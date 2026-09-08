@@ -1,0 +1,2491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mia va al Colegio</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF6B6B">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- Fuente infantil más ancha y legible -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================================================================
+           ESTILOS BASE - CON FUENTE INFANTIL
+           ================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            min-height: 100vh;
+            transition: all 0.5s;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        /* Fuente más ancha para los elementos emergentes */
+        .emergente {
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 700;
+            font-size: 150px;
+            letter-spacing: 8px;
+        }
+
+        /* Fuente más ancha para los botones del juego */
+        .juego-opcion {
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 700;
+        }
+
+        /* Fuente más ancha para títulos */
+        .titulo-principal {
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 700;
+        }
+
+        .titulo-principal .mia {
+            font-weight: 700;
+        }
+
+        .titulo-principal .colegio {
+            font-weight: 700;
+        }
+
+        body.tema-escuela {
+            background: linear-gradient(135deg, #FFF8E7, #FFE4B5, #FFF0F5);
+        }
+        body.tema-selva {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9, #A5D6A7);
+        }
+        body.tema-espacio {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        }
+
+        .contenedor {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 60px;
+            padding: 30px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            position: relative;
+            width: 92%;
+            max-width: 800px;
+            margin: 15px auto;
+            z-index: 1;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.5s;
+            max-height: 96vh;
+            overflow-y: auto;
+        }
+
+        .contenedor::-webkit-scrollbar {
+            width: 6px;
+        }
+        .contenedor::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .contenedor::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        body.tema-espacio .contenedor {
+            background: rgba(26, 26, 46, 0.92);
+            border-color: rgba(100, 200, 255, 0.3);
+            color: #fff;
+        }
+
+        body.tema-espacio .contenedor::-webkit-scrollbar-thumb {
+            background: #444;
+        }
+
+        .titulo-principal {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #FF6B6B;
+            text-shadow: 3px 3px 0 #FFD93D, 6px 6px 0 rgba(255, 107, 107, 0.15);
+            margin-bottom: 2px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        body.tema-espacio .titulo-principal {
+            color: #4FC3F7;
+            text-shadow: 0 0 30px rgba(79, 195, 247, 0.3);
+        }
+
+        .titulo-principal .mia {
+            color: #6C4A7C;
+            font-size: 2.8rem;
+        }
+
+        .titulo-principal .colegio {
+            color: #4FC3F7;
+        }
+
+        body.tema-espacio .titulo-principal .mia {
+            color: #CE93D8;
+        }
+
+        .subtitulo {
+            color: #6BCB77;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        body.tema-espacio .subtitulo {
+            color: #81C784;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            background: #e8e8e8;
+            color: #666;
+            touch-action: manipulation;
+            min-height: 38px;
+            flex: 1;
+            min-width: 55px;
+            max-width: 120px;
+        }
+
+        .tab-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .tab-btn:active {
+            transform: scale(0.95);
+        }
+
+        .tab-btn.activo {
+            background: #6BCB77;
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 203, 119, 0.4);
+        }
+
+        body.tema-espacio .tab-btn {
+            background: #2a2a4a;
+            color: #aaa;
+        }
+
+        body.tema-espacio .tab-btn.activo {
+            background: #4FC3F7;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.activo {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .escenario {
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 8px 0;
+            background: rgba(255, 248, 231, 0.4);
+            border-radius: 40px;
+            border: 3px dashed rgba(255, 215, 0, 0.25);
+            overflow: hidden;
+        }
+
+        body.tema-espacio .escenario {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(79, 195, 247, 0.15);
+        }
+
+        .emergente {
+            font-size: 150px;
+            font-weight: 700;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s;
+            animation: rebotar 0.8s ease-out;
+            position: relative;
+            z-index: 2;
+            touch-action: manipulation;
+            letter-spacing: 8px;
+        }
+
+        body.tema-espacio .emergente {
+            text-shadow: 0 0 40px rgba(79, 195, 247, 0.2);
+        }
+
+        .emergente:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes rebotar {
+            0% {
+                transform: scale(0) rotate(-15deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.3) rotate(3deg);
+                opacity: 1;
+            }
+            70% {
+                transform: scale(0.9) rotate(-2deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes latido {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+                text-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        .sonando {
+            animation: latido 0.6s ease-in-out 4;
+        }
+
+        @keyframes explosion {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            30% {
+                transform: scale(1.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(0.1);
+                opacity: 0;
+            }
+        }
+
+        .emergente.explotar {
+            animation: explosion 0.7s ease forwards;
+        }
+
+        .burbuja {
+            position: absolute;
+            border-radius: 50%;
+            animation: flotar 6s infinite alternate ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes flotar {
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+            100% {
+                transform: translateY(-70px) scale(1.3);
+            }
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #4FC3F7;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #0288D1;
+            transition: all 0.08s;
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            touch-action: manipulation;
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #0288D1;
+        }
+
+        .btn.secundario {
+            background: #FFD93D;
+            box-shadow: 0 4px 0 #F9A825;
+            color: #333;
+        }
+
+        .btn.secundario:active {
+            box-shadow: 0 1px 0 #F9A825;
+        }
+
+        .btn.repetir {
+            background: #6BCB77;
+            box-shadow: 0 4px 0 #2E7D32;
+            color: white;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+        }
+
+        .btn.repetir:active {
+            box-shadow: 0 1px 0 #2E7D32;
+        }
+
+        .btn.iniciar {
+            background: #FF8A9E;
+            box-shadow: 0 5px 0 #C62828;
+            color: white;
+            font-size: 1.5rem;
+            padding: 20px 50px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .btn.iniciar:active {
+            box-shadow: 0 2px 0 #C62828;
+        }
+
+        .btn.grabar {
+            background: #FF6B6B;
+            box-shadow: 0 4px 0 #C62828;
+            color: white;
+        }
+
+        .btn.grabar:active {
+            box-shadow: 0 1px 0 #C62828;
+        }
+
+        .btn.grabar.grabando {
+            background: #ff0000;
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.04);
+            }
+        }
+
+        .indicador-sonido {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 6px 0;
+            flex-wrap: wrap;
+        }
+
+        .barra-sonido {
+            width: 100px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .barra-sonido .relleno {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
+            border-radius: 10px;
+            transition: width 0.15s;
+        }
+
+        .barra-sonido.activa .relleno {
+            animation: barraLatido 1.5s ease-in-out;
+        }
+
+        @keyframes barraLatido {
+            0% {
+                width: 0%;
+            }
+            25% {
+                width: 100%;
+            }
+            50% {
+                width: 60%;
+            }
+            75% {
+                width: 100%;
+            }
+            100% {
+                width: 0%;
+            }
+        }
+
+        #iconoOido {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .mascota {
+            font-size: 1.15rem;
+            color: #6C4A7C;
+            background: #F3E8FF;
+            padding: 10px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 4px;
+            min-height: 52px;
+            border: 2px solid #C084FC;
+            transition: all 0.3s;
+            max-width: 100%;
+            word-wrap: break-word;
+            font-weight: 600;
+        }
+
+        body.tema-espacio .mascota {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #4FC3F7;
+            color: #fff;
+        }
+
+        .mascota-emoji {
+            font-size: 1.8rem;
+            display: inline-block;
+            animation: saltarMascota 2s infinite;
+        }
+
+        @keyframes saltarMascota {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-8px) rotate(-8deg);
+            }
+            75% {
+                transform: translateY(-8px) rotate(8deg);
+            }
+        }
+
+        .estado-sonido {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .info-extra {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            color: #888;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            font-weight: 600;
+        }
+
+        .info-extra span {
+            background: #f5f5f5;
+            padding: 4px 14px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        body.tema-espacio .info-extra span {
+            background: rgba(255, 255, 255, 0.07);
+            color: #aaa;
+        }
+
+        .indicador-progreso {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin: 6px 0;
+            flex-wrap: wrap;
+            padding: 0 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            display: inline-block;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .dot.activo {
+            background: #6BCB77;
+            transform: scale(1.3);
+        }
+
+        .dot.visto {
+            background: #FFD93D;
+        }
+
+        body.tema-espacio .dot {
+            background: #444;
+        }
+
+        body.tema-espacio .dot.activo {
+            background: #4FC3F7;
+        }
+
+        body.tema-espacio .dot.visto {
+            background: #FFD93D;
+        }
+
+        .juego-opciones {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .juego-opcion {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #ddd;
+            font-size: 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            user-select: none;
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .juego-opcion:hover:not(:disabled) {
+            transform: scale(1.08);
+            border-color: #6BCB77;
+        }
+
+        .juego-opcion:active:not(:disabled) {
+            transform: scale(0.92);
+        }
+
+        .juego-opcion:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .juego-opcion.correcta {
+            border-color: #6BCB77;
+            background: #E8F5E9;
+            animation: correcto 0.5s;
+        }
+
+        .juego-opcion.incorrecta {
+            border-color: #FF6B6B;
+            background: #FFEBEE;
+            animation: incorrecto 0.5s;
+        }
+
+        @keyframes correcto {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.25);
+            }
+        }
+
+        @keyframes incorrecto {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-15px);
+            }
+            75% {
+                transform: translateX(15px);
+            }
+        }
+
+        #juegoResultado {
+            font-size: 1.3rem;
+            margin: 8px 0;
+            min-height: 45px;
+            font-weight: 700;
+        }
+
+        .panel-progreso {
+            text-align: left;
+            padding: 15px;
+        }
+
+        .panel-progreso h3 {
+            margin: 12px 0 6px;
+            font-size: 1.1rem;
+            color: #6C4A7C;
+            font-weight: 700;
+        }
+
+        body.tema-espacio .panel-progreso h3 {
+            color: #CE93D8;
+        }
+
+        .panel-progreso .barra-progreso {
+            width: 100%;
+            height: 18px;
+            background: #e8e8e8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 6px 0;
+        }
+
+        .panel-progreso .barra-progreso .relleno {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .panel-progreso .medalla {
+            display: inline-block;
+            font-size: 2.8rem;
+            margin: 6px;
+            animation: saltarMascota 2s infinite;
+        }
+
+        .panel-progreso .estadistica {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        body.tema-espacio .panel-progreso .estadistica {
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .filtro-tipo {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+
+        .filtro-tipo .btn-filtro {
+            padding: 6px 16px;
+            border-radius: 25px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            color: #666;
+            touch-action: manipulation;
+        }
+
+        .filtro-tipo .btn-filtro:active {
+            transform: scale(0.95);
+        }
+
+        .filtro-tipo .btn-filtro.activo {
+            background: #6BCB77;
+            color: white;
+            border-color: #6BCB77;
+        }
+
+        body.tema-espacio .filtro-tipo .btn-filtro {
+            background: #2a2a4a;
+            border-color: #444;
+            color: #aaa;
+        }
+
+        body.tema-espacio .filtro-tipo .btn-filtro.activo {
+            background: #4FC3F7;
+            border-color: #4FC3F7;
+            color: #fff;
+        }
+
+        .personalizacion {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 8px 0;
+        }
+
+        .personalizacion .opcion {
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 3px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            font-size: 1.4rem;
+            touch-action: manipulation;
+            user-select: none;
+            font-weight: 700;
+        }
+
+        .personalizacion .opcion:active {
+            transform: scale(0.92);
+        }
+
+        .personalizacion .opcion.seleccionado {
+            border-color: #6BCB77;
+            background: #E8F5E9;
+            box-shadow: 0 0 20px rgba(107, 203, 119, 0.25);
+        }
+
+        body.tema-espacio .personalizacion .opcion {
+            background: #2a2a4a;
+            border-color: #444;
+            color: #fff;
+        }
+
+        body.tema-espacio .personalizacion .opcion.seleccionado {
+            border-color: #4FC3F7;
+            background: #1a3a5a;
+        }
+
+        .configuracion {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 8px 0;
+        }
+
+        .configuracion label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .configuracion input[type="range"] {
+            width: 80px;
+            accent-color: #6BCB77;
+        }
+
+        .rima {
+            font-size: 1.05rem;
+            color: #6C4A7C;
+            background: #F3E8FF;
+            padding: 12px 18px;
+            border-radius: 30px;
+            margin: 8px 0;
+            animation: fadeIn 0.4s;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        body.tema-espacio .rima {
+            background: rgba(255, 255, 255, 0.07);
+            color: #aaa;
+        }
+
+        .grabacion {
+            margin: 12px 0;
+        }
+
+        .grabacion audio {
+            width: 100%;
+            max-width: 280px;
+            margin: 8px 0;
+            border-radius: 10px;
+        }
+
+        .pantalla-inicio {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 248, 231, 0.97);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 25px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pantalla-inicio h1 {
+            font-size: 3.5rem;
+            color: #FF6B6B;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .pantalla-inicio p {
+            font-size: 1.3rem;
+            color: #6C4A7C;
+            max-width: 500px;
+            font-weight: 600;
+        }
+
+        .pantalla-inicio .btn-iniciar {
+            background: #6BCB77;
+            border: none;
+            padding: 22px 50px;
+            border-radius: 60px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #2E7D32;
+            transition: all 0.1s;
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            animation: pulse 1.5s infinite;
+            touch-action: manipulation;
+        }
+
+        .pantalla-inicio .btn-iniciar:active {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 #2E7D32;
+        }
+
+        .pantalla-inicio .btn-iniciar:hover {
+            transform: scale(1.03);
+        }
+
+        .oculto {
+            display: none !important;
+        }
+
+        /* ================================================================
+           PANTALLA DE CELEBRACIÓN
+           ================================================================ */
+        #celebracion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        #celebracion h1 {
+            color: #FFD93D;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: saltarMascota 1s infinite;
+        }
+
+        #celebracion p {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 600;
+            max-width: 500px;
+        }
+
+        #celebracion .btn {
+            font-size: 1.5rem;
+            padding: 18px 45px;
+            background: #6BCB77;
+            box-shadow: 0 5px 0 #2E7D32;
+            border-radius: 60px;
+            animation: pulse 1.5s infinite;
+        }
+
+        #celebracion .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #2E7D32;
+        }
+
+        /* Confeti animado */
+        .confeti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            top: -20px;
+            animation: caerConfeti 3s linear infinite;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        @keyframes caerConfeti {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Fuegos artificiales con emojis */
+        .fuego {
+            position: fixed;
+            font-size: 3rem;
+            pointer-events: none;
+            z-index: 10001;
+            animation: explotar 1.5s ease-out forwards;
+        }
+
+        @keyframes explotar {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            30% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2) rotate(360deg) translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .contenedor {
+                padding: 25px 30px;
+                border-radius: 50px;
+                max-height: 94vh;
+                width: 94%;
+            }
+
+            .titulo-principal {
+                font-size: 2rem;
+            }
+
+            .titulo-principal .mia {
+                font-size: 2.4rem;
+            }
+
+            .emergente {
+                font-size: 120px;
+            }
+
+            .escenario {
+                height: 220px;
+            }
+
+            .btn {
+                padding: 11px 20px;
+                font-size: 0.95rem;
+                min-height: 42px;
+            }
+
+            .tab-btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+                min-height: 36px;
+            }
+
+            .juego-opcion {
+                width: 70px;
+                height: 70px;
+                font-size: 2.2rem;
+            }
+
+            #celebracion h1 {
+                font-size: 2.8rem;
+            }
+
+            #celebracion p {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .contenedor {
+                padding: 16px 14px;
+                border-radius: 35px;
+                width: 96%;
+                margin: 10px auto;
+                max-height: 97vh;
+                border-width: 3px;
+            }
+
+            .titulo-principal {
+                font-size: 1.5rem;
+            }
+
+            .titulo-principal .mia {
+                font-size: 1.8rem;
+            }
+
+            .subtitulo {
+                font-size: 0.8rem;
+            }
+
+            .botones {
+                gap: 8px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .botones .btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 13px 18px;
+                font-size: 1rem;
+                min-height: 48px;
+                border-radius: 35px;
+            }
+
+            .tabs {
+                gap: 5px;
+            }
+
+            .tab-btn {
+                padding: 8px 10px;
+                font-size: 0.7rem;
+                min-height: 34px;
+                min-width: 45px;
+                flex: 1;
+                border-radius: 25px;
+                max-width: none;
+            }
+
+            .emergente {
+                font-size: 90px;
+                letter-spacing: 4px;
+            }
+
+            .escenario {
+                height: 160px;
+                border-radius: 30px;
+                border-width: 2px;
+            }
+
+            .indicador-sonido {
+                gap: 10px;
+            }
+
+            .btn.repetir {
+                font-size: 0.95rem;
+                padding: 10px 20px;
+                min-height: 44px;
+                min-width: 100px;
+            }
+
+            .barra-sonido {
+                width: 70px;
+                height: 6px;
+            }
+
+            #iconoOido {
+                font-size: 1.4rem;
+            }
+
+            .mascota {
+                font-size: 0.95rem;
+                padding: 8px 14px;
+                min-height: 44px;
+                border-radius: 30px;
+            }
+
+            .mascota-emoji {
+                font-size: 1.5rem;
+            }
+
+            .info-extra {
+                gap: 6px;
+                font-size: 0.7rem;
+            }
+
+            .info-extra span {
+                padding: 3px 10px;
+                border-radius: 20px;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .indicador-progreso {
+                gap: 3px;
+            }
+
+            .juego-opcion {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+                border-width: 3px;
+            }
+
+            .juego-opciones {
+                gap: 10px;
+            }
+
+            #juegoResultado {
+                font-size: 1.1rem;
+                min-height: 38px;
+            }
+
+            .filtro-tipo {
+                gap: 5px;
+            }
+
+            .filtro-tipo .btn-filtro {
+                padding: 5px 12px;
+                font-size: 0.7rem;
+                border-radius: 20px;
+            }
+
+            .panel-progreso {
+                padding: 8px;
+            }
+
+            .panel-progreso h3 {
+                font-size: 0.95rem;
+            }
+
+            .panel-progreso .estadistica {
+                font-size: 0.8rem;
+                padding: 5px 0;
+            }
+
+            .panel-progreso .medalla {
+                font-size: 2.2rem;
+                margin: 4px;
+            }
+
+            .panel-progreso .barra-progreso {
+                height: 14px;
+            }
+
+            .rima {
+                font-size: 0.9rem;
+                padding: 10px 14px;
+            }
+
+            .grabacion .btn {
+                font-size: 0.85rem;
+                padding: 9px 16px;
+                min-height: 40px;
+                min-width: 70px;
+            }
+
+            .grabacion audio {
+                max-width: 100%;
+            }
+
+            .personalizacion .opcion {
+                padding: 6px 12px;
+                font-size: 1.2rem;
+                border-radius: 25px;
+                border-width: 2px;
+            }
+
+            .configuracion {
+                gap: 10px;
+            }
+
+            .configuracion label {
+                font-size: 0.8rem;
+            }
+
+            .configuracion input[type="range"] {
+                width: 60px;
+            }
+
+            .pantalla-inicio h1 {
+                font-size: 2.5rem;
+            }
+
+            .pantalla-inicio p {
+                font-size: 1.1rem;
+            }
+
+            .pantalla-inicio .btn-iniciar {
+                padding: 16px 35px;
+                font-size: 1.4rem;
+                border-radius: 50px;
+            }
+
+            .grabacion .btn {
+                margin: 3px;
+            }
+
+            #celebracion h1 {
+                font-size: 2.2rem;
+            }
+
+            #celebracion p {
+                font-size: 1.1rem;
+            }
+
+            #celebracion .btn {
+                font-size: 1.1rem;
+                padding: 14px 30px;
+            }
+
+            .fuego {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .contenedor {
+                padding: 12px 10px;
+                border-radius: 25px;
+                width: 98%;
+            }
+
+            .titulo-principal {
+                font-size: 1.2rem;
+            }
+
+            .titulo-principal .mia {
+                font-size: 1.4rem;
+            }
+
+            .emergente {
+                font-size: 70px;
+                letter-spacing: 2px;
+            }
+
+            .escenario {
+                height: 130px;
+                border-radius: 20px;
+            }
+
+            .btn {
+                font-size: 0.85rem;
+                padding: 10px 14px;
+                min-height: 40px;
+                max-width: 220px;
+            }
+
+            .tab-btn {
+                font-size: 0.6rem;
+                padding: 5px 8px;
+                min-height: 28px;
+                min-width: 35px;
+            }
+
+            .juego-opcion {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                border-width: 2px;
+            }
+
+            .juego-opciones {
+                gap: 6px;
+            }
+
+            .mascota {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+                min-height: 36px;
+            }
+
+            .mascota-emoji {
+                font-size: 1.2rem;
+            }
+
+            .btn.repetir {
+                font-size: 0.8rem;
+                padding: 8px 14px;
+                min-height: 36px;
+                min-width: 70px;
+            }
+
+            .barra-sonido {
+                width: 50px;
+                height: 5px;
+            }
+
+            #iconoOido {
+                font-size: 1.1rem;
+            }
+
+            .info-extra {
+                font-size: 0.6rem;
+                gap: 4px;
+            }
+
+            .info-extra span {
+                padding: 2px 8px;
+            }
+
+            .dot {
+                width: 6px;
+                height: 6px;
+            }
+
+            .pantalla-inicio h1 {
+                font-size: 2rem;
+            }
+
+            .pantalla-inicio p {
+                font-size: 0.9rem;
+            }
+
+            .pantalla-inicio .btn-iniciar {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+
+            .panel-progreso .estadistica {
+                font-size: 0.7rem;
+            }
+
+            #celebracion h1 {
+                font-size: 1.8rem;
+            }
+
+            #celebracion p {
+                font-size: 1rem;
+            }
+
+            #celebracion .btn {
+                font-size: 0.95rem;
+                padding: 12px 25px;
+            }
+
+            .fuego {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .contenedor {
+                max-height: 98vh;
+                padding: 12px 20px;
+            }
+
+            .escenario {
+                height: 120px;
+            }
+
+            .emergente {
+                font-size: 70px;
+                letter-spacing: 2px;
+            }
+
+            .titulo-principal {
+                font-size: 1.3rem;
+            }
+
+            .titulo-principal .mia {
+                font-size: 1.5rem;
+            }
+
+            .botones .btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+                min-height: 34px;
+                max-width: 180px;
+            }
+
+            .mascota {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+                min-height: 34px;
+            }
+
+            .tab-btn {
+                padding: 4px 10px;
+                font-size: 0.65rem;
+                min-height: 28px;
+            }
+
+            .indicador-progreso {
+                margin: 3px 0;
+            }
+
+            .dot {
+                width: 6px;
+                height: 6px;
+            }
+
+            .juego-opcion {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            #celebracion h1 {
+                font-size: 1.8rem;
+            }
+
+            #celebracion p {
+                font-size: 1rem;
+            }
+        }
+
+        @supports (padding: max(0px)) {
+            .contenedor {
+                padding-left: max(14px, env(safe-area-inset-left));
+                padding-right: max(14px, env(safe-area-inset-right));
+                padding-top: max(16px, env(safe-area-inset-top));
+                padding-bottom: max(16px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body class="tema-escuela">
+
+    <!-- ================================================================
+    PANTALLA DE INICIO
+    ================================================================ -->
+    <div class="pantalla-inicio" id="pantallaInicio">
+        <h1>🏫 Mia va al Colegio</h1>
+        <p>🧸 ¡Aprende letras y números con Mia!</p>
+        <p style="font-size:1.1rem; color:#999; max-width:400px;">👉 Haz clic en el botón para empezar</p>
+        <button class="btn-iniciar" id="btnIniciar">🚀 ¡Empezar!</button>
+    </div>
+
+    <!-- ================================================================
+    PANTALLA DE CELEBRACIÓN
+    ================================================================ -->
+    <div id="celebracion">
+        <h1>🎉 ¡Felicidades!</h1>
+        <p>🌟 ¡Has aprendido todas las letras y números!<br>Eres un campeón 🏆</p>
+        <button class="btn" onclick="reiniciarProgreso()">🔄 Empezar de nuevo</button>
+    </div>
+
+    <!-- ================================================================
+    CONTENIDO PRINCIPAL
+    ================================================================ -->
+    <div class="contenedor" id="contenedorPrincipal" style="display:none;">
+
+        <h1 class="titulo-principal">
+            <span class="mia">🏫 Mia</span>
+            <span style="color:#FF6B6B;">va al</span>
+            <span class="colegio">Colegio</span>
+        </h1>
+        <p class="subtitulo">
+            <span>📚</span>
+            <span>✏️</span>
+            <span>¡Aprende jugando!</span>
+            <span>🎒</span>
+            <span>🌟</span>
+        </p>
+
+        <div class="tabs">
+            <button class="tab-btn activo" data-tab="aprender">📖 Aprender</button>
+            <button class="tab-btn" data-tab="juego">🎮 Juego</button>
+            <button class="tab-btn" data-tab="grabacion">🎤 Grabar</button>
+            <button class="tab-btn" data-tab="progreso">📊 Progreso</button>
+            <button class="tab-btn" data-tab="personalizar">🎨 Personalizar</button>
+        </div>
+
+        <div class="tab-content activo" id="tab-aprender">
+
+            <div class="filtro-tipo">
+                <button class="btn-filtro activo" data-tipo="todas">🌟 Todas</button>
+                <button class="btn-filtro" data-tipo="letras">🔤 Letras</button>
+                <button class="btn-filtro" data-tipo="numeros">🔢 Números</button>
+            </div>
+
+            <div class="escenario" id="escenario">
+                <div class="emergente" id="emergente">A</div>
+            </div>
+
+            <div class="indicador-progreso" id="indicadorProgreso"></div>
+
+            <div class="botones">
+                <button class="btn" id="anterior">⬅ Anterior</button>
+                <button class="btn secundario" id="aleatorio">🎲 Sorpresa</button>
+                <button class="btn" id="siguiente">Siguiente ➡</button>
+            </div>
+
+            <div class="indicador-sonido">
+                <button class="btn repetir" id="btnSonido">🔊 Repetir</button>
+                <div class="barra-sonido" id="barraSonido">
+                    <div class="relleno" id="barraRelleno"></div>
+                </div>
+                <span id="iconoOido">👂</span>
+            </div>
+
+            <div>
+                <span class="mascota" id="mensaje">
+                    <span class="mascota-emoji">🧸</span>
+                    Mia dice: ¡A de Avión! ✈️
+                </span>
+            </div>
+
+            <div class="estado-sonido" id="estadoSonido">🔇 Haz clic en "Repetir" para escuchar</div>
+
+            <div class="rima" id="rima"></div>
+
+            <div class="info-extra">
+                <span>🔁 Repeticiones: <span id="contadorRepeticiones">0</span></span>
+                <span>⭐ Aprendidos: <span id="progresoLetras">1</span>/<span id="totalLetras">37</span></span>
+                <span>🏆 Nivel: <span id="nivel">1</span></span>
+                <span>🌟 Estrellas: <span id="estrellas">0</span></span>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-juego">
+            <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎮 Adivina la letra o número</h2>
+            <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Escucha a Mia y elige la respuesta correcta</p>
+
+            <div style="font-size:2rem; margin:8px 0;" id="juegoPista">🔊</div>
+
+            <div class="juego-opciones" id="juegoOpciones"></div>
+
+            <div id="juegoResultado"></div>
+
+            <button class="btn repetir" id="juegoNuevo">🔄 Nueva ronda</button>
+            <p style="color:#999; font-size:0.8rem; margin-top:8px; font-weight:600;">
+                ✅ Aciertos: <span id="juegoAciertos">0</span> |
+                ❌ Fallos: <span id="juegoFallos">0</span>
+            </p>
+        </div>
+
+        <div class="tab-content" id="tab-grabacion">
+            <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎤 Practica con Mia</h2>
+            <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Graba tu voz y escucha cómo pronuncias</p>
+
+            <div style="font-size:3.5rem; margin:8px 0; font-weight:700;" id="grabacionLetra">A</div>
+
+            <div class="grabacion">
+                <button class="btn grabar" id="btnGrabar">🎙️ Grabar</button>
+                <button class="btn" id="btnReproducirGrabacion">▶️ Escuchar</button>
+                <button class="btn secundario" id="btnEliminarGrabacion">🗑️ Eliminar</button>
+            </div>
+
+            <div style="margin:10px 0;">
+                <audio id="audioGrabacion" controls style="width:100%; max-width:280px;"></audio>
+            </div>
+
+            <div class="info-extra">
+                <span>📝 Última letra: <span id="ultimaGrabacion">-</span></span>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-progreso">
+            <h2 style="color:#6C4A7C; margin-bottom:8px; font-size:1.3rem; font-weight:700;">📊 Mi progreso</h2>
+
+            <div class="panel-progreso">
+                <h3>⭐ Aprendidos (letras + números)</h3>
+                <div class="barra-progreso">
+                    <div class="relleno" id="barraProgreso" style="width:0%;"></div>
+                </div>
+                <p style="text-align:center; font-size:0.9rem; font-weight:600;"><span id="progresoTexto">0</span> de 37</p>
+
+                <h3>🏅 Medallas</h3>
+                <div id="medallasContainer" style="text-align:center; margin:6px 0;">
+                    <span class="medalla" style="opacity:0.3;">⭐</span>
+                    <span class="medalla" style="opacity:0.3;">🏅</span>
+                    <span class="medalla" style="opacity:0.3;">👑</span>
+                    <span class="medalla" style="opacity:0.3;">🎖️</span>
+                </div>
+
+                <h3>📈 Estadísticas</h3>
+                <div class="estadistica">
+                    <span>🔁 Repeticiones totales</span>
+                    <span id="estRepeticiones">0</span>
+                </div>
+                <div class="estadistica">
+                    <span>✅ Juego acertado</span>
+                    <span id="estAciertos">0</span>
+                </div>
+                <div class="estadistica">
+                    <span>❌ Juego fallado</span>
+                    <span id="estFallos">0</span>
+                </div>
+                <div class="estadistica">
+                    <span>🌟 Estrellas</span>
+                    <span id="estEstrellas">0</span>
+                </div>
+                <div class="estadistica">
+                    <span>📅 Última sesión</span>
+                    <span id="estUltimaSesion">-</span>
+                </div>
+
+                <button class="btn secundario" id="btnReiniciar" style="margin-top:12px; width:100%; max-width:280px;">🔄 Reiniciar progreso</button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-personalizar">
+            <h2 style="color:#6C4A7C; margin-bottom:8px; font-size:1.3rem; font-weight:700;">🎨 Personaliza a Mia</h2>
+
+            <h3 style="font-size:1rem; color:#6C4A7C; margin-top:6px; font-weight:700;">🧸 Elige tu mascota</h3>
+            <div class="personalizacion" id="selectorMascota">
+                <div class="opcion seleccionado" data-mascota="🧸">🧸</div>
+                <div class="opcion" data-mascota="🐼">🐼</div>
+                <div class="opcion" data-mascota="🦊">🦊</div>
+                <div class="opcion" data-mascota="🐨">🐨</div>
+                <div class="opcion" data-mascota="🦄">🦄</div>
+            </div>
+
+            <h3 style="font-size:1rem; color:#6C4A7C; margin-top:12px; font-weight:700;">🎨 Tema visual</h3>
+            <div class="personalizacion" id="selectorTema">
+                <div class="opcion seleccionado" data-tema="escuela">🏫 Escuela</div>
+                <div class="opcion" data-tema="selva">🌴 Selva</div>
+                <div class="opcion" data-tema="espacio">🚀 Espacio</div>
+            </div>
+
+            <h3 style="font-size:1rem; color:#6C4A7C; margin-top:12px; font-weight:700;">🔊 Voz</h3>
+            <div class="configuracion">
+                <label>
+                    Velocidad:
+                    <input type="range" id="vozVelocidad" min="0.3" max="1.0" step="0.05" value="0.55">
+                    <span id="vozVelocidadValor">0.55</span>
+                </label>
+                <label>
+                    Tono:
+                    <input type="range" id="vozTono" min="0.8" max="2.0" step="0.1" value="1.6">
+                    <span id="vozTonoValor">1.6</span>
+                </label>
+            </div>
+
+            <button class="btn" id="btnGuardarPreferencias" style="margin-top:10px; width:100%; max-width:280px;">💾 Guardar preferencias</button>
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // DATOS: LETRAS (27) + NÚMEROS (10) = 37 ELEMENTOS
+        // ================================================================
+
+        const elementos = [
+            { id: 'A', tipo: 'letra', color: '#FF6B6B', mensaje: '¡A de Avión! ✈️', sonido: 'A', ejemplo: 'Avión' },
+            { id: 'B', tipo: 'letra', color: '#FF9F43', mensaje: '¡B de Bebé! 👶', sonido: 'B', ejemplo: 'Bebé' },
+            { id: 'C', tipo: 'letra', color: '#FECA57', mensaje: '¡C de Casa! 🏠', sonido: 'C', ejemplo: 'Casa' },
+            { id: 'D', tipo: 'letra', color: '#6BCB77', mensaje: '¡D de Delfín! 🐬', sonido: 'D', ejemplo: 'Delfín' },
+            { id: 'E', tipo: 'letra', color: '#4FC3F7', mensaje: '¡E de Estrella! ⭐', sonido: 'E', ejemplo: 'Estrella' },
+            { id: 'F', tipo: 'letra', color: '#5B86E5', mensaje: '¡F de Flor! 🌸', sonido: 'F', ejemplo: 'Flor' },
+            { id: 'G', tipo: 'letra', color: '#A29BFE', mensaje: '¡G de Gato! 🐱', sonido: 'G', ejemplo: 'Gato' },
+            { id: 'H', tipo: 'letra', color: '#FD79A8', mensaje: '¡H de Helado! 🍦', sonido: 'H', ejemplo: 'Helado' },
+            { id: 'I', tipo: 'letra', color: '#00CEC9', mensaje: '¡I de Isla! 🏝️', sonido: 'I', ejemplo: 'Isla' },
+            { id: 'J', tipo: 'letra', color: '#FDCB6E', mensaje: '¡J de Jirafa! 🦒', sonido: 'J', ejemplo: 'Jirafa' },
+            { id: 'K', tipo: 'letra', color: '#E17055', mensaje: '¡K de Koala! 🐨', sonido: 'K', ejemplo: 'Koala' },
+            { id: 'L', tipo: 'letra', color: '#74B9FF', mensaje: '¡L de Luna! 🌙', sonido: 'L', ejemplo: 'Luna' },
+            { id: 'M', tipo: 'letra', color: '#55EFC4', mensaje: '¡M de Mariposa! 🦋', sonido: 'M', ejemplo: 'Mariposa' },
+            { id: 'N', tipo: 'letra', color: '#FAB1A0', mensaje: '¡N de Nube! ☁️', sonido: 'N', ejemplo: 'Nube' },
+            { id: 'Ñ', tipo: 'letra', color: '#81ECEC', mensaje: '¡Ñ de Ñandú! 🐦', sonido: 'eñe', ejemplo: 'Ñandú' },
+            { id: 'O', tipo: 'letra', color: '#FF7675', mensaje: '¡O de Oso! 🐻', sonido: 'O', ejemplo: 'Oso' },
+            { id: 'P', tipo: 'letra', color: '#FDCB6E', mensaje: '¡P de Pelota! ⚽', sonido: 'P', ejemplo: 'Pelota' },
+            { id: 'Q', tipo: 'letra', color: '#A29BFE', mensaje: '¡Q de Queso! 🧀', sonido: 'Q', ejemplo: 'Queso' },
+            { id: 'R', tipo: 'letra', color: '#FF6B6B', mensaje: '¡R de Ratón! 🐭', sonido: 'R', ejemplo: 'Ratón' },
+            { id: 'S', tipo: 'letra', color: '#6BCB77', mensaje: '¡S de Sol! ☀️', sonido: 'S', ejemplo: 'Sol' },
+            { id: 'T', tipo: 'letra', color: '#4FC3F7', mensaje: '¡T de Tortuga! 🐢', sonido: 'T', ejemplo: 'Tortuga' },
+            { id: 'U', tipo: 'letra', color: '#C084FC', mensaje: '¡U de Uva! 🍇', sonido: 'U', ejemplo: 'Uva' },
+            { id: 'V', tipo: 'letra', color: '#FF9F43', mensaje: '¡V de Vaca! 🐄', sonido: 'V', ejemplo: 'Vaca' },
+            { id: 'W', tipo: 'letra', color: '#FECA57', mensaje: '¡W de Wafle! 🧇', sonido: 'doble u', ejemplo: 'Wafle' },
+            { id: 'X', tipo: 'letra', color: '#5B86E5', mensaje: '¡X de Xilófono!', sonido: 'equis', ejemplo: 'Xilófono' },
+            { id: 'Y', tipo: 'letra', color: '#FD79A8', mensaje: '¡Y de Yogur! 🥛', sonido: 'y', ejemplo: 'Yogur' },
+            { id: 'Z', tipo: 'letra', color: '#00CEC9', mensaje: '¡Z de Zorro! 🦊', sonido: 'Z', ejemplo: 'Zorro' },
+            { id: '0', tipo: 'numero', color: '#FF6B6B', mensaje: '¡El número 0! 🔵', sonido: 'cero', ejemplo: 'cero' },
+            { id: '1', tipo: 'numero', color: '#FF9F43', mensaje: '¡El número 1! ☝️', sonido: 'uno', ejemplo: 'uno' },
+            { id: '2', tipo: 'numero', color: '#FECA57', mensaje: '¡El número 2! 🦆', sonido: 'dos', ejemplo: 'dos' },
+            { id: '3', tipo: 'numero', color: '#6BCB77', mensaje: '¡El número 3! 🍭', sonido: 'tres', ejemplo: 'tres' },
+            { id: '4', tipo: 'numero', color: '#4FC3F7', mensaje: '¡El número 4! 🐢', sonido: 'cuatro', ejemplo: 'cuatro' },
+            { id: '5', tipo: 'numero', color: '#5B86E5', mensaje: '¡El número 5! ⭐', sonido: 'cinco', ejemplo: 'cinco' },
+            { id: '6', tipo: 'numero', color: '#A29BFE', mensaje: '¡El número 6! 🐶', sonido: 'seis', ejemplo: 'seis' },
+            { id: '7', tipo: 'numero', color: '#FD79A8', mensaje: '¡El número 7! 🌈', sonido: 'siete', ejemplo: 'siete' },
+            { id: '8', tipo: 'numero', color: '#00CEC9', mensaje: '¡El número 8! 🐙', sonido: 'ocho', ejemplo: 'ocho' },
+            { id: '9', tipo: 'numero', color: '#FDCB6E', mensaje: '¡El número 9! 🎈', sonido: 'nueve', ejemplo: 'nueve' }
+        ];
+
+        const rimas = {
+            'A': 'A de Avión, vuela sin parar, por el cielo va a jugar.',
+            'B': 'B de Bebé, que quiere comer, y empieza a crecer.',
+            'C': 'C de Casa, donde vivo yo, con mi familia y mi corazón.',
+            'D': 'D de Delfín, en el mar sin fin, salta y juega sin cesar.',
+            'E': 'E de Estrella, que brilla en el cielo, ilumina mi sueño.',
+            'F': 'F de Flor, que da color, al jardín con gran amor.',
+            'G': 'G de Gato, que es muy bonito, y corre detrás del ratito.',
+            'H': 'H de Helado, que está congelado, y en el verano es mirado.',
+            'I': 'I de Isla, en el mar tan sola, donde canta una ola.',
+            'J': 'J de Jirafa, con cuello muy largo, come hojas sin cargo.',
+            'K': 'K de Koala, que duerme en el árbol, es un animal adorable.',
+            'L': 'L de Luna, que brilla de noche, y a los niños da un broche.',
+            'M': 'M de Mariposa, que vuela sin parar, de flor en flor va a jugar.',
+            'N': 'N de Nube, que flota en el cielo, y nos da un consuelo.',
+            'Ñ': 'Ñ de Ñandú, que corre veloz, es un ave con gran voz.',
+            'O': 'O de Oso, que come miel, es grande y muy fiel.',
+            'P': 'P de Pelota, que rueda sin parar, ¡a jugar sin descansar!',
+            'Q': 'Q de Queso, que es muy sabroso, y en el pan es delicioso.',
+            'R': 'R de Ratón, que corre veloz, es pequeño y juguetón.',
+            'S': 'S de Sol, que brilla con calor, nos da luz y color.',
+            'T': 'T de Tortuga, que camina lento, pero tiene gran talento.',
+            'U': 'U de Uva, dulce y redonda, en la viña se esconde.',
+            'V': 'V de Vaca, que da leche buena, en la pradera serena.',
+            'W': 'W de Wafle, que es un postre, ¡rico y muy forte!',
+            'X': 'X de Xilófono, que suena tan bien, ¡música para aprender!',
+            'Y': 'Y de Yogur, que es rico y sano, para comer con la mano.',
+            'Z': 'Z de Zorro, astuto y veloz, se mueve sin voz.',
+            '0': 'Cero es redondo como una pelota, ¡rueda sin parar!',
+            '1': 'Uno es como un lápiz, derecho y muy feliz.',
+            '2': 'Dos como un pato, que nada en el lago.',
+            '3': 'Tres como una serpiente, que se mueve suavemente.',
+            '4': 'Cuatro como una silla, ¡siéntate con alegría!',
+            '5': 'Cinco como una estrella, que brilla y es muy bella.',
+            '6': 'Seis como un caracol, que lleva su casa al sol.',
+            '7': 'Siete como un bastón, para caminar sin cansancio.',
+            '8': 'Ocho como un muñeco de nieve, ¡redondo y muy breve!',
+            '9': 'Nueve como un globo, que sube hasta el cielo.'
+        };
+
+        let estado = {
+            indiceActual: 0,
+            contadorRepeticiones: 0,
+            nivel: 1,
+            estrellas: 0,
+            vistos: new Set(),
+            aciertos: 0,
+            fallos: 0,
+            ultimaSesion: new Date().toLocaleString(),
+            tema: 'escuela',
+            mascota: '🧸',
+            vozVelocidad: 0.55,
+            vozTono: 1.6,
+            filtro: 'todas'
+        };
+
+        let estaSonando = false;
+        let audioActivado = false;
+        let grabacionActiva = false;
+        let mediaRecorder = null;
+        let chunks = [];
+        let juegoBloqueado = false;
+
+        const emergente = document.getElementById('emergente');
+        const mensaje = document.getElementById('mensaje');
+        const btnSonido = document.getElementById('btnSonido');
+        const barraSonido = document.getElementById('barraSonido');
+        const contadorSpan = document.getElementById('contadorRepeticiones');
+        const iconoOido = document.getElementById('iconoOido');
+        const totalLetrasSpan = document.getElementById('totalLetras');
+        const progresoLetrasSpan = document.getElementById('progresoLetras');
+        const nivelSpan = document.getElementById('nivel');
+        const estrellasSpan = document.getElementById('estrellas');
+        const estadoSonido = document.getElementById('estadoSonido');
+        const pantallaInicio = document.getElementById('pantallaInicio');
+        const btnIniciar = document.getElementById('btnIniciar');
+        const contenedorPrincipal = document.getElementById('contenedorPrincipal');
+        const indicadorProgreso = document.getElementById('indicadorProgreso');
+        const rimaDiv = document.getElementById('rima');
+        const celebracion = document.getElementById('celebracion');
+
+        function getElementosFiltrados() {
+            if (estado.filtro === 'letras') return elementos.filter(e => e.tipo === 'letra');
+            if (estado.filtro === 'numeros') return elementos.filter(e => e.tipo === 'numero');
+            return elementos;
+        }
+
+        // ================================================================
+        // CELEBRACIÓN
+        // ================================================================
+
+        function mostrarCelebracion() {
+            celebracion.style.display = 'flex';
+            // Generar confeti
+            for (let i = 0; i < 50; i++) {
+                const confeti = document.createElement('div');
+                confeti.className = 'confeti';
+                confeti.style.left = Math.random() * 100 + '%';
+                confeti.style.background = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4FC3F7', '#C084FC', '#FF8A9E'][Math.floor(Math
+                    .random() * 6)];
+                confeti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                confeti.style.animationDelay = (Math.random() * 2) + 's';
+                confeti.style.width = (6 + Math.random() * 10) + 'px';
+                confeti.style.height = (6 + Math.random() * 10) + 'px';
+                document.body.appendChild(confeti);
+                setTimeout(() => confeti.remove(), 5000);
+            }
+            // Generar fuegos artificiales
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const fuego = document.createElement('div');
+                    fuego.className = 'fuego';
+                    fuego.textContent = ['🎆', '🎇', '✨', '🌟', '💫', '🎉', '🎊', '🌈'][Math.floor(Math.random() * 8)];
+                    fuego.style.left = (10 + Math.random() * 80) + '%';
+                    fuego.style.top = (10 + Math.random() * 80) + '%';
+                    document.body.appendChild(fuego);
+                    setTimeout(() => fuego.remove(), 2000);
+                }, i * 200);
+            }
+        }
+
+        function reiniciarProgreso() {
+            if (confirm('⚠️ ¿Seguro que quieres reiniciar todo el progreso?')) {
+                localStorage.removeItem('miaProgreso');
+                estado.vistos = new Set();
+                estado.contadorRepeticiones = 0;
+                estado.nivel = 1;
+                estado.estrellas = 0;
+                estado.aciertos = 0;
+                estado.fallos = 0;
+                estado.indiceActual = 0;
+                celebracion.style.display = 'none';
+                actualizarUIProgreso();
+                mostrarElemento(0);
+                setTimeout(() => iniciarJuego(), 500);
+                alert('🔄 Progreso reiniciado');
+            }
+        }
+
+        function reproducirSonido(texto) {
+            if (!audioActivado) {
+                estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
+                return;
+            }
+            if (!('speechSynthesis' in window)) {
+                estadoSonido.textContent = '⚠️ Tu navegador no soporta voz';
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.text = texto;
+            utterance.lang = 'es-ES';
+            utterance.rate = estado.vozVelocidad;
+            utterance.pitch = estado.vozTono;
+            utterance.volume = 1;
+            const voces = window.speechSynthesis.getVoices();
+            const vozInfantil = voces.find(v =>
+                v.lang.startsWith('es') &&
+                (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Mónica'))
+            );
+            if (vozInfantil) utterance.voice = vozInfantil;
+            estaSonando = true;
+            emergente.classList.add('sonando');
+            barraSonido.classList.add('activa');
+            iconoOido.textContent = '🔊';
+            estadoSonido.textContent = '🎤 ' + texto;
+            window.speechSynthesis.speak(utterance);
+            utterance.onend = function() {
+                estaSonando = false;
+                emergente.classList.remove('sonando');
+                barraSonido.classList.remove('activa');
+                iconoOido.textContent = '👂';
+                estadoSonido.textContent = '✅ ¡Listo!';
+            };
+            utterance.onerror = function() {
+                estaSonando = false;
+                emergente.classList.remove('sonando');
+                barraSonido.classList.remove('activa');
+                iconoOido.textContent = '⚠️';
+            };
+        }
+
+        function reproducirSonidoAlegre(item) {
+            const id = item.id;
+            const ejemplo = item.ejemplo;
+            let textoFinal = '';
+            if (item.tipo === 'numero') {
+                const numeros = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+                const numTexto = numeros[parseInt(id)] || id;
+                textoFinal = `¡El número ${id}! ${numTexto} ${numTexto} ${numTexto}`;
+            } else if (id === 'M') {
+                textoFinal = '¡M de Mariposa! ¡M! ¡M! ¡Mariposa! 🦋';
+            } else if (id === 'O') {
+                textoFinal = '¡O de Oso! ¡O! ¡O! ¡Oso! 🐻';
+            } else if (id === 'Ñ') {
+                textoFinal = '¡Eñe! ¡Eñe! ¡Eñe de Ñandú! 🐦';
+            } else if (id === 'X') {
+                textoFinal = '¡Equis! ¡Equis! ¡Equis de Xilófono!';
+            } else if (id === 'W') {
+                textoFinal = '¡Doble u! ¡Doble u! ¡Doble u de Wafle! 🧇';
+            } else {
+                const formas = [
+                    `¡${id}! ¡${id}! ¡${id} de ${ejemplo}!`,
+                    `¡${id} de ${ejemplo}! ¡${id}!`,
+                    `${id} ... ${id} ... ${id} ... ¡${ejemplo}!`,
+                    `¡Mira la ${id}! ¡${id} de ${ejemplo}!`,
+                ];
+                textoFinal = formas[Math.floor(Math.random() * formas.length)];
+            }
+            reproducirSonido(textoFinal);
+        }
+
+        function guardarProgreso() {
+            const data = {
+                indiceActual: estado.indiceActual,
+                contadorRepeticiones: estado.contadorRepeticiones,
+                nivel: estado.nivel,
+                estrellas: estado.estrellas,
+                vistos: Array.from(estado.vistos),
+                aciertos: estado.aciertos,
+                fallos: estado.fallos,
+                ultimaSesion: estado.ultimaSesion,
+                tema: estado.tema,
+                mascota: estado.mascota,
+                vozVelocidad: estado.vozVelocidad,
+                vozTono: estado.vozTono,
+                filtro: estado.filtro
+            };
+            localStorage.setItem('miaProgreso', JSON.stringify(data));
+        }
+
+        function cargarProgreso() {
+            const data = localStorage.getItem('miaProgreso');
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    estado.indiceActual = parsed.indiceActual || 0;
+                    estado.contadorRepeticiones = parsed.contadorRepeticiones || 0;
+                    estado.nivel = parsed.nivel || 1;
+                    estado.estrellas = parsed.estrellas || 0;
+                    estado.vistos = new Set(parsed.vistos || []);
+                    estado.aciertos = parsed.aciertos || 0;
+                    estado.fallos = parsed.fallos || 0;
+                    estado.ultimaSesion = parsed.ultimaSesion || new Date().toLocaleString();
+                    estado.tema = parsed.tema || 'escuela';
+                    estado.mascota = parsed.mascota || '🧸';
+                    estado.vozVelocidad = parsed.vozVelocidad || 0.55;
+                    estado.vozTono = parsed.vozTono || 1.6;
+                    estado.filtro = parsed.filtro || 'todas';
+                    return true;
+                } catch (e) { console.error('Error cargando progreso:', e); }
+            }
+            return false;
+        }
+
+        function actualizarUIProgreso() {
+            contadorSpan.textContent = estado.contadorRepeticiones;
+            nivelSpan.textContent = estado.nivel;
+            estrellasSpan.textContent = estado.estrellas;
+            progresoLetrasSpan.textContent = estado.vistos.size;
+            actualizarIndicador();
+            actualizarPanelProgreso();
+            guardarProgreso();
+
+            // Verificar si completó todo
+            if (estado.vistos.size === 37) {
+                setTimeout(() => {
+                    mostrarCelebracion();
+                }, 500);
+            }
+        }
+
+        function crearIndicador() {
+            indicadorProgreso.innerHTML = '';
+            const filtrados = getElementosFiltrados();
+            filtrados.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.id = 'dot-' + i;
+                indicadorProgreso.appendChild(dot);
+            });
+        }
+
+        function actualizarIndicador() {
+            const filtrados = getElementosFiltrados();
+            const indiceFiltrado = filtrados.indexOf(elementos[estado.indiceActual]);
+            filtrados.forEach((item, i) => {
+                const dot = document.getElementById('dot-' + i);
+                if (dot) {
+                    dot.className = 'dot';
+                    const idx = elementos.indexOf(item);
+                    if (i === indiceFiltrado) dot.classList.add('activo');
+                    if (estado.vistos.has(idx)) dot.classList.add('visto');
+                }
+            });
+        }
+
+        function mostrarElemento(indiceReal) {
+            if (estaSonando) return;
+            const item = elementos[indiceReal];
+            emergente.textContent = item.id;
+            emergente.style.color = item.color;
+            emergente.style.animation = 'none';
+            void emergente.offsetWidth;
+            emergente.style.animation = 'rebotar 0.8s ease-out';
+            const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
+            mensaje.innerHTML = `
+                        <span class="mascota-emoji">${estado.mascota}</span>
+                        Mia dice: ${item.mensaje} ${tipoEmoji}
+                    `;
+            if (rimas[item.id]) {
+                rimaDiv.textContent = '🎵 ' + rimas[item.id];
+                rimaDiv.style.display = 'block';
+            } else {
+                rimaDiv.style.display = 'none';
+            }
+            estado.indiceActual = indiceReal;
+            estado.vistos.add(indiceReal);
+            emergente.classList.remove('explotar');
+            emergente.classList.remove('sonando');
+            document.getElementById('grabacionLetra').textContent = item.id;
+            actualizarUIProgreso();
+            if (audioActivado) {
+                setTimeout(() => { reproducirSonidoAlegre(item); }, 500);
+            } else {
+                estadoSonido.textContent = '🔇 Haz clic en "Repetir" para escuchar';
+            }
+        }
+
+        function actualizarPanelProgreso() {
+            const total = elementos.length;
+            const vistos = estado.vistos.size;
+            const porcentaje = (vistos / total) * 100;
+            document.getElementById('barraProgreso').style.width = porcentaje + '%';
+            document.getElementById('progresoTexto').textContent = vistos;
+            document.getElementById('estRepeticiones').textContent = estado.contadorRepeticiones;
+            document.getElementById('estAciertos').textContent = estado.aciertos;
+            document.getElementById('estFallos').textContent = estado.fallos;
+            document.getElementById('estEstrellas').textContent = estado.estrellas;
+            document.getElementById('estUltimaSesion').textContent = estado.ultimaSesion;
+            const medallas = document.querySelectorAll('.medalla');
+            if (vistos >= 5) medallas[0].style.opacity = '1';
+            if (vistos >= 10) medallas[1].style.opacity = '1';
+            if (vistos >= 20) medallas[2].style.opacity = '1';
+            if (vistos >= 37) medallas[3].style.opacity = '1';
+        }
+
+        let juegoLetraActual = '';
+        let juegoOpcionesArray = [];
+
+        function iniciarJuego() {
+            juegoBloqueado = false;
+            document.getElementById('juegoResultado').textContent = '';
+            document.getElementById('juegoResultado').style.color = '';
+            const disponibles = elementos.filter((_, i) => estado.vistos.has(i));
+            const filtrados = getElementosFiltrados();
+            const disponiblesFiltrados = disponibles.filter(item =>
+                filtrados.some(f => f.id === item.id)
+            );
+            if (disponiblesFiltrados.length < 3) {
+                document.getElementById('juegoResultado').textContent = '😊 ¡Aprende más primero! (Necesitas al menos 3)';
+                document.getElementById('juegoResultado').style.color = '#FF9F43';
+                document.getElementById('juegoPista').textContent = '📚';
+                document.getElementById('juegoOpciones').innerHTML = '';
+                return;
+            }
+            const objetivo = disponiblesFiltrados[Math.floor(Math.random() * disponiblesFiltrados.length)];
+            juegoLetraActual = objetivo.id;
+            const otras = filtrados.filter(item => item.id !== juegoLetraActual);
+            const shuffled = [...otras].sort(() => Math.random() - 0.5);
+            const distractores = shuffled.slice(0, 2);
+            juegoOpcionesArray = [objetivo, ...distractores].sort(() => Math.random() - 0.5);
+            document.getElementById('juegoPista').textContent = '🔊 ¡Encuentra la respuesta!';
+            document.getElementById('juegoResultado').textContent = '';
+            const container = document.getElementById('juegoOpciones');
+            container.innerHTML = '';
+            juegoOpcionesArray.forEach(op => {
+                const btn = document.createElement('button');
+                btn.className = 'juego-opcion';
+                btn.textContent = op.id;
+                btn.dataset.letra = op.id;
+                btn.style.color = op.color;
+                btn.style.fontSize = '2.2rem';
+                btn.style.fontWeight = '700';
+                btn.addEventListener('click', function() {
+                    if (!juegoBloqueado) { verificarJuego(op.id); }
+                });
+                container.appendChild(btn);
+            });
+            setTimeout(() => {
+                if (audioActivado) {
+                    const mensaje = '¡Busca! ' + objetivo.id + ' ' + objetivo.id + ' ' + objetivo.id;
+                    reproducirSonido(mensaje);
+                }
+            }, 500);
+        }
+
+        function verificarJuego(letraElegida) {
+            juegoBloqueado = true;
+            const botones = document.querySelectorAll('.juego-opcion');
+            botones.forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.letra === juegoLetraActual) btn.classList.add('correcta');
+                if (btn.dataset.letra === letraElegida && letraElegida !== juegoLetraActual) btn.classList.add(
+                    'incorrecta');
+            });
+            if (letraElegida === juegoLetraActual) {
+                estado.aciertos++;
+                estado.estrellas++;
+                document.getElementById('juegoResultado').textContent = '🎉 ¡Correcto! ¡Muy bien! 🌟';
+                document.getElementById('juegoResultado').style.color = '#6BCB77';
+                if (audioActivado) reproducirSonido('¡Muy bien! ¡Correcto!');
+                crearEstrellas();
+            } else {
+                estado.fallos++;
+                document.getElementById('juegoResultado').textContent = '😅 ¡Oh no! Era ' + juegoLetraActual;
+                document.getElementById('juegoResultado').style.color = '#FF6B6B';
+                if (audioActivado) reproducirSonido('Era ' + juegoLetraActual);
+            }
+            document.getElementById('juegoAciertos').textContent = estado.aciertos;
+            document.getElementById('juegoFallos').textContent = estado.fallos;
+            actualizarUIProgreso();
+            setTimeout(() => {
+                juegoBloqueado = false;
+                botones.forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('correcta', 'incorrecta');
+                });
+            }, 3000);
+        }
+
+        function crearEstrellas() {
+            const emojis = ['⭐', '✨', '🌟', '💫', '🎈', '🌈', '🎉', '🎊', '💖', '🦋'];
+            const escenario = document.getElementById('escenario');
+            for (let i = 0; i < 25; i++) {
+                const estrella = document.createElement('div');
+                estrella.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                estrella.style.position = 'absolute';
+                estrella.style.fontSize = (15 + Math.random() * 35) + 'px';
+                estrella.style.left = (5 + Math.random() * 90) + '%';
+                estrella.style.top = (5 + Math.random() * 90) + '%';
+                estrella.style.pointerEvents = 'none';
+                estrella.style.transition = 'all 1.2s ease-out';
+                estrella.style.opacity = '1';
+                estrella.style.zIndex = '10';
+                escenario.appendChild(estrella);
+                const angulo = Math.random() * 2 * Math.PI;
+                const distancia = 80 + Math.random() * 200;
+                setTimeout(() => {
+                    estrella.style.transform =
+                        `translate(${Math.cos(angulo) * distancia}px, ${Math.sin(angulo) * distancia - 150}px) scale(0.1)`;
+                    estrella.style.opacity = '0';
+                }, 50);
+                setTimeout(() => { estrella.remove(); }, 1500);
+            }
+        }
+
+        function aplicarTema(tema) {
+            document.body.className = 'tema-' + tema;
+            estado.tema = tema;
+            document.querySelectorAll('#selectorTema .opcion').forEach(el => {
+                el.classList.toggle('seleccionado', el.dataset.tema === tema);
+            });
+            guardarProgreso();
+        }
+
+        function cambiarMascota(mascota) {
+            estado.mascota = mascota;
+            document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
+                el.classList.toggle('seleccionado', el.dataset.mascota === mascota);
+            });
+            const item = elementos[estado.indiceActual];
+            const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
+            mensaje.innerHTML = `
+                        <span class="mascota-emoji">${estado.mascota}</span>
+                        Mia dice: ${item.mensaje} ${tipoEmoji}
+                    `;
+            guardarProgreso();
+        }
+
+        function generarBurbujas() {
+            const escenario = document.getElementById('escenario');
+            const colores = ['rgba(255,107,107,0.2)', 'rgba(255,217,61,0.2)', 'rgba(79,195,247,0.2)',
+                'rgba(107,203,119,0.2)', 'rgba(192,132,252,0.2)'
+            ];
+            for (let i = 0; i < 12; i++) {
+                const burbuja = document.createElement('div');
+                burbuja.className = 'burbuja';
+                const size = 8 + Math.random() * 30;
+                burbuja.style.width = size + 'px';
+                burbuja.style.height = size + 'px';
+                burbuja.style.left = Math.random() * 90 + '%';
+                burbuja.style.top = Math.random() * 90 + '%';
+                burbuja.style.animationDuration = (4 + Math.random() * 5) + 's';
+                burbuja.style.animationDelay = (Math.random() * 4) + 's';
+                burbuja.style.background = colores[Math.floor(Math.random() * colores.length)];
+                escenario.appendChild(burbuja);
+            }
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('📦 Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(err => {
+                        console.log('❌ Error al registrar Service Worker:', err);
+                    });
+            });
+        }
+
+        function init() {
+            totalLetrasSpan.textContent = elementos.length;
+            cargarProgreso();
+            generarBurbujas();
+            aplicarTema(estado.tema);
+            document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
+                el.classList.toggle('seleccionado', el.dataset.mascota === estado.mascota);
+            });
+            document.getElementById('vozVelocidad').value = estado.vozVelocidad;
+            document.getElementById('vozVelocidadValor').textContent = estado.vozVelocidad;
+            document.getElementById('vozTono').value = estado.vozTono;
+            document.getElementById('vozTonoValor').textContent = estado.vozTono;
+            document.querySelectorAll('.btn-filtro').forEach(el => {
+                el.classList.toggle('activo', el.dataset.tipo === estado.filtro);
+            });
+            crearIndicador();
+            mostrarElemento(estado.indiceActual);
+            document.getElementById('juegoAciertos').textContent = estado.aciertos;
+            document.getElementById('juegoFallos').textContent = estado.fallos;
+            actualizarPanelProgreso();
+            setTimeout(() => { iniciarJuego(); }, 1000);
+            console.log('🏫 Mia va al Colegio - Iniciado!');
+        }
+
+        btnIniciar.addEventListener('click', function() {
+            pantallaInicio.classList.add('oculto');
+            contenedorPrincipal.style.display = 'block';
+            audioActivado = true;
+            estadoSonido.textContent = '🔊 Audio activado!';
+            init();
+        });
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
+                this.classList.add('activo');
+                const tab = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('activo'));
+                document.getElementById('tab-' + tab).classList.add('activo');
+                if (tab === 'juego') { setTimeout(() => { iniciarJuego(); }, 300); }
+                if (tab === 'progreso') { actualizarPanelProgreso(); }
+            });
+        });
+
+        document.querySelectorAll('.btn-filtro').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('activo'));
+                this.classList.add('activo');
+                estado.filtro = this.dataset.tipo;
+                guardarProgreso();
+                crearIndicador();
+                const filtrados = getElementosFiltrados();
+                if (filtrados.length > 0) {
+                    const idx = elementos.indexOf(filtrados[0]);
+                    mostrarElemento(idx);
+                }
+            });
+        });
+
+        document.getElementById('siguiente').addEventListener('click', () => {
+            if (estaSonando) return;
+            const filtrados = getElementosFiltrados();
+            const actual = filtrados.indexOf(elementos[estado.indiceActual]);
+            const nuevo = (actual + 1) % filtrados.length;
+            const idx = elementos.indexOf(filtrados[nuevo]);
+            mostrarElemento(idx);
+        });
+
+        document.getElementById('anterior').addEventListener('click', () => {
+            if (estaSonando) return;
+            const filtrados = getElementosFiltrados();
+            const actual = filtrados.indexOf(elementos[estado.indiceActual]);
+            const nuevo = (actual - 1 + filtrados.length) % filtrados.length;
+            const idx = elementos.indexOf(filtrados[nuevo]);
+            mostrarElemento(idx);
+        });
+
+        document.getElementById('aleatorio').addEventListener('click', () => {
+            if (estaSonando) return;
+            const filtrados = getElementosFiltrados();
+            let nuevo;
+            do {
+                nuevo = Math.floor(Math.random() * filtrados.length);
+            } while (nuevo === filtrados.indexOf(elementos[estado.indiceActual]) && filtrados.length > 1);
+            const idx = elementos.indexOf(filtrados[nuevo]);
+            mostrarElemento(idx);
+        });
+
+        btnSonido.addEventListener('click', () => {
+            if (!audioActivado) {
+                estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
+                return;
+            }
+            if (estaSonando) return;
+            const item = elementos[estado.indiceActual];
+            reproducirSonidoAlegre(item);
+        });
+
+        emergente.addEventListener('click', function() {
+            if (estaSonando) return;
+            const item = elementos[estado.indiceActual];
+            this.classList.add('explotar');
+            if (audioActivado) reproducirSonidoAlegre(item);
+            crearEstrellas();
+            setTimeout(() => this.classList.remove('explotar'), 700);
+        });
+
+        document.getElementById('juegoNuevo').addEventListener('click', iniciarJuego);
+
+        document.getElementById('btnGrabar').addEventListener('click', async () => {
+            if (grabacionActiva) {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                    grabacionActiva = false;
+                    document.getElementById('btnGrabar').textContent = '🎙️ Grabar';
+                    document.getElementById('btnGrabar').classList.remove('grabando');
+                }
+                return;
+            }
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                chunks = [];
+                mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const audio = document.getElementById('audioGrabacion');
+                    audio.src = url;
+                    document.getElementById('ultimaGrabacion').textContent = elementos[estado.indiceActual].id;
+                    guardarProgreso();
+                };
+                mediaRecorder.start();
+                grabacionActiva = true;
+                document.getElementById('btnGrabar').textContent = '⏹️ Detener';
+                document.getElementById('btnGrabar').classList.add('grabando');
+            } catch (err) {
+                alert('⚠️ No se pudo acceder al micrófono.');
+            }
+        });
+
+        document.getElementById('btnReproducirGrabacion').addEventListener('click', () => {
+            const audio = document.getElementById('audioGrabacion');
+            if (audio.src) { audio.play(); } else { alert('📢 Primero graba tu voz'); }
+        });
+
+        document.getElementById('btnEliminarGrabacion').addEventListener('click', () => {
+            const audio = document.getElementById('audioGrabacion');
+            audio.src = '';
+            audio.removeAttribute('src');
+            document.getElementById('ultimaGrabacion').textContent = '-';
+        });
+
+        document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
+            el.addEventListener('click', () => cambiarMascota(el.dataset.mascota));
+        });
+
+        document.querySelectorAll('#selectorTema .opcion').forEach(el => {
+            el.addEventListener('click', () => aplicarTema(el.dataset.tema));
+        });
+
+        document.getElementById('vozVelocidad').addEventListener('input', function() {
+            estado.vozVelocidad = parseFloat(this.value);
+            document.getElementById('vozVelocidadValor').textContent = estado.vozVelocidad;
+        });
+
+        document.getElementById('vozTono').addEventListener('input', function() {
+            estado.vozTono = parseFloat(this.value);
+            document.getElementById('vozTonoValor').textContent = estado.vozTono;
+        });
+
+        document.getElementById('btnGuardarPreferencias').addEventListener('click', () => {
+            guardarProgreso();
+            alert('💾 ¡Preferencias guardadas!');
+        });
+
+        document.getElementById('btnReiniciar').addEventListener('click', () => {
+            if (confirm('⚠️ ¿Seguro que quieres reiniciar todo el progreso?')) {
+                localStorage.removeItem('miaProgreso');
+                estado.vistos = new Set();
+                estado.contadorRepeticiones = 0;
+                estado.nivel = 1;
+                estado.estrellas = 0;
+                estado.aciertos = 0;
+                estado.fallos = 0;
+                estado.indiceActual = 0;
+                celebracion.style.display = 'none';
+                actualizarUIProgreso();
+                mostrarElemento(0);
+                setTimeout(() => iniciarJuego(), 500);
+                alert('🔄 Progreso reiniciado');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!audioActivado) return;
+            if (e.key === 'ArrowRight') document.getElementById('siguiente').click();
+            if (e.key === 'ArrowLeft') document.getElementById('anterior').click();
+            if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                btnSonido.click();
+            }
+        });
+
+        function cargarVoces() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+                window.speechSynthesis.onvoiceschanged = function() {
+                    console.log('✅ Voces disponibles:', window.speechSynthesis.getVoices().length);
+                };
+            }
+        }
+        cargarVoces();
+
+        console.log('🚀 Mia va al Colegio - Cargado!');
+        console.log('🎮 Juego: Inicia automáticamente');
+        console.log('📦 PWA: Instalable como app desde el navegador');
+        console.log('🎉 Celebración: Aparece al completar las 37 letras y números');
+    </script>
+
+</body>
+</html>
