@@ -8,14 +8,19 @@
     <meta name="theme-color" content="#FF6B6B">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- Fuente infantil más ancha y legible -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ================================================================
+           ESTILOS BASE - CON FUENTE INFANTIL
+           ================================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
+
         body {
             font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
             min-height: 100vh;
@@ -26,26 +31,35 @@
             align-items: center;
             font-weight: 600;
         }
+
+        /* Fuente más ancha para los elementos emergentes */
         .emergente {
             font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
             font-weight: 700;
             font-size: 150px;
             letter-spacing: 8px;
         }
+
+        /* Fuente más ancha para los botones del juego */
         .juego-opcion {
             font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
             font-weight: 700;
         }
+
+        /* Fuente más ancha para títulos */
         .titulo-principal {
             font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
             font-weight: 700;
         }
+
         .titulo-principal .mia {
             font-weight: 700;
         }
+
         .titulo-principal .colegio {
             font-weight: 700;
         }
+
         body.tema-escuela {
             background: linear-gradient(135deg, #FFF8E7, #FFE4B5, #FFF0F5);
         }
@@ -55,6 +69,7 @@
         body.tema-espacio {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
         }
+
         .contenedor {
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
@@ -73,6 +88,7 @@
             max-height: 96vh;
             overflow-y: auto;
         }
+
         .contenedor::-webkit-scrollbar {
             width: 6px;
         }
@@ -83,14 +99,17 @@
             background: #ccc;
             border-radius: 10px;
         }
+
         body.tema-espacio .contenedor {
             background: rgba(26, 26, 46, 0.92);
             border-color: rgba(100, 200, 255, 0.3);
             color: #fff;
         }
+
         body.tema-espacio .contenedor::-webkit-scrollbar-thumb {
             background: #444;
         }
+
         .titulo-principal {
             font-size: 2.3rem;
             font-weight: 700;
@@ -100,29 +119,36 @@
             letter-spacing: 2px;
             line-height: 1.2;
         }
+
         body.tema-espacio .titulo-principal {
             color: #4FC3F7;
             text-shadow: 0 0 30px rgba(79, 195, 247, 0.3);
         }
+
         .titulo-principal .mia {
             color: #6C4A7C;
             font-size: 2.8rem;
         }
+
         .titulo-principal .colegio {
             color: #4FC3F7;
         }
+
         body.tema-espacio .titulo-principal .mia {
             color: #CE93D8;
         }
+
         .subtitulo {
             color: #6BCB77;
             font-size: 1rem;
             margin-bottom: 5px;
             font-weight: 600;
         }
+
         body.tema-espacio .subtitulo {
             color: #81C784;
         }
+
         .tabs {
             display: flex;
             justify-content: center;
@@ -130,6 +156,7 @@
             margin: 12px 0;
             flex-wrap: wrap;
         }
+
         .tab-btn {
             padding: 8px 16px;
             border: none;
@@ -147,32 +174,40 @@
             min-width: 55px;
             max-width: 120px;
         }
+
         .tab-btn:hover {
             transform: scale(1.05);
         }
+
         .tab-btn:active {
             transform: scale(0.95);
         }
+
         .tab-btn.activo {
             background: #6BCB77;
             color: white;
             box-shadow: 0 4px 15px rgba(107, 203, 119, 0.4);
         }
+
         body.tema-espacio .tab-btn {
             background: #2a2a4a;
             color: #aaa;
         }
+
         body.tema-espacio .tab-btn.activo {
             background: #4FC3F7;
             color: #fff;
         }
+
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease;
         }
+
         .tab-content.activo {
             display: block;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -183,6 +218,7 @@
                 transform: translateY(0);
             }
         }
+
         .escenario {
             height: 250px;
             display: flex;
@@ -195,10 +231,12 @@
             border: 3px dashed rgba(255, 215, 0, 0.25);
             overflow: hidden;
         }
+
         body.tema-espacio .escenario {
             background: rgba(255, 255, 255, 0.04);
             border-color: rgba(79, 195, 247, 0.15);
         }
+
         .emergente {
             font-size: 150px;
             font-weight: 700;
@@ -212,12 +250,15 @@
             touch-action: manipulation;
             letter-spacing: 8px;
         }
+
         body.tema-espacio .emergente {
             text-shadow: 0 0 40px rgba(79, 195, 247, 0.2);
         }
+
         .emergente:active {
             transform: scale(0.95);
         }
+
         @keyframes rebotar {
             0% {
                 transform: scale(0) rotate(-15deg);
@@ -234,6 +275,7 @@
                 transform: scale(1) rotate(0deg);
             }
         }
+
         @keyframes latido {
             0%,
             100% {
@@ -244,9 +286,11 @@
                 text-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
             }
         }
+
         .sonando {
             animation: latido 0.6s ease-in-out 4;
         }
+
         @keyframes explosion {
             0% {
                 transform: scale(1);
@@ -261,9 +305,11 @@
                 opacity: 0;
             }
         }
+
         .emergente.explotar {
             animation: explosion 0.7s ease forwards;
         }
+
         .burbuja {
             position: absolute;
             border-radius: 50%;
@@ -271,6 +317,7 @@
             pointer-events: none;
             z-index: 1;
         }
+
         @keyframes flotar {
             0% {
                 transform: translateY(0px) scale(1);
@@ -279,6 +326,7 @@
                 transform: translateY(-70px) scale(1.3);
             }
         }
+
         .botones {
             display: flex;
             justify-content: center;
@@ -286,6 +334,7 @@
             margin: 12px 0 10px;
             flex-wrap: wrap;
         }
+
         .btn {
             background: #4FC3F7;
             border: none;
@@ -306,18 +355,22 @@
             gap: 6px;
             user-select: none;
         }
+
         .btn:active {
             transform: translateY(3px);
             box-shadow: 0 1px 0 #0288D1;
         }
+
         .btn.secundario {
             background: #FFD93D;
             box-shadow: 0 4px 0 #F9A825;
             color: #333;
         }
+
         .btn.secundario:active {
             box-shadow: 0 1px 0 #F9A825;
         }
+
         .btn.repetir {
             background: #6BCB77;
             box-shadow: 0 4px 0 #2E7D32;
@@ -325,9 +378,11 @@
             font-size: 1.1rem;
             padding: 12px 30px;
         }
+
         .btn.repetir:active {
             box-shadow: 0 1px 0 #2E7D32;
         }
+
         .btn.iniciar {
             background: #FF8A9E;
             box-shadow: 0 5px 0 #C62828;
@@ -336,21 +391,26 @@
             padding: 20px 50px;
             animation: pulse 1.5s infinite;
         }
+
         .btn.iniciar:active {
             box-shadow: 0 2px 0 #C62828;
         }
+
         .btn.grabar {
             background: #FF6B6B;
             box-shadow: 0 4px 0 #C62828;
             color: white;
         }
+
         .btn.grabar:active {
             box-shadow: 0 1px 0 #C62828;
         }
+
         .btn.grabar.grabando {
             background: #ff0000;
             animation: pulse 0.5s infinite;
         }
+
         @keyframes pulse {
             0%,
             100% {
@@ -360,6 +420,7 @@
                 transform: scale(1.04);
             }
         }
+
         .indicador-sonido {
             display: flex;
             align-items: center;
@@ -368,6 +429,7 @@
             margin: 6px 0;
             flex-wrap: wrap;
         }
+
         .barra-sonido {
             width: 100px;
             height: 8px;
@@ -377,6 +439,7 @@
             display: inline-block;
             flex-shrink: 0;
         }
+
         .barra-sonido .relleno {
             height: 100%;
             width: 0%;
@@ -384,9 +447,11 @@
             border-radius: 10px;
             transition: width 0.15s;
         }
+
         .barra-sonido.activa .relleno {
             animation: barraLatido 1.5s ease-in-out;
         }
+
         @keyframes barraLatido {
             0% {
                 width: 0%;
@@ -404,10 +469,12 @@
                 width: 0%;
             }
         }
+
         #iconoOido {
             font-size: 1.6rem;
             line-height: 1;
         }
+
         .mascota {
             font-size: 1.15rem;
             color: #6C4A7C;
@@ -423,16 +490,19 @@
             word-wrap: break-word;
             font-weight: 600;
         }
+
         body.tema-espacio .mascota {
             background: rgba(255, 255, 255, 0.08);
             border-color: #4FC3F7;
             color: #fff;
         }
+
         .mascota-emoji {
             font-size: 1.8rem;
             display: inline-block;
             animation: saltarMascota 2s infinite;
         }
+
         @keyframes saltarMascota {
             0%,
             100% {
@@ -445,12 +515,14 @@
                 transform: translateY(-8px) rotate(8deg);
             }
         }
+
         .estado-sonido {
             font-size: 0.8rem;
             color: #999;
             margin-top: 4px;
             font-weight: 600;
         }
+
         .info-extra {
             display: flex;
             justify-content: center;
@@ -461,16 +533,19 @@
             flex-wrap: wrap;
             font-weight: 600;
         }
+
         .info-extra span {
             background: #f5f5f5;
             padding: 4px 14px;
             border-radius: 30px;
             transition: all 0.3s;
         }
+
         body.tema-espacio .info-extra span {
             background: rgba(255, 255, 255, 0.07);
             color: #aaa;
         }
+
         .indicador-progreso {
             display: flex;
             justify-content: center;
@@ -479,6 +554,7 @@
             flex-wrap: wrap;
             padding: 0 5px;
         }
+
         .dot {
             width: 10px;
             height: 10px;
@@ -488,22 +564,28 @@
             transition: all 0.3s;
             flex-shrink: 0;
         }
+
         .dot.activo {
             background: #6BCB77;
             transform: scale(1.3);
         }
+
         .dot.visto {
             background: #FFD93D;
         }
+
         body.tema-espacio .dot {
             background: #444;
         }
+
         body.tema-espacio .dot.activo {
             background: #4FC3F7;
         }
+
         body.tema-espacio .dot.visto {
             background: #FFD93D;
         }
+
         .juego-opciones {
             display: flex;
             justify-content: center;
@@ -511,6 +593,7 @@
             margin: 16px 0;
             flex-wrap: wrap;
         }
+
         .juego-opcion {
             width: 80px;
             height: 80px;
@@ -529,27 +612,33 @@
             font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
             letter-spacing: 2px;
         }
+
         .juego-opcion:hover:not(:disabled) {
             transform: scale(1.08);
             border-color: #6BCB77;
         }
+
         .juego-opcion:active:not(:disabled) {
             transform: scale(0.92);
         }
+
         .juego-opcion:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
+
         .juego-opcion.correcta {
             border-color: #6BCB77;
             background: #E8F5E9;
             animation: correcto 0.5s;
         }
+
         .juego-opcion.incorrecta {
             border-color: #FF6B6B;
             background: #FFEBEE;
             animation: incorrecto 0.5s;
         }
+
         @keyframes correcto {
             0%,
             100% {
@@ -559,6 +648,7 @@
                 transform: scale(1.25);
             }
         }
+
         @keyframes incorrecto {
             0%,
             100% {
@@ -571,25 +661,30 @@
                 transform: translateX(15px);
             }
         }
+
         #juegoResultado {
             font-size: 1.3rem;
             margin: 8px 0;
             min-height: 45px;
             font-weight: 700;
         }
+
         .panel-progreso {
             text-align: left;
             padding: 15px;
         }
+
         .panel-progreso h3 {
             margin: 12px 0 6px;
             font-size: 1.1rem;
             color: #6C4A7C;
             font-weight: 700;
         }
+
         body.tema-espacio .panel-progreso h3 {
             color: #CE93D8;
         }
+
         .panel-progreso .barra-progreso {
             width: 100%;
             height: 18px;
@@ -598,18 +693,21 @@
             overflow: hidden;
             margin: 6px 0;
         }
+
         .panel-progreso .barra-progreso .relleno {
             height: 100%;
             background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
             border-radius: 10px;
             transition: width 0.5s;
         }
+
         .panel-progreso .medalla {
             display: inline-block;
             font-size: 2.8rem;
             margin: 6px;
             animation: saltarMascota 2s infinite;
         }
+
         .panel-progreso .estadistica {
             display: flex;
             justify-content: space-between;
@@ -618,9 +716,11 @@
             font-size: 0.95rem;
             font-weight: 600;
         }
+
         body.tema-espacio .panel-progreso .estadistica {
             border-bottom-color: rgba(255, 255, 255, 0.08);
         }
+
         .filtro-tipo {
             display: flex;
             justify-content: center;
@@ -628,6 +728,7 @@
             margin: 8px 0;
             flex-wrap: wrap;
         }
+
         .filtro-tipo .btn-filtro {
             padding: 6px 16px;
             border-radius: 25px;
@@ -641,24 +742,29 @@
             color: #666;
             touch-action: manipulation;
         }
+
         .filtro-tipo .btn-filtro:active {
             transform: scale(0.95);
         }
+
         .filtro-tipo .btn-filtro.activo {
             background: #6BCB77;
             color: white;
             border-color: #6BCB77;
         }
+
         body.tema-espacio .filtro-tipo .btn-filtro {
             background: #2a2a4a;
             border-color: #444;
             color: #aaa;
         }
+
         body.tema-espacio .filtro-tipo .btn-filtro.activo {
             background: #4FC3F7;
             border-color: #4FC3F7;
             color: #fff;
         }
+
         .personalizacion {
             display: flex;
             gap: 12px;
@@ -666,6 +772,7 @@
             flex-wrap: wrap;
             margin: 8px 0;
         }
+
         .personalizacion .opcion {
             padding: 8px 16px;
             border-radius: 30px;
@@ -678,23 +785,28 @@
             user-select: none;
             font-weight: 700;
         }
+
         .personalizacion .opcion:active {
             transform: scale(0.92);
         }
+
         .personalizacion .opcion.seleccionado {
             border-color: #6BCB77;
             background: #E8F5E9;
             box-shadow: 0 0 20px rgba(107, 203, 119, 0.25);
         }
+
         body.tema-espacio .personalizacion .opcion {
             background: #2a2a4a;
             border-color: #444;
             color: #fff;
         }
+
         body.tema-espacio .personalizacion .opcion.seleccionado {
             border-color: #4FC3F7;
             background: #1a3a5a;
         }
+
         .configuracion {
             display: flex;
             gap: 16px;
@@ -702,6 +814,7 @@
             flex-wrap: wrap;
             margin: 8px 0;
         }
+
         .configuracion label {
             display: flex;
             align-items: center;
@@ -709,10 +822,12 @@
             font-size: 0.9rem;
             font-weight: 600;
         }
+
         .configuracion input[type="range"] {
             width: 80px;
             accent-color: #6BCB77;
         }
+
         .rima {
             font-size: 1.05rem;
             color: #6C4A7C;
@@ -724,19 +839,23 @@
             line-height: 1.4;
             font-weight: 600;
         }
+
         body.tema-espacio .rima {
             background: rgba(255, 255, 255, 0.07);
             color: #aaa;
         }
+
         .grabacion {
             margin: 12px 0;
         }
+
         .grabacion audio {
             width: 100%;
             max-width: 280px;
             margin: 8px 0;
             border-radius: 10px;
         }
+
         .pantalla-inicio {
             position: fixed;
             top: 0;
@@ -753,18 +872,21 @@
             padding: 20px;
             text-align: center;
         }
+
         .pantalla-inicio h1 {
             font-size: 3.5rem;
             color: #FF6B6B;
             line-height: 1.2;
             font-weight: 700;
         }
+
         .pantalla-inicio p {
             font-size: 1.3rem;
             color: #6C4A7C;
             max-width: 500px;
             font-weight: 600;
         }
+
         .pantalla-inicio .btn-iniciar {
             background: #6BCB77;
             border: none;
@@ -780,17 +902,23 @@
             animation: pulse 1.5s infinite;
             touch-action: manipulation;
         }
+
         .pantalla-inicio .btn-iniciar:active {
             transform: translateY(5px);
             box-shadow: 0 1px 0 #2E7D32;
         }
+
         .pantalla-inicio .btn-iniciar:hover {
             transform: scale(1.03);
         }
+
         .oculto {
             display: none !important;
         }
 
+        /* ================================================================
+           PANTALLA DE CELEBRACIÓN
+           ================================================================ */
         #celebracion {
             position: fixed;
             top: 0;
@@ -808,6 +936,7 @@
             text-align: center;
             animation: fadeIn 0.8s ease;
         }
+
         #celebracion h1 {
             color: #FFD93D;
             font-size: 3.5rem;
@@ -815,12 +944,14 @@
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
             animation: saltarMascota 1s infinite;
         }
+
         #celebracion p {
             color: white;
             font-size: 1.8rem;
             font-weight: 600;
             max-width: 500px;
         }
+
         #celebracion .btn {
             font-size: 1.5rem;
             padding: 18px 45px;
@@ -829,10 +960,13 @@
             border-radius: 60px;
             animation: pulse 1.5s infinite;
         }
+
         #celebracion .btn:active {
             transform: translateY(4px);
             box-shadow: 0 1px 0 #2E7D32;
         }
+
+        /* Confeti animado */
         .confeti {
             position: fixed;
             width: 12px;
@@ -843,6 +977,7 @@
             pointer-events: none;
             z-index: 10000;
         }
+
         @keyframes caerConfeti {
             0% {
                 transform: translateY(0) rotate(0deg) scale(1);
@@ -853,6 +988,8 @@
                 opacity: 0;
             }
         }
+
+        /* Fuegos artificiales con emojis */
         .fuego {
             position: fixed;
             font-size: 3rem;
@@ -860,6 +997,7 @@
             z-index: 10001;
             animation: explotar 1.5s ease-out forwards;
         }
+
         @keyframes explotar {
             0% {
                 transform: scale(0) rotate(0deg);
@@ -882,36 +1020,45 @@
                 max-height: 94vh;
                 width: 94%;
             }
+
             .titulo-principal {
                 font-size: 2rem;
             }
+
             .titulo-principal .mia {
                 font-size: 2.4rem;
             }
+
             .emergente {
                 font-size: 120px;
             }
+
             .escenario {
                 height: 220px;
             }
+
             .btn {
                 padding: 11px 20px;
                 font-size: 0.95rem;
                 min-height: 42px;
             }
+
             .tab-btn {
                 padding: 8px 14px;
                 font-size: 0.8rem;
                 min-height: 36px;
             }
+
             .juego-opcion {
                 width: 70px;
                 height: 70px;
                 font-size: 2.2rem;
             }
+
             #celebracion h1 {
                 font-size: 2.8rem;
             }
+
             #celebracion p {
                 font-size: 1.4rem;
             }
@@ -926,20 +1073,25 @@
                 max-height: 97vh;
                 border-width: 3px;
             }
+
             .titulo-principal {
                 font-size: 1.5rem;
             }
+
             .titulo-principal .mia {
                 font-size: 1.8rem;
             }
+
             .subtitulo {
                 font-size: 0.8rem;
             }
+
             .botones {
                 gap: 8px;
                 flex-direction: column;
                 align-items: center;
             }
+
             .botones .btn {
                 width: 100%;
                 max-width: 280px;
@@ -948,9 +1100,11 @@
                 min-height: 48px;
                 border-radius: 35px;
             }
+
             .tabs {
                 gap: 5px;
             }
+
             .tab-btn {
                 padding: 8px 10px;
                 font-size: 0.7rem;
@@ -960,145 +1114,182 @@
                 border-radius: 25px;
                 max-width: none;
             }
+
             .emergente {
                 font-size: 90px;
                 letter-spacing: 4px;
             }
+
             .escenario {
                 height: 160px;
                 border-radius: 30px;
                 border-width: 2px;
             }
+
             .indicador-sonido {
                 gap: 10px;
             }
+
             .btn.repetir {
                 font-size: 0.95rem;
                 padding: 10px 20px;
                 min-height: 44px;
                 min-width: 100px;
             }
+
             .barra-sonido {
                 width: 70px;
                 height: 6px;
             }
+
             #iconoOido {
                 font-size: 1.4rem;
             }
+
             .mascota {
                 font-size: 0.95rem;
                 padding: 8px 14px;
                 min-height: 44px;
                 border-radius: 30px;
             }
+
             .mascota-emoji {
                 font-size: 1.5rem;
             }
+
             .info-extra {
                 gap: 6px;
                 font-size: 0.7rem;
             }
+
             .info-extra span {
                 padding: 3px 10px;
                 border-radius: 20px;
             }
+
             .dot {
                 width: 8px;
                 height: 8px;
             }
+
             .indicador-progreso {
                 gap: 3px;
             }
+
             .juego-opcion {
                 width: 60px;
                 height: 60px;
                 font-size: 1.8rem;
                 border-width: 3px;
             }
+
             .juego-opciones {
                 gap: 10px;
             }
+
             #juegoResultado {
                 font-size: 1.1rem;
                 min-height: 38px;
             }
+
             .filtro-tipo {
                 gap: 5px;
             }
+
             .filtro-tipo .btn-filtro {
                 padding: 5px 12px;
                 font-size: 0.7rem;
                 border-radius: 20px;
             }
+
             .panel-progreso {
                 padding: 8px;
             }
+
             .panel-progreso h3 {
                 font-size: 0.95rem;
             }
+
             .panel-progreso .estadistica {
                 font-size: 0.8rem;
                 padding: 5px 0;
             }
+
             .panel-progreso .medalla {
                 font-size: 2.2rem;
                 margin: 4px;
             }
+
             .panel-progreso .barra-progreso {
                 height: 14px;
             }
+
             .rima {
                 font-size: 0.9rem;
                 padding: 10px 14px;
             }
+
             .grabacion .btn {
                 font-size: 0.85rem;
                 padding: 9px 16px;
                 min-height: 40px;
                 min-width: 70px;
             }
+
             .grabacion audio {
                 max-width: 100%;
             }
+
             .personalizacion .opcion {
                 padding: 6px 12px;
                 font-size: 1.2rem;
                 border-radius: 25px;
                 border-width: 2px;
             }
+
             .configuracion {
                 gap: 10px;
             }
+
             .configuracion label {
                 font-size: 0.8rem;
             }
+
             .configuracion input[type="range"] {
                 width: 60px;
             }
+
             .pantalla-inicio h1 {
                 font-size: 2.5rem;
             }
+
             .pantalla-inicio p {
                 font-size: 1.1rem;
             }
+
             .pantalla-inicio .btn-iniciar {
                 padding: 16px 35px;
                 font-size: 1.4rem;
                 border-radius: 50px;
             }
+
             .grabacion .btn {
                 margin: 3px;
             }
+
             #celebracion h1 {
                 font-size: 2.2rem;
             }
+
             #celebracion p {
                 font-size: 1.1rem;
             }
+
             #celebracion .btn {
                 font-size: 1.1rem;
                 padding: 14px 30px;
             }
+
             .fuego {
                 font-size: 2rem;
             }
@@ -1110,96 +1301,120 @@
                 border-radius: 25px;
                 width: 98%;
             }
+
             .titulo-principal {
                 font-size: 1.2rem;
             }
+
             .titulo-principal .mia {
                 font-size: 1.4rem;
             }
+
             .emergente {
                 font-size: 70px;
                 letter-spacing: 2px;
             }
+
             .escenario {
                 height: 130px;
                 border-radius: 20px;
             }
+
             .btn {
                 font-size: 0.85rem;
                 padding: 10px 14px;
                 min-height: 40px;
                 max-width: 220px;
             }
+
             .tab-btn {
                 font-size: 0.6rem;
                 padding: 5px 8px;
                 min-height: 28px;
                 min-width: 35px;
             }
+
             .juego-opcion {
                 width: 50px;
                 height: 50px;
                 font-size: 1.5rem;
                 border-width: 2px;
             }
+
             .juego-opciones {
                 gap: 6px;
             }
+
             .mascota {
                 font-size: 0.8rem;
                 padding: 6px 10px;
                 min-height: 36px;
             }
+
             .mascota-emoji {
                 font-size: 1.2rem;
             }
+
             .btn.repetir {
                 font-size: 0.8rem;
                 padding: 8px 14px;
                 min-height: 36px;
                 min-width: 70px;
             }
+
             .barra-sonido {
                 width: 50px;
                 height: 5px;
             }
+
             #iconoOido {
                 font-size: 1.1rem;
             }
+
             .info-extra {
                 font-size: 0.6rem;
                 gap: 4px;
             }
+
             .info-extra span {
                 padding: 2px 8px;
             }
+
             .dot {
                 width: 6px;
                 height: 6px;
             }
+
             .pantalla-inicio h1 {
                 font-size: 2rem;
             }
+
             .pantalla-inicio p {
                 font-size: 0.9rem;
             }
+
             .pantalla-inicio .btn-iniciar {
                 padding: 12px 25px;
                 font-size: 1.1rem;
             }
+
             .panel-progreso .estadistica {
                 font-size: 0.7rem;
             }
+
             #celebracion h1 {
                 font-size: 1.8rem;
             }
+
             #celebracion p {
                 font-size: 1rem;
             }
+
             #celebracion .btn {
                 font-size: 0.95rem;
                 padding: 12px 25px;
             }
+
             .fuego {
                 font-size: 1.5rem;
             }
@@ -1210,50 +1425,62 @@
                 max-height: 98vh;
                 padding: 12px 20px;
             }
+
             .escenario {
                 height: 120px;
             }
+
             .emergente {
                 font-size: 70px;
                 letter-spacing: 2px;
             }
+
             .titulo-principal {
                 font-size: 1.3rem;
             }
+
             .titulo-principal .mia {
                 font-size: 1.5rem;
             }
+
             .botones .btn {
                 padding: 8px 14px;
                 font-size: 0.8rem;
                 min-height: 34px;
                 max-width: 180px;
             }
+
             .mascota {
                 font-size: 0.8rem;
                 padding: 6px 12px;
                 min-height: 34px;
             }
+
             .tab-btn {
                 padding: 4px 10px;
                 font-size: 0.65rem;
                 min-height: 28px;
             }
+
             .indicador-progreso {
                 margin: 3px 0;
             }
+
             .dot {
                 width: 6px;
                 height: 6px;
             }
+
             .juego-opcion {
                 width: 45px;
                 height: 45px;
                 font-size: 1.3rem;
             }
+
             #celebracion h1 {
                 font-size: 1.8rem;
             }
+
             #celebracion p {
                 font-size: 1rem;
             }
@@ -1271,6 +1498,9 @@
 </head>
 <body class="tema-escuela">
 
+    <!-- ================================================================
+    PANTALLA DE INICIO
+    ================================================================ -->
     <div class="pantalla-inicio" id="pantallaInicio">
         <h1>🏫 Mia va al Colegio</h1>
         <p>🧸 ¡Aprende letras y números con Mia!</p>
@@ -1278,13 +1508,20 @@
         <button class="btn-iniciar" id="btnIniciar">🚀 ¡Empezar!</button>
     </div>
 
+    <!-- ================================================================
+    PANTALLA DE CELEBRACIÓN
+    ================================================================ -->
     <div id="celebracion">
         <h1>🎉 ¡Felicidades!</h1>
         <p>🌟 ¡Has aprendido todas las letras y números!<br>Eres un campeón 🏆</p>
         <button class="btn" onclick="reiniciarProgreso()">🔄 Empezar de nuevo</button>
     </div>
 
+    <!-- ================================================================
+    CONTENIDO PRINCIPAL
+    ================================================================ -->
     <div class="contenedor" id="contenedorPrincipal" style="display:none;">
+
         <h1 class="titulo-principal">
             <span class="mia">🏫 Mia</span>
             <span style="color:#FF6B6B;">va al</span>
@@ -1307,6 +1544,7 @@
         </div>
 
         <div class="tab-content activo" id="tab-aprender">
+
             <div class="filtro-tipo">
                 <button class="btn-filtro activo" data-tipo="todas">🌟 Todas</button>
                 <button class="btn-filtro" data-tipo="letras">🔤 Letras</button>
@@ -1355,9 +1593,13 @@
         <div class="tab-content" id="tab-juego">
             <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎮 Adivina la letra o número</h2>
             <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Escucha a Mia y elige la respuesta correcta</p>
+
             <div style="font-size:2rem; margin:8px 0;" id="juegoPista">🔊</div>
+
             <div class="juego-opciones" id="juegoOpciones"></div>
+
             <div id="juegoResultado"></div>
+
             <button class="btn repetir" id="juegoNuevo">🔄 Nueva ronda</button>
             <p style="color:#999; font-size:0.8rem; margin-top:8px; font-weight:600;">
                 ✅ Aciertos: <span id="juegoAciertos">0</span> |
@@ -1368,15 +1610,19 @@
         <div class="tab-content" id="tab-grabacion">
             <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎤 Practica con Mia</h2>
             <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Graba tu voz y escucha cómo pronuncias</p>
+
             <div style="font-size:3.5rem; margin:8px 0; font-weight:700;" id="grabacionLetra">A</div>
+
             <div class="grabacion">
                 <button class="btn grabar" id="btnGrabar">🎙️ Grabar</button>
                 <button class="btn" id="btnReproducirGrabacion">▶️ Escuchar</button>
                 <button class="btn secundario" id="btnEliminarGrabacion">🗑️ Eliminar</button>
             </div>
+
             <div style="margin:10px 0;">
                 <audio id="audioGrabacion" controls style="width:100%; max-width:280px;"></audio>
             </div>
+
             <div class="info-extra">
                 <span>📝 Última letra: <span id="ultimaGrabacion">-</span></span>
             </div>
@@ -1384,6 +1630,7 @@
 
         <div class="tab-content" id="tab-progreso">
             <h2 style="color:#6C4A7C; margin-bottom:8px; font-size:1.3rem; font-weight:700;">📊 Mi progreso</h2>
+
             <div class="panel-progreso">
                 <h3>⭐ Aprendidos (letras + números)</h3>
                 <div class="barra-progreso">
@@ -1427,6 +1674,7 @@
 
         <div class="tab-content" id="tab-personalizar">
             <h2 style="color:#6C4A7C; margin-bottom:8px; font-size:1.3rem; font-weight:700;">🎨 Personaliza a Mia</h2>
+
             <h3 style="font-size:1rem; color:#6C4A7C; margin-top:6px; font-weight:700;">🧸 Elige tu mascota</h3>
             <div class="personalizacion" id="selectorMascota">
                 <div class="opcion seleccionado" data-mascota="🧸">🧸</div>
@@ -1459,9 +1707,14 @@
 
             <button class="btn" id="btnGuardarPreferencias" style="margin-top:10px; width:100%; max-width:280px;">💾 Guardar preferencias</button>
         </div>
+
     </div>
 
     <script>
+        // ================================================================
+        // DATOS: LETRAS (27) + NÚMEROS (10) = 37 ELEMENTOS
+        // ================================================================
+
         const elementos = [
             { id: 'A', tipo: 'letra', color: '#FF6B6B', mensaje: '¡A de Avión! ✈️', sonido: 'A', ejemplo: 'Avión' },
             { id: 'B', tipo: 'letra', color: '#FF9F43', mensaje: '¡B de Bebé! 👶', sonido: 'B', ejemplo: 'Bebé' },
@@ -1589,8 +1842,13 @@
             return elementos;
         }
 
+        // ================================================================
+        // CELEBRACIÓN
+        // ================================================================
+
         function mostrarCelebracion() {
             celebracion.style.display = 'flex';
+            // Generar confeti
             for (let i = 0; i < 50; i++) {
                 const confeti = document.createElement('div');
                 confeti.className = 'confeti';
@@ -1604,6 +1862,7 @@
                 document.body.appendChild(confeti);
                 setTimeout(() => confeti.remove(), 5000);
             }
+            // Generar fuegos artificiales
             for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const fuego = document.createElement('div');
@@ -1760,8 +2019,11 @@
             actualizarPanelProgreso();
             guardarProgreso();
 
+            // Verificar si completó todo
             if (estado.vistos.size === 37) {
-                setTimeout(() => { mostrarCelebracion(); }, 500);
+                setTimeout(() => {
+                    mostrarCelebracion();
+                }, 500);
             }
         }
 
@@ -1799,8 +2061,10 @@
             void emergente.offsetWidth;
             emergente.style.animation = 'rebotar 0.8s ease-out';
             const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
-            mensaje.innerHTML =
-                `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
+            mensaje.innerHTML = `
+                        <span class="mascota-emoji">${estado.mascota}</span>
+                        Mia dice: ${item.mensaje} ${tipoEmoji}
+                    `;
             if (rimas[item.id]) {
                 rimaDiv.textContent = '🎵 ' + rimas[item.id];
                 rimaDiv.style.display = 'block';
@@ -1964,8 +2228,10 @@
             });
             const item = elementos[estado.indiceActual];
             const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
-            mensaje.innerHTML =
-                `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
+            mensaje.innerHTML = `
+                        <span class="mascota-emoji">${estado.mascota}</span>
+                        Mia dice: ${item.mensaje} ${tipoEmoji}
+                    `;
             guardarProgreso();
         }
 

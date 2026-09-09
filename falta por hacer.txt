@@ -1,0 +1,43 @@
+❌ LO QUE FALTA POR HACER
+📁 ARCHIVOS Y RECURSOS
+Tarea	Prioridad	Tiempo estimado	Descripción
+Crear iconos (icon-192.png y icon-512.png)	🔴 Alta	10 min	Usar favicon.io para generar los iconos de la app
+Subir a GitHub	🔴 Alta	15 min	Crear repositorio y subir los 5 archivos
+Publicar en Cloudflare Pages	🔴 Alta	20 min	Obtener URL pública gratuita
+Probar en móvil	🔴 Alta	10 min	Abrir la URL en Chrome y añadir a pantalla de inicio
+🎵 MÚSICA Y SONIDOS
+Tarea	Prioridad	Tiempo estimado	Descripción
+Música de fondo infantil	🟡 Media	30 min	Descargar melodía libre de derechos y añadir botón silenciar
+Sonidos de animales/objetos	🟡 Media	1-2 horas	Asignar sonidos a cada letra (ej: A → avión)
+📖 CONTENIDO EDUCATIVO EXTRA
+Tarea	Prioridad	Tiempo estimado	Descripción
+Sección de palabras	🟡 Media	2-3 horas	Añadir palabras completas (ej: "Mamá", "Sol", "Luna")
+Sílabas (MA, ME, MI, MO, MU)	🟡 Media	1-2 horas	Ejercicios específicos para logopedia
+Más números (hasta el 20)	🟢 Baja	1 hora	Ampliar la sección de números
+📊 PARA PADRES Y LOGOPEDAS
+Tarea	Prioridad	Tiempo estimado	Descripción
+Informe de progreso	🟡 Media	3-4 horas	Generar PDF o gráfico con estadísticas semanales
+Panel de padres (con contraseña)	🟡 Media	2-3 horas	Acceso protegido para ver el progreso detallado
+Perfiles múltiples	🟢 Baja	4-5 horas	Varios niños con su propio progreso
+🚀 PUBLICACIÓN Y MONETIZACIÓN
+Tarea	Prioridad	Tiempo estimado	Descripción
+Cuenta Google Play (25 USD)	🟡 Media	1 día	Registro de desarrollador
+Generar AAB (Android App Bundle)	🟡 Media	1 hora	Usar Nitron o Appy Pie
+Política de privacidad	🟡 Media	1-2 horas	Obligatorio para Google Play
+Cumplir "Diseñado para familias"	🟡 Media	2-3 horas	Normativas de Google para apps infantiles
+Anuncios (AdMob con SDK infantil)	🟢 Baja	2-3 horas	Monetizar con anuncios seguros para niños
+🎨 MEJORAS VISUALES
+Tarea	Prioridad	Tiempo estimado	Descripción
+Más temas visuales (Granja, Mar)	🟢 Baja	1 hora	Añadir más opciones de temas
+Más mascotas (🐶, 🐱, 🐰)	🟢 Baja	30 min	Ampliar el selector de mascotas
+Animaciones de transición	🟢 Baja	1-2 horas	Mejorar las transiciones entre pestañas
+🛠️ MEJORAS TÉCNICAS
+Tarea	Prioridad	Tiempo estimado	Descripción
+Sincronización en la nube	🟢 Baja	5-6 horas	Guardar progreso en Firebase/Supabase
+Notificaciones push	🟢 Baja	3-4 horas	Recordatorios para practicar
+Google Analytics	🟢 Baja	1 hora	Ver estadísticas de uso
+📊 RESUMEN POR TIEMPO
+Prioridad	Tareas	Tiempo estimado
+🔴 Alta (esencial para publicar)	4 tareas	~55 minutos
+🟡 Media (mejora la experiencia)	8 tareas	~15-20 horas
+🟢 Baja (extras)	7 tareas	~15-20 horas
