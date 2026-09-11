@@ -1,0 +1,24 @@
+{
+  "name": "Mia va al Colegio",
+  "short_name": "Mia Colegio",
+  "description": "Aprende letras y números jugando con Mia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8E7",
+  "theme_color": "#FF6B6B",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
