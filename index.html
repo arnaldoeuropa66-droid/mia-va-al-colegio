@@ -5,9 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mia va al Colegio</title>
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="theme-color" content="#FF6B6B">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mia Colegio">
+    
+    <!-- Meta tags para compartir en redes sociales -->
+    <meta property="og:title" content="Mia va al Colegio">
+    <meta property="og:description" content="🧸 ¡Aprende letras y números jugando con Mia! App educativa para niños.">
+    <meta property="og:image" content="icon-512.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mia va al Colegio">
+    <meta name="twitter:description" content="🧸 ¡Aprende letras y números jugando con Mia!">
+    <meta name="twitter:image" content="icon-512.png">
+    
+    <!-- Fuente infantil -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -749,10 +765,34 @@
             align-items: center;
             z-index: 1000;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
             padding: 20px;
             text-align: center;
         }
+        
+        /* ============================================================
+           NUEVO: Icono en pantalla de inicio
+           ============================================================ */
+        .icono-inicio {
+            width: 150px;
+            height: 150px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            animation: flotarIcono 3s ease-in-out infinite;
+            object-fit: contain;
+            background: white;
+            padding: 8px;
+        }
+        
+        @keyframes flotarIcono {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-12px) scale(1.05);
+            }
+        }
+        
         .pantalla-inicio h1 {
             font-size: 3.5rem;
             color: #FF6B6B;
@@ -914,6 +954,11 @@
             }
             #celebracion p {
                 font-size: 1.4rem;
+            }
+            .icono-inicio {
+                width: 130px;
+                height: 130px;
+                border-radius: 25px;
             }
         }
 
@@ -1102,6 +1147,11 @@
             .fuego {
                 font-size: 2rem;
             }
+            .icono-inicio {
+                width: 110px;
+                height: 110px;
+                border-radius: 22px;
+            }
         }
 
         @media (max-width: 380px) {
@@ -1203,6 +1253,11 @@
             .fuego {
                 font-size: 1.5rem;
             }
+            .icono-inicio {
+                width: 90px;
+                height: 90px;
+                border-radius: 18px;
+            }
         }
 
         @media (max-height: 500px) and (orientation: landscape) {
@@ -1257,6 +1312,11 @@
             #celebracion p {
                 font-size: 1rem;
             }
+            .icono-inicio {
+                width: 80px;
+                height: 80px;
+                border-radius: 15px;
+            }
         }
 
         @supports (padding: max(0px)) {
@@ -1272,7 +1332,8 @@
 <body class="tema-escuela">
 
     <div class="pantalla-inicio" id="pantallaInicio">
-        <h1>🏫 Mia va al Colegio</h1>
+        <img src="icon-512.png" alt="Mia va al Colegio" class="icono-inicio">
+        <h1>Mia va al Colegio</h1>
         <p>🧸 ¡Aprende letras y números con Mia!</p>
         <p style="font-size:1.1rem; color:#999; max-width:400px;">👉 Haz clic en el botón para empezar</p>
         <button class="btn-iniciar" id="btnIniciar">🚀 ¡Empezar!</button>
@@ -1751,6 +1812,11 @@
             return false;
         }
 
+        function actualizarTituloPestana() {
+            const vistos = estado.vistos.size;
+            document.title = `Mia va al Colegio - ${vistos}/37 ⭐`;
+        }
+
         function actualizarUIProgreso() {
             contadorSpan.textContent = estado.contadorRepeticiones;
             nivelSpan.textContent = estado.nivel;
@@ -1758,6 +1824,7 @@
             progresoLetrasSpan.textContent = estado.vistos.size;
             actualizarIndicador();
             actualizarPanelProgreso();
+            actualizarTituloPestana();
             guardarProgreso();
 
             if (estado.vistos.size === 37) {
@@ -2219,6 +2286,7 @@
         console.log('🎮 Juego: Inicia automáticamente');
         console.log('📦 PWA: Instalable como app desde el navegador');
         console.log('🎉 Celebración: Aparece al completar las 37 letras y números');
+        console.log('🎨 Icono personalizado en pantalla de inicio');
     </script>
 
 </body>
