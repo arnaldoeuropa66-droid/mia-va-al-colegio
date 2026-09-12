@@ -1749,6 +1749,48 @@
             }
             llenarSelectorVoces();
         }
+        // ============================================================
+// 🔥 PRECARGA DE VOCES - "Despierta" el motor TTS
+// ============================================================
+function precargarMotorDeVoz() {
+    if (!('speechSynthesis' in window)) return;
+
+    console.log('🔥 Precargando motor de voz...');
+
+    // 1️⃣ Fuerza la carga inicial de voces
+    window.speechSynthesis.getVoices();
+    
+    // 2️⃣ Reproduce un utterance VACÍO para despertar el motor
+    // (no se oye nada, pero inicializa el motor TTS)
+    const calentamiento = new SpeechSynthesisUtterance('');
+    calentamiento.volume = 0;  // volumen 0 = silencioso
+    calentamiento.rate = 1;
+    calentamiento.pitch = 1;
+    
+    // Timeout para evitar que se quede colgado
+    const timeoutId = setTimeout(() => {
+        console.log('⚠️ Precarga tardó demasiado, continuando...');
+    }, 3000);
+
+    calentamiento.onstart = () => {
+        console.log('🔥 Motor de voz despertando...');
+    };
+
+    calentamiento.onend = () => {
+        clearTimeout(timeoutId);
+        console.log('✅ Motor de voz listo');
+    };
+
+    calentamiento.onerror = (e) => {
+        clearTimeout(timeoutId);
+        // Silencioso: es normal que falle con texto vacío en algunos navegadores
+        if (e.error !== 'interrupted' && e.error !== 'canceled') {
+            console.log('ℹ️ Precarga completada (con aviso):', e.error);
+        }
+    };
+
+    window.speechSynthesis.speak(calentamiento);
+}
 
         function llenarSelectorVoces() {
             const selector = document.getElementById('selectorVoz');
@@ -2370,6 +2412,17 @@ function mostrarAvisoActualizacion() {
     });
 }
 function init() {
+    totalLetrasSpan.textContent = elementos.length;
+    cargarProgreso();
+    generarBurbujas();
+    aplicarTema(estado.tema);
+    
+    // 🔥 Precarga el motor de voz (silenciosamente)
+    precargarMotorDeVoz();
+    
+    // ... el resto del código igual ...
+}
+function init() {
             totalLetrasSpan.textContent = elementos.length;
             cargarProgreso();
             generarBurbujas();
@@ -2397,13 +2450,19 @@ function init() {
         }
 
         btnIniciar.addEventListener('click', function() {
-            pantallaInicio.classList.add('oculto');
-            contenedorPrincipal.style.display = 'block';
-            audioActivado = true;
-            estadoSonido.textContent = '🔊 Audio activado!';
-            init();
-        });
-
+    pantallaInicio.classList.add('oculto');
+    contenedorPrincipal.style.display = 'block';
+    audioActivado = true;
+    estadoSonido.textContent = '🔊 Audio activado!';
+    
+    // 🔥 PRIMERO: precarga el motor de voz (aprovecha el gesto del usuario)
+    precargarMotorDeVoz();
+    
+    // ⏱️ Pequeña espera para que el motor se inicialice, luego arranca
+    setTimeout(() => {
+        init();
+    }, 300);
+});
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
