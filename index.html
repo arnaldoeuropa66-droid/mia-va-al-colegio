@@ -358,18 +358,6 @@
         .btn.iniciar:active {
             box-shadow: 0 2px 0 #C62828;
         }
-        .btn.grabar {
-            background: #FF6B6B;
-            box-shadow: 0 4px 0 #C62828;
-            color: white;
-        }
-        .btn.grabar:active {
-            box-shadow: 0 1px 0 #C62828;
-        }
-        .btn.grabar.grabando {
-            background: #ff0000;
-            animation: pulse 0.5s infinite;
-        }
         @keyframes pulse {
             0%,
             100% {
@@ -747,15 +735,6 @@
             background: rgba(255, 255, 255, 0.07);
             color: #aaa;
         }
-        .grabacion {
-            margin: 12px 0;
-        }
-        .grabacion audio {
-            width: 100%;
-            max-width: 280px;
-            margin: 8px 0;
-            border-radius: 10px;
-        }
         .pantalla-inicio {
             position: fixed;
             top: 0;
@@ -1090,15 +1069,6 @@
                 font-size: 0.9rem;
                 padding: 10px 14px;
             }
-            .grabacion .btn {
-                font-size: 0.85rem;
-                padding: 9px 16px;
-                min-height: 40px;
-                min-width: 70px;
-            }
-            .grabacion audio {
-                max-width: 100%;
-            }
             .personalizacion .opcion {
                 padding: 6px 12px;
                 font-size: 1.2rem;
@@ -1124,9 +1094,6 @@
                 padding: 16px 35px;
                 font-size: 1.4rem;
                 border-radius: 50px;
-            }
-            .grabacion .btn {
-                margin: 3px;
             }
             #celebracion h1 {
                 font-size: 2.2rem;
@@ -1361,7 +1328,6 @@
         <div class="tabs">
             <button class="tab-btn activo" data-tab="aprender">📖 Aprender</button>
             <button class="tab-btn" data-tab="juego">🎮 Juego</button>
-            <button class="tab-btn" data-tab="grabacion">🎤 Grabar</button>
             <button class="tab-btn" data-tab="progreso">📊 Progreso</button>
             <button class="tab-btn" data-tab="personalizar">🎨 Personalizar</button>
         </div>
@@ -1423,23 +1389,6 @@
                 ✅ Aciertos: <span id="juegoAciertos">0</span> |
                 ❌ Fallos: <span id="juegoFallos">0</span>
             </p>
-        </div>
-
-        <div class="tab-content" id="tab-grabacion">
-            <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎤 Practica con Mia</h2>
-            <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Graba tu voz y escucha cómo pronuncias</p>
-            <div style="font-size:3.5rem; margin:8px 0; font-weight:700;" id="grabacionLetra">A</div>
-            <div class="grabacion">
-                <button class="btn grabar" id="btnGrabar">🎙️ Grabar</button>
-                <button class="btn" id="btnReproducirGrabacion">▶️ Escuchar</button>
-                <button class="btn secundario" id="btnEliminarGrabacion">🗑️ Eliminar</button>
-            </div>
-            <div style="margin:10px 0;">
-                <audio id="audioGrabacion" controls style="width:100%; max-width:280px;"></audio>
-            </div>
-            <div class="info-extra">
-                <span>📝 Última letra: <span id="ultimaGrabacion">-</span></span>
-            </div>
         </div>
 
         <div class="tab-content" id="tab-progreso">
@@ -1649,15 +1598,10 @@
 
         let estaSonando = false;
         let audioActivado = false;
-        let grabacionActiva = false;
-        let mediaRecorder = null;
-        let chunks = [];
         let juegoBloqueado = false;
         let vocesDisponibles = [];
 
-        // ============================================================
-        // ✅ NUEVO: Variables para cola de voz y debounce de backend
-        // ============================================================
+        // ✅ Variables para cola de voz y debounce de backend
         let colaVoz = [];
         let hablandoAhora = false;
         let syncTimeout = null;
@@ -1738,8 +1682,7 @@
         }
 
         // ============================================================
-        // ✅ NUEVO: Sincronización con backend con DEBOUNCE
-        // Evita múltiples llamadas seguidas y no interrumpe la voz
+        // Sincronización con backend con DEBOUNCE
         // ============================================================
         function sincronizarProgresoConBackend() {
             clearTimeout(syncTimeout);
@@ -1775,7 +1718,7 @@
                 } catch (error) {
                     console.warn('⚠️ Backend no disponible:', error.message);
                 }
-            }, 1000); // agrupa cambios en 1s
+            }, 1000);
         }
 
         async function probarConexionBackend() {
@@ -1793,7 +1736,6 @@
         // ============================================================
         // GESTIÓN DE VOCES
         // ============================================================
-
         function cargarVocesDisponibles() {
             if (!('speechSynthesis' in window)) {
                 console.warn('⚠️ Web Speech API no soportada');
@@ -1808,7 +1750,6 @@
             llenarSelectorVoces();
         }
 
-        // ✅ NUEVO: Filtra voces problemáticas y marca locales/remotas
         function llenarSelectorVoces() {
             const selector = document.getElementById('selectorVoz');
             if (!selector) return;
@@ -1821,7 +1762,6 @@
             const vocesEspanol = vocesFiltradas.filter(v => v.lang.startsWith('es'));
             const otrasVoces = vocesFiltradas.filter(v => !v.lang.startsWith('es'));
 
-            // Ordenar: locales primero
             vocesEspanol.sort((a, b) => (b.localService ? 1 : 0) - (a.localService ? 1 : 0));
 
             const opcionDefault = document.createElement('option');
@@ -1873,7 +1813,6 @@
                 vocesDisponibles = window.speechSynthesis.getVoices();
             }
 
-            // Voz manual (solo si NO es problemática)
             if (estado.vozSeleccionada && !VOCES_PROBLEMATICAS.includes(estado.vozSeleccionada)) {
                 const vozManual = vocesDisponibles.find(v => v.name === estado.vozSeleccionada);
                 if (vozManual) {
@@ -1882,13 +1821,11 @@
                 }
             }
 
-            // Voces preferidas (prioriza LOCALES antes que remotas)
             const nombresPreferidos = [
                 'Microsoft Sabina', 'Microsoft Helena', 'Microsoft Laura',
                 'Mónica', 'Monica', 'Paulina', 'Marisol', 'Lucía', 'Lucia'
             ];
 
-            // 1) Buscar locales preferidas
             for (const nombre of nombresPreferidos) {
                 const voz = vocesDisponibles.find(v =>
                     v.lang.startsWith('es') &&
@@ -1901,7 +1838,6 @@
                 }
             }
 
-            // 2) Buscar cualquier local en español
             let voz = vocesDisponibles.find(v =>
                 v.lang.startsWith('es') &&
                 v.localService &&
@@ -1912,7 +1848,6 @@
                 return voz;
             }
 
-            // 3) Cualquier voz en español (evitando problemáticas)
             voz = vocesDisponibles.find(v =>
                 v.lang.startsWith('es') &&
                 !VOCES_PROBLEMATICAS.includes(v.name)
@@ -1926,10 +1861,6 @@
             return vocesDisponibles[0] || null;
         }
 
-        // ============================================================
-        // ✅ NUEVO: reproducirSonido con COLA y cancelación segura
-        // Evita el error "interrupted" al pisar utterances
-        // ============================================================
         function reproducirSonido(texto) {
             if (!audioActivado) {
                 estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
@@ -1943,7 +1874,6 @@
         }
 
         function _hablarInterno(texto) {
-            // Cancelar suavemente cualquier utterance pendiente
             if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
                 window.speechSynthesis.cancel();
             }
@@ -1977,7 +1907,6 @@
             };
 
             utterance.onerror = function(event) {
-                // 'interrupted' y 'canceled' son normales al cancelar
                 if (event.error === 'interrupted' || event.error === 'canceled') {
                     console.log('🔇 Voz cancelada (normal):', event.error);
                 } else {
@@ -1994,7 +1923,6 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // ✅ NUEVO: función para detener voz (útil al cambiar de pantalla)
         function detenerVoz() {
             colaVoz = [];
             hablandoAhora = false;
@@ -2146,7 +2074,6 @@
             estado.vistos.add(indiceReal);
             emergente.classList.remove('explotar');
             emergente.classList.remove('sonando');
-            document.getElementById('grabacionLetra').textContent = item.id;
             actualizarUIProgreso();
             if (audioActivado) {
                 setTimeout(() => { reproducirSonidoAlegre(item); }, 500);
@@ -2448,50 +2375,6 @@
 
         document.getElementById('juegoNuevo').addEventListener('click', iniciarJuego);
 
-        document.getElementById('btnGrabar').addEventListener('click', async () => {
-            if (grabacionActiva) {
-                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                    mediaRecorder.stop();
-                    grabacionActiva = false;
-                    document.getElementById('btnGrabar').textContent = '🎙️ Grabar';
-                    document.getElementById('btnGrabar').classList.remove('grabando');
-                }
-                return;
-            }
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                chunks = [];
-                mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'audio/webm' });
-                    const url = URL.createObjectURL(blob);
-                    const audio = document.getElementById('audioGrabacion');
-                    audio.src = url;
-                    document.getElementById('ultimaGrabacion').textContent = elementos[estado.indiceActual].id;
-                    guardarProgreso();
-                };
-                mediaRecorder.start();
-                grabacionActiva = true;
-                document.getElementById('btnGrabar').textContent = '⏹️ Detener';
-                document.getElementById('btnGrabar').classList.add('grabando');
-            } catch (err) {
-                alert('⚠️ No se pudo acceder al micrófono.');
-            }
-        });
-
-        document.getElementById('btnReproducirGrabacion').addEventListener('click', () => {
-            const audio = document.getElementById('audioGrabacion');
-            if (audio.src) { audio.play(); } else { alert('📢 Primero graba tu voz'); }
-        });
-
-        document.getElementById('btnEliminarGrabacion').addEventListener('click', () => {
-            const audio = document.getElementById('audioGrabacion');
-            audio.src = '';
-            audio.removeAttribute('src');
-            document.getElementById('ultimaGrabacion').textContent = '-';
-        });
-
         document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
             el.addEventListener('click', () => cambiarMascota(el.dataset.mascota));
         });
@@ -2543,7 +2426,6 @@
             }
         });
 
-        // Cuando las voces cambien (algunos navegadores las cargan de forma asíncrona)
         if ('speechSynthesis' in window) {
             window.speechSynthesis.onvoiceschanged = function() {
                 console.log('🔄 Voces actualizadas');
@@ -2556,7 +2438,8 @@
         console.log('📦 PWA: Instalable como app desde el navegador');
         console.log('🎉 Celebración: Aparece al completar las 37 letras y números');
         console.log('🎨 Icono personalizado en pantalla de inicio');
-        console.log('🎤 Selector de voces implementado (con filtro de voces problemáticas)');
+        console.log('🎤 Selector de voces implementado (sin grabación de voz)');
+        console.log('🔒 Sin captura de audio del menor (protección de datos)');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
