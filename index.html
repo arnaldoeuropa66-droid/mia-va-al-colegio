@@ -2296,70 +2296,7 @@ function precargarMotorDeVoz() {
         // ============================================================
 // 📦 SERVICE WORKER - Registro + actualización automática
 // ============================================================
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js', {
-            updateViaCache: 'none'  // ✅ No usar caché HTTP para el SW
-        })
-        .then((registration) => {
-            console.log('📦 Service Worker registrado');
 
-            // Forzar comprobación de actualización al arrancar
-            registration.update().catch(() => {});
-
-            // 🔄 Detectar nueva versión
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                if (!newWorker) return;
-
-                console.log('🆕 Nueva versión del SW detectada');
-
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed') {
-                        if (navigator.serviceWorker.controller) {
-                            console.log('✅ Nueva versión lista');
-                            mostrarAvisoActualizacion();
-                        } else {
-                            console.log('🎉 SW instalado por primera vez');
-                        }
-                    }
-                });
-            });
-
-            if (registration.waiting) {
-                mostrarAvisoActualizacion();
-            }
-
-            // 🔁 Auto-recarga tras actualización
-            let refrescando = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refrescando) {
-                    refrescando = true;
-                    console.log('🔄 Recargando con nueva versión...');
-                    window.location.reload();
-                }
-            });
-        })
-        .catch((err) => {
-            console.log('❌ Error al registrar SW:', err);
-        });
-
-        // 🔄 Comprobar actualizaciones cada 30 min
-        setInterval(() => {
-            navigator.serviceWorker.getRegistration().then((reg) => {
-                if (reg) reg.update().catch(() => {});
-            });
-        }, 30 * 60 * 1000);
-
-        // 📢 Escuchar mensajes del SW
-        navigator.serviceWorker.addEventListener('message', (event) => {
-            if (event.data && event.data.tipo === 'NUEVA_VERSION') {
-                console.log('📢 SW notifica versión:', event.data.version);
-                mostrarAvisoActualizacion();
-            }
-        });
-    });
-}
 
 // ============================================================
 // 🔔 Aviso al usuario de nueva versión disponible
