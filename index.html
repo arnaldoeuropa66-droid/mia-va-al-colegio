@@ -2310,6 +2310,8 @@ if ('serviceWorker' in navigator) {
             // 🔄 Detectar nueva versión
             registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing;
+                if (!newWorker) return;
+
                 console.log('🆕 Nueva versión del SW detectada');
 
                 newWorker.addEventListener('statechange', () => {
@@ -2356,37 +2358,6 @@ if ('serviceWorker' in navigator) {
                 mostrarAvisoActualizacion();
             }
         });
-    });
-}
-
-                // 🔁 Detectar cuando el SW toma el control tras recargar
-                let refrescando = false;
-                navigator.serviceWorker.addEventListener('controllerchange', () => {
-                    if (!refrescando) {
-                        refrescando = true;
-                        console.log('🔄 Nueva versión activa, recargando...');
-                        window.location.reload();
-                    }
-                });
-            })
-            .catch(err => {
-                console.log('❌ Error al registrar Service Worker:', err);
-            });
-
-        // 🔄 Comprobar actualizaciones cada hora
-        setInterval(() => {
-            navigator.serviceWorker.getRegistration().then(reg => {
-                if (reg) reg.update();
-            });
-        }, 60 * 60 * 1000);
-    });
-
-    // 📢 Escuchar mensajes del Service Worker
-    navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data && event.data.tipo === 'NUEVA_VERSION') {
-            console.log('📢 SW notifica nueva versión:', event.data.version);
-            mostrarAvisoActualizacion();
-        }
     });
 }
 
