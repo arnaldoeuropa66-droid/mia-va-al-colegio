@@ -10,13 +10,11 @@
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="theme-color" content="#FF6B6B">
 
-    <!-- ✅ PWA: metas corregidas y unificadas -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Mia Colegio">
 
-    <!-- Meta tags para compartir en redes sociales -->
     <meta property="og:title" content="Mia va al Colegio">
     <meta property="og:description" content="🧸 ¡Aprende letras y números jugando con Mia! App educativa para niños.">
     <meta property="og:image" content="icon-512.png">
@@ -26,1273 +24,145 @@
     <meta name="twitter:description" content="🧸 ¡Aprende letras y números jugando con Mia!">
     <meta name="twitter:image" content="icon-512.png">
 
-    <!-- Fuente infantil -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="icon-192.png">
+    <link rel="preload" as="image" href="icon-512.png">
+    <link rel="dns-prefetch" href="https://backend-mia.arnaldoeuropa66.workers.dev">
+
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            min-height: 100vh;
-            transition: all 0.5s;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 600;
-        }
-        .emergente {
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            font-weight: 700;
-            font-size: 150px;
-            letter-spacing: 8px;
-        }
-        .juego-opcion {
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            font-weight: 700;
-        }
-        .titulo-principal {
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            font-weight: 700;
-        }
-        .titulo-principal .mia {
-            font-weight: 700;
-        }
-        .titulo-principal .colegio {
-            font-weight: 700;
-        }
-        body.tema-escuela {
-            background: linear-gradient(135deg, #FFF8E7, #FFE4B5, #FFF0F5);
-        }
-        body.tema-selva {
-            background: linear-gradient(135deg, #E8F5E9, #C8E6C9, #A5D6A7);
-        }
-        body.tema-espacio {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-        }
-        .contenedor {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 60px;
-            padding: 30px 40px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-            position: relative;
-            width: 92%;
-            max-width: 800px;
-            margin: 15px auto;
-            z-index: 1;
-            border: 4px solid rgba(255, 215, 0, 0.3);
-            transition: all 0.5s;
-            max-height: 96vh;
-            overflow-y: auto;
-        }
-        .contenedor::-webkit-scrollbar {
-            width: 6px;
-        }
-        .contenedor::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .contenedor::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 10px;
-        }
-        body.tema-espacio .contenedor {
-            background: rgba(26, 26, 46, 0.92);
-            border-color: rgba(100, 200, 255, 0.3);
-            color: #fff;
-        }
-        body.tema-espacio .contenedor::-webkit-scrollbar-thumb {
-            background: #444;
-        }
-        .titulo-principal {
-            font-size: 2.3rem;
-            font-weight: 700;
-            color: #FF6B6B;
-            text-shadow: 3px 3px 0 #FFD93D, 6px 6px 0 rgba(255, 107, 107, 0.15);
-            margin-bottom: 2px;
-            letter-spacing: 2px;
-            line-height: 1.2;
-        }
-        body.tema-espacio .titulo-principal {
-            color: #4FC3F7;
-            text-shadow: 0 0 30px rgba(79, 195, 247, 0.3);
-        }
-        .titulo-principal .mia {
-            color: #6C4A7C;
-            font-size: 2.8rem;
-        }
-        .titulo-principal .colegio {
-            color: #4FC3F7;
-        }
-        body.tema-espacio .titulo-principal .mia {
-            color: #CE93D8;
-        }
-        .subtitulo {
-            color: #6BCB77;
-            font-size: 1rem;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        body.tema-espacio .subtitulo {
-            color: #81C784;
-        }
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            margin: 12px 0;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            background: #e8e8e8;
-            color: #666;
-            touch-action: manipulation;
-            min-height: 38px;
-            flex: 1;
-            min-width: 55px;
-            max-width: 120px;
-        }
-        .tab-btn:hover {
-            transform: scale(1.05);
-        }
-        .tab-btn:active {
-            transform: scale(0.95);
-        }
-        .tab-btn.activo {
-            background: #6BCB77;
-            color: white;
-            box-shadow: 0 4px 15px rgba(107, 203, 119, 0.4);
-        }
-        body.tema-espacio .tab-btn {
-            background: #2a2a4a;
-            color: #aaa;
-        }
-        body.tema-espacio .tab-btn.activo {
-            background: #4FC3F7;
-            color: #fff;
-        }
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        .tab-content.activo {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .escenario {
-            height: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            margin: 8px 0;
-            background: rgba(255, 248, 231, 0.4);
-            border-radius: 40px;
-            border: 3px dashed rgba(255, 215, 0, 0.25);
-            overflow: hidden;
-        }
-        body.tema-espacio .escenario {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(79, 195, 247, 0.15);
-        }
-        .emergente {
-            font-size: 150px;
-            font-weight: 700;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.2s;
-            animation: rebotar 0.8s ease-out;
-            position: relative;
-            z-index: 2;
-            touch-action: manipulation;
-            letter-spacing: 8px;
-        }
-        body.tema-espacio .emergente {
-            text-shadow: 0 0 40px rgba(79, 195, 247, 0.2);
-        }
-        .emergente:active {
-            transform: scale(0.95);
-        }
-        @keyframes rebotar {
-            0% {
-                transform: scale(0) rotate(-15deg);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.3) rotate(3deg);
-                opacity: 1;
-            }
-            70% {
-                transform: scale(0.9) rotate(-2deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-            }
-        }
-        @keyframes latido {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-                text-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
-            }
-        }
-        .sonando {
-            animation: latido 0.6s ease-in-out 4;
-        }
-        @keyframes explosion {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            30% {
-                transform: scale(1.8);
-                opacity: 0.9;
-            }
-            100% {
-                transform: scale(0.1);
-                opacity: 0;
-            }
-        }
-        .emergente.explotar {
-            animation: explosion 0.7s ease forwards;
-        }
-        .burbuja {
-            position: absolute;
-            border-radius: 50%;
-            animation: flotar 6s infinite alternate ease-in-out;
-            pointer-events: none;
-            z-index: 1;
-        }
-        @keyframes flotar {
-            0% {
-                transform: translateY(0px) scale(1);
-            }
-            100% {
-                transform: translateY(-70px) scale(1.3);
-            }
-        }
-        .botones {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 12px 0 10px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            background: #4FC3F7;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #0288D1;
-            transition: all 0.08s;
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            touch-action: manipulation;
-            min-height: 46px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            user-select: none;
-        }
-        .btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #0288D1;
-        }
-        .btn.secundario {
-            background: #FFD93D;
-            box-shadow: 0 4px 0 #F9A825;
-            color: #333;
-        }
-        .btn.secundario:active {
-            box-shadow: 0 1px 0 #F9A825;
-        }
-        .btn.repetir {
-            background: #6BCB77;
-            box-shadow: 0 4px 0 #2E7D32;
-            color: white;
-            font-size: 1.1rem;
-            padding: 12px 30px;
-        }
-        .btn.repetir:active {
-            box-shadow: 0 1px 0 #2E7D32;
-        }
-        .btn.iniciar {
-            background: #FF8A9E;
-            box-shadow: 0 5px 0 #C62828;
-            color: white;
-            font-size: 1.5rem;
-            padding: 20px 50px;
-            animation: pulse 1.5s infinite;
-        }
-        .btn.iniciar:active {
-            box-shadow: 0 2px 0 #C62828;
-        }
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.04);
-            }
-        }
-        .indicador-sonido {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 6px 0;
-            flex-wrap: wrap;
-        }
-        .barra-sonido {
-            width: 100px;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            display: inline-block;
-            flex-shrink: 0;
-        }
-        .barra-sonido .relleno {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
-            border-radius: 10px;
-            transition: width 0.15s;
-        }
-        .barra-sonido.activa .relleno {
-            animation: barraLatido 1.5s ease-in-out;
-        }
-        @keyframes barraLatido {
-            0% {
-                width: 0%;
-            }
-            25% {
-                width: 100%;
-            }
-            50% {
-                width: 60%;
-            }
-            75% {
-                width: 100%;
-            }
-            100% {
-                width: 0%;
-            }
-        }
-        #iconoOido {
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-        .mascota {
-            font-size: 1.15rem;
-            color: #6C4A7C;
-            background: #F3E8FF;
-            padding: 10px 20px;
-            border-radius: 40px;
-            display: inline-block;
-            margin-top: 4px;
-            min-height: 52px;
-            border: 2px solid #C084FC;
-            transition: all 0.3s;
-            max-width: 100%;
-            word-wrap: break-word;
-            font-weight: 600;
-        }
-        body.tema-espacio .mascota {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #4FC3F7;
-            color: #fff;
-        }
-        .mascota-emoji {
-            font-size: 1.8rem;
-            display: inline-block;
-            animation: saltarMascota 2s infinite;
-        }
-        @keyframes saltarMascota {
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-8px) rotate(-8deg);
-            }
-            75% {
-                transform: translateY(-8px) rotate(8deg);
-            }
-        }
-        .estado-sonido {
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: 4px;
-            font-weight: 600;
-        }
-        .info-extra {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 8px;
-            color: #888;
-            font-size: 0.8rem;
-            flex-wrap: wrap;
-            font-weight: 600;
-        }
-        .info-extra span {
-            background: #f5f5f5;
-            padding: 4px 14px;
-            border-radius: 30px;
-            transition: all 0.3s;
-        }
-        body.tema-espacio .info-extra span {
-            background: rgba(255, 255, 255, 0.07);
-            color: #aaa;
-        }
-        .indicador-progreso {
-            display: flex;
-            justify-content: center;
-            gap: 3px;
-            margin: 6px 0;
-            flex-wrap: wrap;
-            padding: 0 5px;
-        }
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #ddd;
-            display: inline-block;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-        .dot.activo {
-            background: #6BCB77;
-            transform: scale(1.3);
-        }
-        .dot.visto {
-            background: #FFD93D;
-        }
-        body.tema-espacio .dot {
-            background: #444;
-        }
-        body.tema-espacio .dot.activo {
-            background: #4FC3F7;
-        }
-        body.tema-espacio .dot.visto {
-            background: #FFD93D;
-        }
-        .juego-opciones {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin: 16px 0;
-            flex-wrap: wrap;
-        }
-        .juego-opcion {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid #ddd;
-            font-size: 2.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
-            user-select: none;
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            letter-spacing: 2px;
-        }
-        .juego-opcion:hover:not(:disabled) {
-            transform: scale(1.08);
-            border-color: #6BCB77;
-        }
-        .juego-opcion:active:not(:disabled) {
-            transform: scale(0.92);
-        }
-        .juego-opcion:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .juego-opcion.correcta {
-            border-color: #6BCB77;
-            background: #E8F5E9;
-            animation: correcto 0.5s;
-        }
-        .juego-opcion.incorrecta {
-            border-color: #FF6B6B;
-            background: #FFEBEE;
-            animation: incorrecto 0.5s;
-        }
-        @keyframes correcto {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.25);
-            }
-        }
-        @keyframes incorrecto {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-15px);
-            }
-            75% {
-                transform: translateX(15px);
-            }
-        }
-        #juegoResultado {
-            font-size: 1.3rem;
-            margin: 8px 0;
-            min-height: 45px;
-            font-weight: 700;
-        }
-        .panel-progreso {
-            text-align: left;
-            padding: 15px;
-        }
-        .panel-progreso h3 {
-            margin: 12px 0 6px;
-            font-size: 1.1rem;
-            color: #6C4A7C;
-            font-weight: 700;
-        }
-        body.tema-espacio .panel-progreso h3 {
-            color: #CE93D8;
-        }
-        .panel-progreso .barra-progreso {
-            width: 100%;
-            height: 18px;
-            background: #e8e8e8;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 6px 0;
-        }
-        .panel-progreso .barra-progreso .relleno {
-            height: 100%;
-            background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
-            border-radius: 10px;
-            transition: width 0.5s;
-        }
-        .panel-progreso .medalla {
-            display: inline-block;
-            font-size: 2.8rem;
-            margin: 6px;
-            animation: saltarMascota 2s infinite;
-        }
-        .panel-progreso .estadistica {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        body.tema-espacio .panel-progreso .estadistica {
-            border-bottom-color: rgba(255, 255, 255, 0.08);
-        }
-        .filtro-tipo {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 8px 0;
-            flex-wrap: wrap;
-        }
-        .filtro-tipo .btn-filtro {
-            padding: 6px 16px;
-            border-radius: 25px;
-            border: 2px solid #ddd;
-            background: white;
-            cursor: pointer;
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            transition: all 0.3s;
-            color: #666;
-            touch-action: manipulation;
-        }
-        .filtro-tipo .btn-filtro:active {
-            transform: scale(0.95);
-        }
-        .filtro-tipo .btn-filtro.activo {
-            background: #6BCB77;
-            color: white;
-            border-color: #6BCB77;
-        }
-        body.tema-espacio .filtro-tipo .btn-filtro {
-            background: #2a2a4a;
-            border-color: #444;
-            color: #aaa;
-        }
-        body.tema-espacio .filtro-tipo .btn-filtro.activo {
-            background: #4FC3F7;
-            border-color: #4FC3F7;
-            color: #fff;
-        }
-        .personalizacion {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 8px 0;
-        }
-        .personalizacion .opcion {
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 3px solid #ddd;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-            font-size: 1.4rem;
-            touch-action: manipulation;
-            user-select: none;
-            font-weight: 700;
-        }
-        .personalizacion .opcion:active {
-            transform: scale(0.92);
-        }
-        .personalizacion .opcion.seleccionado {
-            border-color: #6BCB77;
-            background: #E8F5E9;
-            box-shadow: 0 0 20px rgba(107, 203, 119, 0.25);
-        }
-        body.tema-espacio .personalizacion .opcion {
-            background: #2a2a4a;
-            border-color: #444;
-            color: #fff;
-        }
-        body.tema-espacio .personalizacion .opcion.seleccionado {
-            border-color: #4FC3F7;
-            background: #1a3a5a;
-        }
-        .configuracion {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 8px 0;
-        }
-        .configuracion label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        .configuracion input[type="range"] {
-            width: 80px;
-            accent-color: #6BCB77;
-        }
-        .rima {
-            font-size: 1.05rem;
-            color: #6C4A7C;
-            background: #F3E8FF;
-            padding: 12px 18px;
-            border-radius: 30px;
-            margin: 8px 0;
-            animation: fadeIn 0.4s;
-            line-height: 1.4;
-            font-weight: 600;
-        }
-        body.tema-espacio .rima {
-            background: rgba(255, 255, 255, 0.07);
-            color: #aaa;
-        }
-        .pantalla-inicio {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 248, 231, 0.97);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            flex-direction: column;
-            gap: 20px;
-            padding: 20px;
-            text-align: center;
-        }
-        .icono-inicio {
-            width: 150px;
-            height: 150px;
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            animation: flotarIcono 3s ease-in-out infinite;
-            object-fit: contain;
-            background: white;
-            padding: 8px;
-        }
-        @keyframes flotarIcono {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            50% {
-                transform: translateY(-12px) scale(1.05);
-            }
-        }
-        .pantalla-inicio h1 {
-            font-size: 3.5rem;
-            color: #FF6B6B;
-            line-height: 1.2;
-            font-weight: 700;
-        }
-        .pantalla-inicio p {
-            font-size: 1.3rem;
-            color: #6C4A7C;
-            max-width: 500px;
-            font-weight: 600;
-        }
-        .pantalla-inicio .btn-iniciar {
-            background: #6BCB77;
-            border: none;
-            padding: 22px 50px;
-            border-radius: 60px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 6px 0 #2E7D32;
-            transition: all 0.1s;
-            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
-            animation: pulse 1.5s infinite;
-            touch-action: manipulation;
-        }
-        .pantalla-inicio .btn-iniciar:active {
-            transform: translateY(5px);
-            box-shadow: 0 1px 0 #2E7D32;
-        }
-        .pantalla-inicio .btn-iniciar:hover {
-            transform: scale(1.03);
-        }
-        .oculto {
-            display: none !important;
-        }
-        #celebracion {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 20px;
-            padding: 20px;
-            text-align: center;
-            animation: fadeIn 0.8s ease;
-        }
-        #celebracion h1 {
-            color: #FFD93D;
-            font-size: 3.5rem;
-            font-weight: 700;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-            animation: saltarMascota 1s infinite;
-        }
-        #celebracion p {
-            color: white;
-            font-size: 1.8rem;
-            font-weight: 600;
-            max-width: 500px;
-        }
-        #celebracion .btn {
-            font-size: 1.5rem;
-            padding: 18px 45px;
-            background: #6BCB77;
-            box-shadow: 0 5px 0 #2E7D32;
-            border-radius: 60px;
-            animation: pulse 1.5s infinite;
-        }
-        #celebracion .btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 1px 0 #2E7D32;
-        }
-        .confeti {
-            position: fixed;
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-            top: -20px;
-            animation: caerConfeti 3s linear infinite;
-            pointer-events: none;
-            z-index: 10000;
-        }
-        @keyframes caerConfeti {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(720deg) scale(0.5);
-                opacity: 0;
-            }
-        }
-        .fuego {
-            position: fixed;
-            font-size: 3rem;
-            pointer-events: none;
-            z-index: 10001;
-            animation: explotar 1.5s ease-out forwards;
-        }
-        @keyframes explotar {
-            0% {
-                transform: scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            30% {
-                transform: scale(1.5) rotate(180deg);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(2) rotate(360deg) translateY(-100px);
-                opacity: 0;
-            }
-        }
-        @media (max-width: 1024px) {
-            .contenedor {
-                padding: 25px 30px;
-                border-radius: 50px;
-                max-height: 94vh;
-                width: 94%;
-            }
-            .titulo-principal {
-                font-size: 2rem;
-            }
-            .titulo-principal .mia {
-                font-size: 2.4rem;
-            }
-            .emergente {
-                font-size: 120px;
-            }
-            .escenario {
-                height: 220px;
-            }
-            .btn {
-                padding: 11px 20px;
-                font-size: 0.95rem;
-                min-height: 42px;
-            }
-            .tab-btn {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-                min-height: 36px;
-            }
-            .juego-opcion {
-                width: 70px;
-                height: 70px;
-                font-size: 2.2rem;
-            }
-            #celebracion h1 {
-                font-size: 2.8rem;
-            }
-            #celebracion p {
-                font-size: 1.4rem;
-            }
-            .icono-inicio {
-                width: 130px;
-                height: 130px;
-                border-radius: 25px;
-            }
-        }
-        @media (max-width: 767px) {
-            .contenedor {
-                padding: 16px 14px;
-                border-radius: 35px;
-                width: 96%;
-                margin: 10px auto;
-                max-height: 97vh;
-                border-width: 3px;
-            }
-            .titulo-principal {
-                font-size: 1.5rem;
-            }
-            .titulo-principal .mia {
-                font-size: 1.8rem;
-            }
-            .subtitulo {
-                font-size: 0.8rem;
-            }
-            .botones {
-                gap: 8px;
-                flex-direction: column;
-                align-items: center;
-            }
-            .botones .btn {
-                width: 100%;
-                max-width: 280px;
-                padding: 13px 18px;
-                font-size: 1rem;
-                min-height: 48px;
-                border-radius: 35px;
-            }
-            .tabs {
-                gap: 5px;
-            }
-            .tab-btn {
-                padding: 8px 10px;
-                font-size: 0.7rem;
-                min-height: 34px;
-                min-width: 45px;
-                flex: 1;
-                border-radius: 25px;
-                max-width: none;
-            }
-            .emergente {
-                font-size: 90px;
-                letter-spacing: 4px;
-            }
-            .escenario {
-                height: 160px;
-                border-radius: 30px;
-                border-width: 2px;
-            }
-            .indicador-sonido {
-                gap: 10px;
-            }
-            .btn.repetir {
-                font-size: 0.95rem;
-                padding: 10px 20px;
-                min-height: 44px;
-                min-width: 100px;
-            }
-            .barra-sonido {
-                width: 70px;
-                height: 6px;
-            }
-            #iconoOido {
-                font-size: 1.4rem;
-            }
-            .mascota {
-                font-size: 0.95rem;
-                padding: 8px 14px;
-                min-height: 44px;
-                border-radius: 30px;
-            }
-            .mascota-emoji {
-                font-size: 1.5rem;
-            }
-            .info-extra {
-                gap: 6px;
-                font-size: 0.7rem;
-            }
-            .info-extra span {
-                padding: 3px 10px;
-                border-radius: 20px;
-            }
-            .dot {
-                width: 8px;
-                height: 8px;
-            }
-            .indicador-progreso {
-                gap: 3px;
-            }
-            .juego-opcion {
-                width: 60px;
-                height: 60px;
-                font-size: 1.8rem;
-                border-width: 3px;
-            }
-            .juego-opciones {
-                gap: 10px;
-            }
-            #juegoResultado {
-                font-size: 1.1rem;
-                min-height: 38px;
-            }
-            .filtro-tipo {
-                gap: 5px;
-            }
-            .filtro-tipo .btn-filtro {
-                padding: 5px 12px;
-                font-size: 0.7rem;
-                border-radius: 20px;
-            }
-            .panel-progreso {
-                padding: 8px;
-            }
-            .panel-progreso h3 {
-                font-size: 0.95rem;
-            }
-            .panel-progreso .estadistica {
-                font-size: 0.8rem;
-                padding: 5px 0;
-            }
-            .panel-progreso .medalla {
-                font-size: 2.2rem;
-                margin: 4px;
-            }
-            .panel-progreso .barra-progreso {
-                height: 14px;
-            }
-            .rima {
-                font-size: 0.9rem;
-                padding: 10px 14px;
-            }
-            .personalizacion .opcion {
-                padding: 6px 12px;
-                font-size: 1.2rem;
-                border-radius: 25px;
-                border-width: 2px;
-            }
-            .configuracion {
-                gap: 10px;
-            }
-            .configuracion label {
-                font-size: 0.8rem;
-            }
-            .configuracion input[type="range"] {
-                width: 60px;
-            }
-            .pantalla-inicio h1 {
-                font-size: 2.5rem;
-            }
-            .pantalla-inicio p {
-                font-size: 1.1rem;
-            }
-            .pantalla-inicio .btn-iniciar {
-                padding: 16px 35px;
-                font-size: 1.4rem;
-                border-radius: 50px;
-            }
-            #celebracion h1 {
-                font-size: 2.2rem;
-            }
-            #celebracion p {
-                font-size: 1.1rem;
-            }
-            #celebracion .btn {
-                font-size: 1.1rem;
-                padding: 14px 30px;
-            }
-            .fuego {
-                font-size: 2rem;
-            }
-            .icono-inicio {
-                width: 110px;
-                height: 110px;
-                border-radius: 22px;
-            }
-        }
-        @media (max-width: 380px) {
-            .contenedor {
-                padding: 12px 10px;
-                border-radius: 25px;
-                width: 98%;
-            }
-            .titulo-principal {
-                font-size: 1.2rem;
-            }
-            .titulo-principal .mia {
-                font-size: 1.4rem;
-            }
-            .emergente {
-                font-size: 70px;
-                letter-spacing: 2px;
-            }
-            .escenario {
-                height: 130px;
-                border-radius: 20px;
-            }
-            .btn {
-                font-size: 0.85rem;
-                padding: 10px 14px;
-                min-height: 40px;
-                max-width: 220px;
-            }
-            .tab-btn {
-                font-size: 0.6rem;
-                padding: 5px 8px;
-                min-height: 28px;
-                min-width: 35px;
-            }
-            .juego-opcion {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-                border-width: 2px;
-            }
-            .juego-opciones {
-                gap: 6px;
-            }
-            .mascota {
-                font-size: 0.8rem;
-                padding: 6px 10px;
-                min-height: 36px;
-            }
-            .mascota-emoji {
-                font-size: 1.2rem;
-            }
-            .btn.repetir {
-                font-size: 0.8rem;
-                padding: 8px 14px;
-                min-height: 36px;
-                min-width: 70px;
-            }
-            .barra-sonido {
-                width: 50px;
-                height: 5px;
-            }
-            #iconoOido {
-                font-size: 1.1rem;
-            }
-            .info-extra {
-                font-size: 0.6rem;
-                gap: 4px;
-            }
-            .info-extra span {
-                padding: 2px 8px;
-            }
-            .dot {
-                width: 6px;
-                height: 6px;
-            }
-            .pantalla-inicio h1 {
-                font-size: 2rem;
-            }
-            .pantalla-inicio p {
-                font-size: 0.9rem;
-            }
-            .pantalla-inicio .btn-iniciar {
-                padding: 12px 25px;
-                font-size: 1.1rem;
-            }
-            .panel-progreso .estadistica {
-                font-size: 0.7rem;
-            }
-            #celebracion h1 {
-                font-size: 1.8rem;
-            }
-            #celebracion p {
-                font-size: 1rem;
-            }
-            #celebracion .btn {
-                font-size: 0.95rem;
-                padding: 12px 25px;
-            }
-            .fuego {
-                font-size: 1.5rem;
-            }
-            .icono-inicio {
-                width: 90px;
-                height: 90px;
-                border-radius: 18px;
-            }
-        }
-        @media (max-height: 500px) and (orientation: landscape) {
-            .contenedor {
-                max-height: 98vh;
-                padding: 12px 20px;
-            }
-            .escenario {
-                height: 120px;
-            }
-            .emergente {
-                font-size: 70px;
-                letter-spacing: 2px;
-            }
-            .titulo-principal {
-                font-size: 1.3rem;
-            }
-            .titulo-principal .mia {
-                font-size: 1.5rem;
-            }
-            .botones .btn {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-                min-height: 34px;
-                max-width: 180px;
-            }
-            .mascota {
-                font-size: 0.8rem;
-                padding: 6px 12px;
-                min-height: 34px;
-            }
-            .tab-btn {
-                padding: 4px 10px;
-                font-size: 0.65rem;
-                min-height: 28px;
-            }
-            .indicador-progreso {
-                margin: 3px 0;
-            }
-            .dot {
-                width: 6px;
-                height: 6px;
-            }
-            .juego-opcion {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-            }
-            #celebracion h1 {
-                font-size: 1.8rem;
-            }
-            #celebracion p {
-                font-size: 1rem;
-            }
-            .icono-inicio {
-                width: 80px;
-                height: 80px;
-                border-radius: 15px;
-            }
-        }
-        @supports (padding: max(0px)) {
-            .contenedor {
-                padding-left: max(14px, env(safe-area-inset-left));
-                padding-right: max(14px, env(safe-area-inset-right));
-                padding-top: max(16px, env(safe-area-inset-top));
-                padding-bottom: max(16px, env(safe-area-inset-bottom));
-            }
-        }
-        #selectorVoz:hover {
-            border-color: #6BCB77 !important;
-            transform: scale(1.02);
-        }
-        #selectorVoz:focus {
-            border-color: #6BCB77 !important;
-            box-shadow: 0 0 15px rgba(107, 203, 119, 0.3);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; min-height: 100vh; transition: all 0.5s; overflow-x: hidden; display: flex; justify-content: center; align-items: center; font-weight: 600; }
+        body.tema-escuela { background: linear-gradient(135deg, #FFF8E7, #FFE4B5, #FFF0F5); }
+        body.tema-selva { background: linear-gradient(135deg, #E8F5E9, #C8E6C9, #A5D6A7); }
+        body.tema-espacio { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
+        .contenedor { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 60px; padding: 30px 40px; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12); position: relative; width: 92%; max-width: 800px; margin: 15px auto; z-index: 1; border: 4px solid rgba(255, 215, 0, 0.3); transition: all 0.5s; max-height: 96vh; overflow-y: auto; }
+        .contenedor::-webkit-scrollbar { width: 6px; }
+        .contenedor::-webkit-scrollbar-track { background: transparent; }
+        .contenedor::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        body.tema-espacio .contenedor { background: rgba(26, 26, 46, 0.92); border-color: rgba(100, 200, 255, 0.3); color: #fff; }
+        body.tema-espacio .contenedor::-webkit-scrollbar-thumb { background: #444; }
+        .titulo-principal { font-size: 2.3rem; font-weight: 700; color: #FF6B6B; text-shadow: 3px 3px 0 #FFD93D, 6px 6px 0 rgba(255, 107, 107, 0.15); margin-bottom: 2px; letter-spacing: 2px; line-height: 1.2; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; }
+        body.tema-espacio .titulo-principal { color: #4FC3F7; text-shadow: 0 0 30px rgba(79, 195, 247, 0.3); }
+        .titulo-principal .mia { color: #6C4A7C; font-size: 2.8rem; }
+        .titulo-principal .colegio { color: #4FC3F7; }
+        body.tema-espacio .titulo-principal .mia { color: #CE93D8; }
+        .subtitulo { color: #6BCB77; font-size: 1rem; margin-bottom: 5px; font-weight: 600; }
+        body.tema-espacio .subtitulo { color: #81C784; }
+        .tabs { display: flex; justify-content: center; gap: 6px; margin: 12px 0; flex-wrap: wrap; }
+        .tab-btn { padding: 8px 16px; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; background: #e8e8e8; color: #666; touch-action: manipulation; min-height: 38px; flex: 1; min-width: 55px; max-width: 120px; }
+        .tab-btn:hover { transform: scale(1.05); }
+        .tab-btn:active { transform: scale(0.95); }
+        .tab-btn.activo { background: #6BCB77; color: white; box-shadow: 0 4px 15px rgba(107, 203, 119, 0.4); }
+        body.tema-espacio .tab-btn { background: #2a2a4a; color: #aaa; }
+        body.tema-espacio .tab-btn.activo { background: #4FC3F7; color: #fff; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.activo { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .escenario { height: 250px; display: flex; justify-content: center; align-items: center; position: relative; margin: 8px 0; background: rgba(255, 248, 231, 0.4); border-radius: 40px; border: 3px dashed rgba(255, 215, 0, 0.25); overflow: hidden; }
+        body.tema-espacio .escenario { background: rgba(255, 255, 255, 0.04); border-color: rgba(79, 195, 247, 0.15); }
+        .emergente { font-size: 150px; font-weight: 700; text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); cursor: pointer; user-select: none; transition: transform 0.2s; animation: rebotar 0.8s ease-out; position: relative; z-index: 2; touch-action: manipulation; letter-spacing: 8px; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; }
+        body.tema-espacio .emergente { text-shadow: 0 0 40px rgba(79, 195, 247, 0.2); }
+        .emergente:active { transform: scale(0.95); }
+        @keyframes rebotar { 0% { transform: scale(0) rotate(-15deg); opacity: 0; } 50% { transform: scale(1.3) rotate(3deg); opacity: 1; } 70% { transform: scale(0.9) rotate(-2deg); } 100% { transform: scale(1) rotate(0deg); } }
+        @keyframes latido { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); text-shadow: 0 0 50px rgba(255, 215, 0, 0.6); } }
+        .sonando { animation: latido 0.6s ease-in-out 4; }
+        @keyframes explosion { 0% { transform: scale(1); opacity: 1; } 30% { transform: scale(1.8); opacity: 0.9; } 100% { transform: scale(0.1); opacity: 0; } }
+        .emergente.explotar { animation: explosion 0.7s ease forwards; }
+        .burbuja { position: absolute; border-radius: 50%; animation: flotar 6s infinite alternate ease-in-out; pointer-events: none; z-index: 1; }
+        @keyframes flotar { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(-70px) scale(1.3); } }
+        .botones { display: flex; justify-content: center; gap: 10px; margin: 12px 0 10px; flex-wrap: wrap; }
+        .btn { background: #4FC3F7; border: none; padding: 12px 24px; border-radius: 50px; font-size: 1rem; font-weight: 700; color: white; cursor: pointer; box-shadow: 0 4px 0 #0288D1; transition: all 0.08s; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; touch-action: manipulation; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; user-select: none; }
+        .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0288D1; }
+        .btn.secundario { background: #FFD93D; box-shadow: 0 4px 0 #F9A825; color: #333; }
+        .btn.secundario:active { box-shadow: 0 1px 0 #F9A825; }
+        .btn.repetir { background: #6BCB77; box-shadow: 0 4px 0 #2E7D32; color: white; font-size: 1.1rem; padding: 12px 30px; }
+        .btn.repetir:active { box-shadow: 0 1px 0 #2E7D32; }
+        .btn.iniciar { background: #FF8A9E; box-shadow: 0 5px 0 #C62828; color: white; font-size: 1.5rem; padding: 20px 50px; animation: pulse 1.5s infinite; }
+        .btn.iniciar:active { box-shadow: 0 2px 0 #C62828; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+        .indicador-sonido { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 6px 0; flex-wrap: wrap; }
+        .barra-sonido { width: 100px; height: 8px; background: #e0e0e0; border-radius: 10px; overflow: hidden; display: inline-block; flex-shrink: 0; }
+        .barra-sonido .relleno { height: 100%; width: 0%; background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77); border-radius: 10px; transition: width 0.15s; }
+        .barra-sonido.activa .relleno { animation: barraLatido 1.5s ease-in-out; }
+        @keyframes barraLatido { 0% { width: 0%; } 25% { width: 100%; } 50% { width: 60%; } 75% { width: 100%; } 100% { width: 0%; } }
+        #iconoOido { font-size: 1.6rem; line-height: 1; }
+        .mascota { font-size: 1.15rem; color: #6C4A7C; background: #F3E8FF; padding: 10px 20px; border-radius: 40px; display: inline-block; margin-top: 4px; min-height: 52px; border: 2px solid #C084FC; transition: all 0.3s; max-width: 100%; word-wrap: break-word; font-weight: 600; }
+        body.tema-espacio .mascota { background: rgba(255, 255, 255, 0.08); border-color: #4FC3F7; color: #fff; }
+        .mascota-emoji { font-size: 1.8rem; display: inline-block; animation: saltarMascota 2s infinite; }
+        @keyframes saltarMascota { 0%, 100% { transform: translateY(0) rotate(0deg); } 25% { transform: translateY(-8px) rotate(-8deg); } 75% { transform: translateY(-8px) rotate(8deg); } }
+        .estado-sonido { font-size: 0.8rem; color: #999; margin-top: 4px; font-weight: 600; }
+        .info-extra { display: flex; justify-content: center; gap: 10px; margin-top: 8px; color: #888; font-size: 0.8rem; flex-wrap: wrap; font-weight: 600; }
+        .info-extra span { background: #f5f5f5; padding: 4px 14px; border-radius: 30px; transition: all 0.3s; }
+        body.tema-espacio .info-extra span { background: rgba(255, 255, 255, 0.07); color: #aaa; }
+        .indicador-progreso { display: flex; justify-content: center; gap: 3px; margin: 6px 0; flex-wrap: wrap; padding: 0 5px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; display: inline-block; transition: all 0.3s; flex-shrink: 0; }
+        .dot.activo { background: #6BCB77; transform: scale(1.3); }
+        .dot.visto { background: #FFD93D; }
+        body.tema-espacio .dot { background: #444; }
+        body.tema-espacio .dot.activo { background: #4FC3F7; }
+        body.tema-espacio .dot.visto { background: #FFD93D; }
+        .juego-opciones { display: flex; justify-content: center; gap: 16px; margin: 16px 0; flex-wrap: wrap; }
+        .juego-opcion { width: 80px; height: 80px; border-radius: 50%; border: 4px solid #ddd; font-size: 2.5rem; font-weight: 700; cursor: pointer; transition: all 0.3s; background: white; display: flex; align-items: center; justify-content: center; touch-action: manipulation; user-select: none; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; letter-spacing: 2px; }
+        .juego-opcion:hover:not(:disabled) { transform: scale(1.08); border-color: #6BCB77; }
+        .juego-opcion:active:not(:disabled) { transform: scale(0.92); }
+        .juego-opcion:disabled { opacity: 0.6; cursor: not-allowed; }
+        .juego-opcion.correcta { border-color: #6BCB77; background: #E8F5E9; animation: correcto 0.5s; }
+        .juego-opcion.incorrecta { border-color: #FF6B6B; background: #FFEBEE; animation: incorrecto 0.5s; }
+        @keyframes correcto { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+        @keyframes incorrecto { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-15px); } 75% { transform: translateX(15px); } }
+        #juegoResultado { font-size: 1.3rem; margin: 8px 0; min-height: 45px; font-weight: 700; }
+        .panel-progreso { text-align: left; padding: 15px; }
+        .panel-progreso h3 { margin: 12px 0 6px; font-size: 1.1rem; color: #6C4A7C; font-weight: 700; }
+        body.tema-espacio .panel-progreso h3 { color: #CE93D8; }
+        .panel-progreso .barra-progreso { width: 100%; height: 18px; background: #e8e8e8; border-radius: 10px; overflow: hidden; margin: 6px 0; }
+        .panel-progreso .barra-progreso .relleno { height: 100%; background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77); border-radius: 10px; transition: width 0.5s; }
+        .panel-progreso .medalla { display: inline-block; font-size: 2.8rem; margin: 6px; animation: saltarMascota 2s infinite; }
+        .panel-progreso .estadistica { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.95rem; font-weight: 600; }
+        body.tema-espacio .panel-progreso .estadistica { border-bottom-color: rgba(255, 255, 255, 0.08); }
+        .filtro-tipo { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+        .filtro-tipo .btn-filtro { padding: 6px 16px; border-radius: 25px; border: 2px solid #ddd; background: white; cursor: pointer; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; font-size: 0.8rem; font-weight: 700; transition: all 0.3s; color: #666; touch-action: manipulation; }
+        .filtro-tipo .btn-filtro:active { transform: scale(0.95); }
+        .filtro-tipo .btn-filtro.activo { background: #6BCB77; color: white; border-color: #6BCB77; }
+        body.tema-espacio .filtro-tipo .btn-filtro { background: #2a2a4a; border-color: #444; color: #aaa; }
+        body.tema-espacio .filtro-tipo .btn-filtro.activo { background: #4FC3F7; border-color: #4FC3F7; color: #fff; }
+        .personalizacion { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 8px 0; }
+        .personalizacion .opcion { padding: 8px 16px; border-radius: 30px; border: 3px solid #ddd; cursor: pointer; transition: all 0.3s; background: white; font-size: 1.4rem; touch-action: manipulation; user-select: none; font-weight: 700; }
+        .personalizacion .opcion:active { transform: scale(0.92); }
+        .personalizacion .opcion.seleccionado { border-color: #6BCB77; background: #E8F5E9; box-shadow: 0 0 20px rgba(107, 203, 119, 0.25); }
+        body.tema-espacio .personalizacion .opcion { background: #2a2a4a; border-color: #444; color: #fff; }
+        body.tema-espacio .personalizacion .opcion.seleccionado { border-color: #4FC3F7; background: #1a3a5a; }
+        .configuracion { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 8px 0; }
+        .configuracion label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; }
+        .configuracion input[type="range"] { width: 80px; accent-color: #6BCB77; }
+        .rima { font-size: 1.05rem; color: #6C4A7C; background: #F3E8FF; padding: 12px 18px; border-radius: 30px; margin: 8px 0; animation: fadeIn 0.4s; line-height: 1.4; font-weight: 600; }
+        body.tema-espacio .rima { background: rgba(255, 255, 255, 0.07); color: #aaa; }
+        .pantalla-inicio { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 248, 231, 0.97); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; gap: 20px; padding: 20px; text-align: center; }
+        .icono-inicio { width: 150px; height: 150px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); animation: flotarIcono 3s ease-in-out infinite; object-fit: contain; background: white; padding: 8px; }
+        @keyframes flotarIcono { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.05); } }
+        .pantalla-inicio h1 { font-size: 3.5rem; color: #FF6B6B; line-height: 1.2; font-weight: 700; }
+        .pantalla-inicio p { font-size: 1.3rem; color: #6C4A7C; max-width: 500px; font-weight: 600; }
+        .pantalla-inicio .btn-iniciar { background: #6BCB77; border: none; padding: 22px 50px; border-radius: 60px; font-size: 1.8rem; font-weight: 700; color: white; cursor: pointer; box-shadow: 0 6px 0 #2E7D32; transition: all 0.1s; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; animation: pulse 1.5s infinite; touch-action: manipulation; }
+        .pantalla-inicio .btn-iniciar:active { transform: translateY(5px); box-shadow: 0 1px 0 #2E7D32; }
+        .pantalla-inicio .btn-iniciar:hover { transform: scale(1.03); }
+        .oculto { display: none !important; }
+        #celebracion { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 9999; display: none; justify-content: center; align-items: center; flex-direction: column; gap: 20px; padding: 20px; text-align: center; animation: fadeIn 0.8s ease; }
+        #celebracion h1 { color: #FFD93D; font-size: 3.5rem; font-weight: 700; text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); animation: saltarMascota 1s infinite; }
+        #celebracion p { color: white; font-size: 1.8rem; font-weight: 600; max-width: 500px; }
+        #celebracion .btn { font-size: 1.5rem; padding: 18px 45px; background: #6BCB77; box-shadow: 0 5px 0 #2E7D32; border-radius: 60px; animation: pulse 1.5s infinite; }
+        #celebracion .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #2E7D32; }
+        .confeti { position: fixed; width: 12px; height: 12px; border-radius: 2px; top: -20px; animation: caerConfeti 3s linear infinite; pointer-events: none; z-index: 10000; }
+        @keyframes caerConfeti { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; } }
+        .fuego { position: fixed; font-size: 3rem; pointer-events: none; z-index: 10001; animation: explotar 1.5s ease-out forwards; }
+        @keyframes explotar { 0% { transform: scale(0) rotate(0deg); opacity: 0; } 30% { transform: scale(1.5) rotate(180deg); opacity: 1; } 100% { transform: scale(2) rotate(360deg) translateY(-100px); opacity: 0; } }
+        @media (max-width: 1024px) { .contenedor { padding: 25px 30px; border-radius: 50px; max-height: 94vh; width: 94%; } .titulo-principal { font-size: 2rem; } .titulo-principal .mia { font-size: 2.4rem; } .emergente { font-size: 120px; } .escenario { height: 220px; } .btn { padding: 11px 20px; font-size: 0.95rem; min-height: 42px; } .tab-btn { padding: 8px 14px; font-size: 0.8rem; min-height: 36px; } .juego-opcion { width: 70px; height: 70px; font-size: 2.2rem; } #celebracion h1 { font-size: 2.8rem; } #celebracion p { font-size: 1.4rem; } .icono-inicio { width: 130px; height: 130px; border-radius: 25px; } }
+        @media (max-width: 767px) { .contenedor { padding: 16px 14px; border-radius: 35px; width: 96%; margin: 10px auto; max-height: 97vh; border-width: 3px; } .titulo-principal { font-size: 1.5rem; } .titulo-principal .mia { font-size: 1.8rem; } .subtitulo { font-size: 0.8rem; } .botones { gap: 8px; flex-direction: column; align-items: center; } .botones .btn { width: 100%; max-width: 280px; padding: 13px 18px; font-size: 1rem; min-height: 48px; border-radius: 35px; } .tabs { gap: 5px; } .tab-btn { padding: 8px 10px; font-size: 0.7rem; min-height: 34px; min-width: 45px; flex: 1; border-radius: 25px; max-width: none; } .emergente { font-size: 90px; letter-spacing: 4px; } .escenario { height: 160px; border-radius: 30px; border-width: 2px; } .indicador-sonido { gap: 10px; } .btn.repetir { font-size: 0.95rem; padding: 10px 20px; min-height: 44px; min-width: 100px; } .barra-sonido { width: 70px; height: 6px; } #iconoOido { font-size: 1.4rem; } .mascota { font-size: 0.95rem; padding: 8px 14px; min-height: 44px; border-radius: 30px; } .mascota-emoji { font-size: 1.5rem; } .info-extra { gap: 6px; font-size: 0.7rem; } .info-extra span { padding: 3px 10px; border-radius: 20px; } .dot { width: 8px; height: 8px; } .indicador-progreso { gap: 3px; } .juego-opcion { width: 60px; height: 60px; font-size: 1.8rem; border-width: 3px; } .juego-opciones { gap: 10px; } #juegoResultado { font-size: 1.1rem; min-height: 38px; } .filtro-tipo { gap: 5px; } .filtro-tipo .btn-filtro { padding: 5px 12px; font-size: 0.7rem; border-radius: 20px; } .panel-progreso { padding: 8px; } .panel-progreso h3 { font-size: 0.95rem; } .panel-progreso .estadistica { font-size: 0.8rem; padding: 5px 0; } .panel-progreso .medalla { font-size: 2.2rem; margin: 4px; } .panel-progreso .barra-progreso { height: 14px; } .rima { font-size: 0.9rem; padding: 10px 14px; } .personalizacion .opcion { padding: 6px 12px; font-size: 1.2rem; border-radius: 25px; border-width: 2px; } .configuracion { gap: 10px; } .configuracion label { font-size: 0.8rem; } .configuracion input[type="range"] { width: 60px; } .pantalla-inicio h1 { font-size: 2.5rem; } .pantalla-inicio p { font-size: 1.1rem; } .pantalla-inicio .btn-iniciar { padding: 16px 35px; font-size: 1.4rem; border-radius: 50px; } #celebracion h1 { font-size: 2.2rem; } #celebracion p { font-size: 1.1rem; } #celebracion .btn { font-size: 1.1rem; padding: 14px 30px; } .fuego { font-size: 2rem; } .icono-inicio { width: 110px; height: 110px; border-radius: 22px; } }
+        @media (max-width: 380px) { .contenedor { padding: 12px 10px; border-radius: 25px; width: 98%; } .titulo-principal { font-size: 1.2rem; } .titulo-principal .mia { font-size: 1.4rem; } .emergente { font-size: 70px; letter-spacing: 2px; } .escenario { height: 130px; border-radius: 20px; } .btn { font-size: 0.85rem; padding: 10px 14px; min-height: 40px; max-width: 220px; } .tab-btn { font-size: 0.6rem; padding: 5px 8px; min-height: 28px; min-width: 35px; } .juego-opcion { width: 50px; height: 50px; font-size: 1.5rem; border-width: 2px; } .juego-opciones { gap: 6px; } .mascota { font-size: 0.8rem; padding: 6px 10px; min-height: 36px; } .mascota-emoji { font-size: 1.2rem; } .btn.repetir { font-size: 0.8rem; padding: 8px 14px; min-height: 36px; min-width: 70px; } .barra-sonido { width: 50px; height: 5px; } #iconoOido { font-size: 1.1rem; } .info-extra { font-size: 0.6rem; gap: 4px; } .info-extra span { padding: 2px 8px; } .dot { width: 6px; height: 6px; } .pantalla-inicio h1 { font-size: 2rem; } .pantalla-inicio p { font-size: 0.9rem; } .pantalla-inicio .btn-iniciar { padding: 12px 25px; font-size: 1.1rem; } .panel-progreso .estadistica { font-size: 0.7rem; } #celebracion h1 { font-size: 1.8rem; } #celebracion p { font-size: 1rem; } #celebracion .btn { font-size: 0.95rem; padding: 12px 25px; } .fuego { font-size: 1.5rem; } .icono-inicio { width: 90px; height: 90px; border-radius: 18px; } }
+        @media (max-height: 500px) and (orientation: landscape) { .contenedor { max-height: 98vh; padding: 12px 20px; } .escenario { height: 120px; } .emergente { font-size: 70px; letter-spacing: 2px; } .titulo-principal { font-size: 1.3rem; } .titulo-principal .mia { font-size: 1.5rem; } .botones .btn { padding: 8px 14px; font-size: 0.8rem; min-height: 34px; max-width: 180px; } .mascota { font-size: 0.8rem; padding: 6px 12px; min-height: 34px; } .tab-btn { padding: 4px 10px; font-size: 0.65rem; min-height: 28px; } .indicador-progreso { margin: 3px 0; } .dot { width: 6px; height: 6px; } .juego-opcion { width: 45px; height: 45px; font-size: 1.3rem; } #celebracion h1 { font-size: 1.8rem; } #celebracion p { font-size: 1rem; } .icono-inicio { width: 80px; height: 80px; border-radius: 15px; } }
+        @supports (padding: max(0px)) { .contenedor { padding-left: max(14px, env(safe-area-inset-left)); padding-right: max(14px, env(safe-area-inset-right)); padding-top: max(16px, env(safe-area-inset-top)); padding-bottom: max(16px, env(safe-area-inset-bottom)); } }
+        #selectorVoz:hover { border-color: #6BCB77 !important; transform: scale(1.02); }
+        #selectorVoz:focus { border-color: #6BCB77 !important; box-shadow: 0 0 15px rgba(107, 203, 119, 0.3); }
     </style>
 </head>
 <body class="tema-escuela">
@@ -1338,19 +208,15 @@
                 <button class="btn-filtro" data-tipo="letras">🔤 Letras</button>
                 <button class="btn-filtro" data-tipo="numeros">🔢 Números</button>
             </div>
-
             <div class="escenario" id="escenario">
                 <div class="emergente" id="emergente">A</div>
             </div>
-
             <div class="indicador-progreso" id="indicadorProgreso"></div>
-
             <div class="botones">
                 <button class="btn" id="anterior">⬅ Anterior</button>
                 <button class="btn secundario" id="aleatorio">🎲 Sorpresa</button>
                 <button class="btn" id="siguiente">Siguiente ➡</button>
             </div>
-
             <div class="indicador-sonido">
                 <button class="btn repetir" id="btnSonido">🔊 Repetir</button>
                 <div class="barra-sonido" id="barraSonido">
@@ -1358,18 +224,14 @@
                 </div>
                 <span id="iconoOido">👂</span>
             </div>
-
             <div>
                 <span class="mascota" id="mensaje">
                     <span class="mascota-emoji">🧸</span>
                     Mia dice: ¡A de Avión! ✈️
                 </span>
             </div>
-
             <div class="estado-sonido" id="estadoSonido">🔇 Haz clic en "Repetir" para escuchar</div>
-
             <div class="rima" id="rima"></div>
-
             <div class="info-extra">
                 <span>🔁 Repeticiones: <span id="contadorRepeticiones">0</span></span>
                 <span>⭐ Aprendidos: <span id="progresoLetras">1</span>/<span id="totalLetras">37</span></span>
@@ -1409,28 +271,19 @@
                 </div>
 
                 <h3>📈 Estadísticas</h3>
-                <div class="estadistica">
-                    <span>🔁 Repeticiones totales</span>
-                    <span id="estRepeticiones">0</span>
-                </div>
-                <div class="estadistica">
-                    <span>✅ Juego acertado</span>
-                    <span id="estAciertos">0</span>
-                </div>
-                <div class="estadistica">
-                    <span>❌ Juego fallado</span>
-                    <span id="estFallos">0</span>
-                </div>
-                <div class="estadistica">
-                    <span>🌟 Estrellas</span>
-                    <span id="estEstrellas">0</span>
-                </div>
-                <div class="estadistica">
-                    <span>📅 Última sesión</span>
-                    <span id="estUltimaSesion">-</span>
-                </div>
+                <div class="estadistica"><span>🔁 Repeticiones totales</span><span id="estRepeticiones">0</span></div>
+                <div class="estadistica"><span>✅ Juego acertado</span><span id="estAciertos">0</span></div>
+                <div class="estadistica"><span>❌ Juego fallado</span><span id="estFallos">0</span></div>
+                <div class="estadistica"><span>🌟 Estrellas</span><span id="estEstrellas">0</span></div>
+                <div class="estadistica"><span>📅 Última sesión</span><span id="estUltimaSesion">-</span></div>
 
                 <button class="btn secundario" id="btnReiniciar" style="margin-top:12px; width:100%; max-width:280px;">🔄 Reiniciar progreso</button>
+
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center;">
+                    <button class="btn" id="btnExportar" style="flex: 1; min-width: 130px; max-width: 280px;">💾 Exportar</button>
+                    <button class="btn secundario" id="btnImportar" style="flex: 1; min-width: 130px; max-width: 280px;">📥 Importar</button>
+                </div>
+                <input type="file" id="inputImportar" accept=".json" style="display:none;">
             </div>
         </div>
 
@@ -1454,49 +307,44 @@
 
             <h3 style="font-size:1rem; color:#6C4A7C; margin-top:12px; font-weight:700;">🔊 Voz de Mia</h3>
             <div style="margin: 8px 0;">
-                <select id="selectorVoz" style="
-                    width: 100%;
-                    max-width: 320px;
-                    padding: 10px 15px;
-                    border-radius: 25px;
-                    border: 3px solid #C084FC;
-                    background: white;
-                    font-family: 'Quicksand', sans-serif;
-                    font-size: 0.9rem;
-                    font-weight: 600;
-                    color: #6C4A7C;
-                    cursor: pointer;
-                    outline: none;
-                ">
+                <select id="selectorVoz" style="width: 100%; max-width: 320px; padding: 10px 15px; border-radius: 25px; border: 3px solid #C084FC; background: white; font-family: 'Quicksand', sans-serif; font-size: 0.9rem; font-weight: 600; color: #6C4A7C; cursor: pointer; outline: none;">
                     <option value="">Cargando voces...</option>
                 </select>
-                <p style="font-size: 0.8rem; color: #999; margin-top: 6px;">
-                    Elige la voz que más te guste para Mia (⭐ local = más estable, ☁️ requiere internet)
-                </p>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 6px;">Elige la voz (⭐ local = más estable, ☁️ requiere internet)</p>
             </div>
 
             <h3 style="font-size:1rem; color:#6C4A7C; margin-top:12px; font-weight:700;">🎚️ Ajustes de voz</h3>
             <div class="configuracion">
-                <label>
-                    Velocidad:
-                    <input type="range" id="vozVelocidad" min="0.3" max="1.0" step="0.05" value="0.55">
-                    <span id="vozVelocidadValor">0.55</span>
-                </label>
-                <label>
-                    Tono:
-                    <input type="range" id="vozTono" min="0.8" max="2.0" step="0.1" value="1.6">
-                    <span id="vozTonoValor">1.6</span>
-                </label>
+                <label>🔊 Volumen:<input type="range" id="vozVolumen" min="0.1" max="1.0" step="0.1" value="1.0"><span id="vozVolumenValor">1.0</span></label>
+                <label>⏩ Velocidad:<input type="range" id="vozVelocidad" min="0.3" max="1.0" step="0.05" value="0.55"><span id="vozVelocidadValor">0.55</span></label>
+                <label>🎵 Tono:<input type="range" id="vozTono" min="0.8" max="2.0" step="0.1" value="1.6"><span id="vozTonoValor">1.6</span></label>
             </div>
 
             <button class="btn" id="btnGuardarPreferencias" style="margin-top:10px; width:100%; max-width:280px;">💾 Guardar preferencias</button>
+
+            <h3 style="font-size:1rem; color:#6C4A7C; margin-top:16px; font-weight:700;">🔐 Seguridad</h3>
+            <div style="text-align: center; margin-top: 8px;">
+                <button class="btn secundario" id="btnCambiarPin" style="width:100%; max-width:280px;">🔑 Cambiar PIN</button>
+                <p style="font-size: 0.75rem; color: #999; margin-top: 6px;">PIN por defecto: <strong>1234</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 👶 MODAL MODO PADRES -->
+    <div id="modalPadres" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; padding: 20px;">
+        <div style="background: white; border-radius: 40px; padding: 30px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border: 4px solid #FFD93D;">
+            <h2 style="font-size: 1.5rem; color: #6C4A7C; margin-bottom: 10px; font-family: 'Quicksand', sans-serif;">👶 Modo Padres</h2>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px; font-family: 'Quicksand', sans-serif;">Introduce el PIN para acceder</p>
+            <input type="password" id="inputPin" maxlength="4" inputmode="numeric" pattern="[0-9]*" style="width: 180px; padding: 15px; font-size: 2rem; text-align: center; letter-spacing: 15px; border: 3px solid #C084FC; border-radius: 25px; font-family: 'Quicksand', sans-serif; font-weight: 700; color: #6C4A7C; outline: none;" placeholder="····">
+            <p id="pinError" style="color: #FF6B6B; font-size: 0.85rem; margin-top: 10px; min-height: 20px; font-family: 'Quicksand', sans-serif; font-weight: 600;"></p>
+            <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: center;">
+                <button id="btnPinCancelar" style="background: #e8e8e8; border: none; padding: 12px 24px; border-radius: 25px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; color: #666;">Cancelar</button>
+                <button id="btnPinAceptar" style="background: #6BCB77; border: none; padding: 12px 24px; border-radius: 25px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; color: white; box-shadow: 0 3px 0 #2E7D32;">Aceptar</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        // CONFIGURACIÓN DEL BACKEND
-        // ============================================================
         const BACKEND_URL = 'https://backend-mia.arnaldoeuropa66.workers.dev';
 
         const elementos = [
@@ -1590,26 +438,24 @@
             ultimaSesion: new Date().toLocaleString(),
             tema: 'escuela',
             mascota: '🧸',
+            vozVolumen: 1.0,
             vozVelocidad: 0.55,
             vozTono: 1.6,
             vozSeleccionada: null,
-            filtro: 'todas'
+            filtro: 'todas',
+            pin: '1234'
         };
 
         let estaSonando = false;
         let audioActivado = false;
         let juegoBloqueado = false;
         let vocesDisponibles = [];
-
-        // ✅ Variables para cola de voz y debounce de backend
         let colaVoz = [];
         let hablandoAhora = false;
         let syncTimeout = null;
+        let accionPendientePadres = null;
 
-        // Voces problemáticas conocidas (fallan en Chrome/Android)
-        const VOCES_PROBLEMATICAS = [
-            'Google español de Estados Unidos'
-        ];
+        const VOCES_PROBLEMATICAS = ['Google español de Estados Unidos'];
 
         const emergente = document.getElementById('emergente');
         const mensaje = document.getElementById('mensaje');
@@ -1641,8 +487,7 @@
                 const confeti = document.createElement('div');
                 confeti.className = 'confeti';
                 confeti.style.left = Math.random() * 100 + '%';
-                confeti.style.background = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4FC3F7', '#C084FC', '#FF8A9E'][Math.floor(Math
-                    .random() * 6)];
+                confeti.style.background = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4FC3F7', '#C084FC', '#FF8A9E'][Math.floor(Math.random() * 6)];
                 confeti.style.animationDuration = (2 + Math.random() * 2) + 's';
                 confeti.style.animationDelay = (Math.random() * 2) + 's';
                 confeti.style.width = (6 + Math.random() * 10) + 'px';
@@ -1664,25 +509,66 @@
         }
 
         function reiniciarProgreso() {
-            if (confirm('⚠️ ¿Seguro que quieres reiniciar todo el progreso?')) {
-                localStorage.removeItem('miaProgreso');
-                estado.vistos = new Set();
-                estado.contadorRepeticiones = 0;
-                estado.nivel = 1;
-                estado.estrellas = 0;
-                estado.aciertos = 0;
-                estado.fallos = 0;
-                estado.indiceActual = 0;
-                celebracion.style.display = 'none';
-                actualizarUIProgreso();
-                mostrarElemento(0);
-                setTimeout(() => iniciarJuego(), 500);
-                alert('🔄 Progreso reiniciado');
-            }
+            pedirPinPadres(() => {
+                if (confirm('⚠️ ¿Seguro que quieres reiniciar todo el progreso?')) {
+                    localStorage.removeItem('miaProgreso');
+                    estado.vistos = new Set();
+                    estado.contadorRepeticiones = 0;
+                    estado.nivel = 1;
+                    estado.estrellas = 0;
+                    estado.aciertos = 0;
+                    estado.fallos = 0;
+                    estado.indiceActual = 0;
+                    celebracion.style.display = 'none';
+                    actualizarUIProgreso();
+                    mostrarElemento(0);
+                    setTimeout(() => iniciarJuego(), 500);
+                    alert('🔄 Progreso reiniciado');
+                }
+            });
         }
 
         // ============================================================
-        // Sincronización con backend con DEBOUNCE
+        // 👶 MODO PADRES
+        // ============================================================
+        function pedirPinPadres(accionCallback) {
+            accionPendientePadres = accionCallback;
+            const modal = document.getElementById('modalPadres');
+            const input = document.getElementById('inputPin');
+            const error = document.getElementById('pinError');
+            input.value = '';
+            error.textContent = '';
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 100);
+        }
+
+        function verificarPin() {
+            const input = document.getElementById('inputPin');
+            const error = document.getElementById('pinError');
+            const pinIngresado = input.value.trim();
+            if (pinIngresado === estado.pin) {
+                document.getElementById('modalPadres').style.display = 'none';
+                if (accionPendientePadres) {
+                    accionPendientePadres();
+                    accionPendientePadres = null;
+                }
+            } else {
+                error.textContent = '❌ PIN incorrecto. Inténtalo de nuevo.';
+                input.value = '';
+                input.focus();
+                input.style.animation = 'none';
+                void input.offsetWidth;
+                input.style.animation = 'incorrecto 0.5s';
+            }
+        }
+
+        function cerrarModalPadres() {
+            document.getElementById('modalPadres').style.display = 'none';
+            accionPendientePadres = null;
+        }
+
+        // ============================================================
+        // BACKEND
         // ============================================================
         function sincronizarProgresoConBackend() {
             clearTimeout(syncTimeout);
@@ -1734,7 +620,7 @@
         }
 
         // ============================================================
-        // GESTIÓN DE VOCES
+        // VOCES
         // ============================================================
         function cargarVocesDisponibles() {
             if (!('speechSynthesis' in window)) {
@@ -1749,61 +635,34 @@
             }
             llenarSelectorVoces();
         }
-        // ============================================================
-// 🔥 PRECARGA DE VOCES - "Despierta" el motor TTS
-// ============================================================
-function precargarMotorDeVoz() {
-    if (!('speechSynthesis' in window)) return;
 
-    console.log('🔥 Precargando motor de voz...');
-
-    // 1️⃣ Fuerza la carga inicial de voces
-    window.speechSynthesis.getVoices();
-    
-    // 2️⃣ Reproduce un utterance VACÍO para despertar el motor
-    // (no se oye nada, pero inicializa el motor TTS)
-    const calentamiento = new SpeechSynthesisUtterance('');
-    calentamiento.volume = 0;  // volumen 0 = silencioso
-    calentamiento.rate = 1;
-    calentamiento.pitch = 1;
-    
-    // Timeout para evitar que se quede colgado
-    const timeoutId = setTimeout(() => {
-        console.log('⚠️ Precarga tardó demasiado, continuando...');
-    }, 3000);
-
-    calentamiento.onstart = () => {
-        console.log('🔥 Motor de voz despertando...');
-    };
-
-    calentamiento.onend = () => {
-        clearTimeout(timeoutId);
-        console.log('✅ Motor de voz listo');
-    };
-
-    calentamiento.onerror = (e) => {
-        clearTimeout(timeoutId);
-        // Silencioso: es normal que falle con texto vacío en algunos navegadores
-        if (e.error !== 'interrupted' && e.error !== 'canceled') {
-            console.log('ℹ️ Precarga completada (con aviso):', e.error);
+        function precargarMotorDeVoz() {
+            if (!('speechSynthesis' in window)) return;
+            console.log('🔥 Precargando motor de voz...');
+            window.speechSynthesis.getVoices();
+            const calentamiento = new SpeechSynthesisUtterance('');
+            calentamiento.volume = 0;
+            calentamiento.rate = 1;
+            calentamiento.pitch = 1;
+            const timeoutId = setTimeout(() => console.log('⚠️ Precarga tardó demasiado'), 3000);
+            calentamiento.onstart = () => console.log('🔥 Motor de voz despertando...');
+            calentamiento.onend = () => { clearTimeout(timeoutId); console.log('✅ Motor de voz listo'); };
+            calentamiento.onerror = (e) => {
+                clearTimeout(timeoutId);
+                if (e.error !== 'interrupted' && e.error !== 'canceled') {
+                    console.log('ℹ️ Precarga completada (con aviso):', e.error);
+                }
+            };
+            window.speechSynthesis.speak(calentamiento);
         }
-    };
-
-    window.speechSynthesis.speak(calentamiento);
-}
 
         function llenarSelectorVoces() {
             const selector = document.getElementById('selectorVoz');
             if (!selector) return;
             selector.innerHTML = '';
-
-            const vocesFiltradas = vocesDisponibles.filter(v =>
-                !VOCES_PROBLEMATICAS.includes(v.name)
-            );
-
+            const vocesFiltradas = vocesDisponibles.filter(v => !VOCES_PROBLEMATICAS.includes(v.name));
             const vocesEspanol = vocesFiltradas.filter(v => v.lang.startsWith('es'));
             const otrasVoces = vocesFiltradas.filter(v => !v.lang.startsWith('es'));
-
             vocesEspanol.sort((a, b) => (b.localService ? 1 : 0) - (a.localService ? 1 : 0));
 
             const opcionDefault = document.createElement('option');
@@ -1837,16 +696,13 @@ function precargarMotorDeVoz() {
                 selector.appendChild(grupoOtras);
             }
 
-            if (estado.vozSeleccionada) {
-                selector.value = estado.vozSeleccionada;
-            }
+            if (estado.vozSeleccionada) selector.value = estado.vozSeleccionada;
 
             selector.addEventListener('change', function() {
                 estado.vozSeleccionada = this.value || null;
                 guardarProgreso();
                 reproducirSonido('¡Hola! Soy Mia. ¡Vamos a aprender!');
             });
-
             console.log(`✅ Selector de voces llenado (${vocesFiltradas.length} disponibles, ${VOCES_PROBLEMATICAS.length} filtradas)`);
         }
 
@@ -1854,64 +710,26 @@ function precargarMotorDeVoz() {
             if (!vocesDisponibles || vocesDisponibles.length === 0) {
                 vocesDisponibles = window.speechSynthesis.getVoices();
             }
-
             if (estado.vozSeleccionada && !VOCES_PROBLEMATICAS.includes(estado.vozSeleccionada)) {
                 const vozManual = vocesDisponibles.find(v => v.name === estado.vozSeleccionada);
-                if (vozManual) {
-                    console.log('🎤 Usando voz manual:', vozManual.name);
-                    return vozManual;
-                }
+                if (vozManual) { console.log('🎤 Usando voz manual:', vozManual.name); return vozManual; }
             }
-
-            const nombresPreferidos = [
-                'Microsoft Sabina', 'Microsoft Helena', 'Microsoft Laura',
-                'Mónica', 'Monica', 'Paulina', 'Marisol', 'Lucía', 'Lucia'
-            ];
-
+            const nombresPreferidos = ['Microsoft Sabina', 'Microsoft Helena', 'Microsoft Laura', 'Mónica', 'Monica', 'Paulina', 'Marisol', 'Lucía', 'Lucia'];
             for (const nombre of nombresPreferidos) {
-                const voz = vocesDisponibles.find(v =>
-                    v.lang.startsWith('es') &&
-                    v.name.includes(nombre) &&
-                    v.localService
-                );
-                if (voz) {
-                    console.log('🎤 Usando voz preferida local:', voz.name);
-                    return voz;
-                }
+                const voz = vocesDisponibles.find(v => v.lang.startsWith('es') && v.name.includes(nombre) && v.localService);
+                if (voz) { console.log('🎤 Usando voz preferida local:', voz.name); return voz; }
             }
-
-            let voz = vocesDisponibles.find(v =>
-                v.lang.startsWith('es') &&
-                v.localService &&
-                !VOCES_PROBLEMATICAS.includes(v.name)
-            );
-            if (voz) {
-                console.log('🎤 Usando voz local en español:', voz.name);
-                return voz;
-            }
-
-            voz = vocesDisponibles.find(v =>
-                v.lang.startsWith('es') &&
-                !VOCES_PROBLEMATICAS.includes(v.name)
-            );
-            if (voz) {
-                console.log('🎤 Usando voz en español:', voz.name);
-                return voz;
-            }
-
+            let voz = vocesDisponibles.find(v => v.lang.startsWith('es') && v.localService && !VOCES_PROBLEMATICAS.includes(v.name));
+            if (voz) { console.log('🎤 Usando voz local en español:', voz.name); return voz; }
+            voz = vocesDisponibles.find(v => v.lang.startsWith('es') && !VOCES_PROBLEMATICAS.includes(v.name));
+            if (voz) { console.log('🎤 Usando voz en español:', voz.name); return voz; }
             console.log('⚠️ No hay voces en español, usando la primera');
             return vocesDisponibles[0] || null;
         }
 
         function reproducirSonido(texto) {
-            if (!audioActivado) {
-                estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
-                return;
-            }
-            if (!('speechSynthesis' in window)) {
-                estadoSonido.textContent = '⚠️ Tu navegador no soporta voz';
-                return;
-            }
+            if (!audioActivado) { estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero'; return; }
+            if (!('speechSynthesis' in window)) { estadoSonido.textContent = '⚠️ Tu navegador no soporta voz'; return; }
             _hablarInterno(texto);
         }
 
@@ -1919,56 +737,42 @@ function precargarMotorDeVoz() {
             if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
                 window.speechSynthesis.cancel();
             }
-
             const utterance = new SpeechSynthesisUtterance(texto);
             utterance.lang = 'es-ES';
             utterance.rate = estado.vozVelocidad;
             utterance.pitch = estado.vozTono;
-            utterance.volume = 1;
-
+            utterance.volume = estado.vozVolumen;
             const vozElegida = obtenerVozElegida();
-            if (vozElegida) {
-                utterance.voice = vozElegida;
-                utterance.lang = vozElegida.lang;
-            }
-
-            estaSonando = true;
-            hablandoAhora = true;
+            if (vozElegida) { utterance.voice = vozElegida; utterance.lang = vozElegida.lang; }
+            estaSonando = true; hablandoAhora = true;
             emergente.classList.add('sonando');
             barraSonido.classList.add('activa');
             iconoOido.textContent = '🔊';
             estadoSonido.textContent = '🎤 ' + texto;
-
             utterance.onend = function() {
-                estaSonando = false;
-                hablandoAhora = false;
+                estaSonando = false; hablandoAhora = false;
                 emergente.classList.remove('sonando');
                 barraSonido.classList.remove('activa');
                 iconoOido.textContent = '👂';
                 estadoSonido.textContent = '✅ ¡Listo!';
             };
-
             utterance.onerror = function(event) {
                 if (event.error === 'interrupted' || event.error === 'canceled') {
                     console.log('🔇 Voz cancelada (normal):', event.error);
                 } else {
                     console.warn('⚠️ Error de voz:', event.error, '| Voz:', utterance.voice?.name);
                 }
-                estaSonando = false;
-                hablandoAhora = false;
+                estaSonando = false; hablandoAhora = false;
                 emergente.classList.remove('sonando');
                 barraSonido.classList.remove('activa');
                 iconoOido.textContent = '👂';
                 estadoSonido.textContent = '✅ ¡Listo!';
             };
-
             window.speechSynthesis.speak(utterance);
         }
 
         function detenerVoz() {
-            colaVoz = [];
-            hablandoAhora = false;
-            estaSonando = false;
+            colaVoz = []; hablandoAhora = false; estaSonando = false;
             window.speechSynthesis.cancel();
             emergente.classList.remove('sonando');
             barraSonido.classList.remove('activa');
@@ -1983,17 +787,12 @@ function precargarMotorDeVoz() {
                 const numeros = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
                 const numTexto = numeros[parseInt(id)] || id;
                 textoFinal = `¡El número ${id}! ${numTexto} ${numTexto} ${numTexto}`;
-            } else if (id === 'M') {
-                textoFinal = '¡M de Mariposa! ¡M! ¡M! ¡Mariposa! 🦋';
-            } else if (id === 'O') {
-                textoFinal = '¡O de Oso! ¡O! ¡O! ¡Oso! 🐻';
-            } else if (id === 'Ñ') {
-                textoFinal = '¡Eñe! ¡Eñe! ¡Eñe de Ñandú! 🐦';
-            } else if (id === 'X') {
-                textoFinal = '¡Equis! ¡Equis! ¡Equis de Xilófono!';
-            } else if (id === 'W') {
-                textoFinal = '¡Doble u! ¡Doble u! ¡Doble u de Wafle! 🧇';
-            } else {
+            } else if (id === 'M') textoFinal = '¡M de Mariposa! ¡M! ¡M! ¡Mariposa! 🦋';
+            else if (id === 'O') textoFinal = '¡O de Oso! ¡O! ¡O! ¡Oso! 🐻';
+            else if (id === 'Ñ') textoFinal = '¡Eñe! ¡Eñe! ¡Eñe de Ñandú! 🐦';
+            else if (id === 'X') textoFinal = '¡Equis! ¡Equis! ¡Equis de Xilófono!';
+            else if (id === 'W') textoFinal = '¡Doble u! ¡Doble u! ¡Doble u de Wafle! 🧇';
+            else {
                 const formas = [
                     `¡${id}! ¡${id}! ¡${id} de ${ejemplo}!`,
                     `¡${id} de ${ejemplo}! ¡${id}!`,
@@ -2005,6 +804,9 @@ function precargarMotorDeVoz() {
             reproducirSonido(textoFinal);
         }
 
+        // ============================================================
+        // PROGRESO
+        // ============================================================
         function guardarProgreso() {
             const data = {
                 indiceActual: estado.indiceActual,
@@ -2017,10 +819,12 @@ function precargarMotorDeVoz() {
                 ultimaSesion: estado.ultimaSesion,
                 tema: estado.tema,
                 mascota: estado.mascota,
+                vozVolumen: estado.vozVolumen,
                 vozVelocidad: estado.vozVelocidad,
                 vozTono: estado.vozTono,
                 vozSeleccionada: estado.vozSeleccionada,
-                filtro: estado.filtro
+                filtro: estado.filtro,
+                pin: estado.pin
             };
             localStorage.setItem('miaProgreso', JSON.stringify(data));
         }
@@ -2040,19 +844,108 @@ function precargarMotorDeVoz() {
                     estado.ultimaSesion = parsed.ultimaSesion || new Date().toLocaleString();
                     estado.tema = parsed.tema || 'escuela';
                     estado.mascota = parsed.mascota || '🧸';
+                    estado.vozVolumen = parsed.vozVolumen !== undefined ? parsed.vozVolumen : 1.0;
                     estado.vozVelocidad = parsed.vozVelocidad || 0.55;
                     estado.vozTono = parsed.vozTono || 1.6;
                     estado.vozSeleccionada = parsed.vozSeleccionada || null;
                     estado.filtro = parsed.filtro || 'todas';
+                    estado.pin = parsed.pin || '1234';
                     return true;
                 } catch (e) { console.error('Error cargando progreso:', e); }
             }
             return false;
         }
 
+        // ============================================================
+        // EXPORTAR / IMPORTAR
+        // ============================================================
+        function exportarProgreso() {
+            const data = {
+                version: '1.0',
+                fecha: new Date().toISOString(),
+                app: 'Mia va al Colegio',
+                progreso: {
+                    indiceActual: estado.indiceActual,
+                    contadorRepeticiones: estado.contadorRepeticiones,
+                    nivel: estado.nivel,
+                    estrellas: estado.estrellas,
+                    vistos: Array.from(estado.vistos),
+                    aciertos: estado.aciertos,
+                    fallos: estado.fallos,
+                    ultimaSesion: estado.ultimaSesion,
+                    tema: estado.tema,
+                    mascota: estado.mascota,
+                    vozVolumen: estado.vozVolumen,
+                    vozVelocidad: estado.vozVelocidad,
+                    vozTono: estado.vozTono,
+                    vozSeleccionada: estado.vozSeleccionada,
+                    filtro: estado.filtro
+                }
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const fecha = new Date().toISOString().slice(0, 10);
+            a.href = url;
+            a.download = `mia-progreso-${fecha}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            console.log('💾 Progreso exportado');
+            alert('💾 ¡Progreso exportado! Guarda el archivo en un lugar seguro.');
+        }
+
+        function importarProgreso(archivo) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.progreso || !data.app) throw new Error('Archivo no válido');
+                    if (confirm('📥 ¿Seguro que quieres importar este progreso? Se sobreescribirá el actual.')) {
+                        const p = data.progreso;
+                        estado.indiceActual = p.indiceActual || 0;
+                        estado.contadorRepeticiones = p.contadorRepeticiones || 0;
+                        estado.nivel = p.nivel || 1;
+                        estado.estrellas = p.estrellas || 0;
+                        estado.vistos = new Set(p.vistos || []);
+                        estado.aciertos = p.aciertos || 0;
+                        estado.fallos = p.fallos || 0;
+                        estado.ultimaSesion = p.ultimaSesion || new Date().toLocaleString();
+                        estado.tema = p.tema || 'escuela';
+                        estado.mascota = p.mascota || '🧸';
+                        estado.vozVolumen = p.vozVolumen !== undefined ? p.vozVolumen : 1.0;
+                        estado.vozVelocidad = p.vozVelocidad || 0.55;
+                        estado.vozTono = p.vozTono || 1.6;
+                        estado.vozSeleccionada = p.vozSeleccionada || null;
+                        estado.filtro = p.filtro || 'todas';
+                        guardarProgreso();
+                        aplicarTema(estado.tema);
+                        document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
+                            el.classList.toggle('seleccionado', el.dataset.mascota === estado.mascota);
+                        });
+                        document.getElementById('vozVolumen').value = estado.vozVolumen;
+                        document.getElementById('vozVolumenValor').textContent = estado.vozVolumen.toFixed(1);
+                        document.getElementById('vozVelocidad').value = estado.vozVelocidad;
+                        document.getElementById('vozVelocidadValor').textContent = estado.vozVelocidad;
+                        document.getElementById('vozTono').value = estado.vozTono;
+                        document.getElementById('vozTonoValor').textContent = estado.vozTono;
+                        crearIndicador();
+                        mostrarElemento(estado.indiceActual);
+                        actualizarPanelProgreso();
+                        alert(`✅ Progreso importado correctamente\n\n📅 Fecha: ${data.fecha ? new Date(data.fecha).toLocaleString() : 'desconocida'}`);
+                        console.log('📥 Progreso importado:', data);
+                    }
+                } catch (err) {
+                    console.error('❌ Error importando:', err);
+                    alert('❌ Error al importar el archivo.\n\nAsegúrate de que es un archivo de progreso válido de Mia va al Colegio.');
+                }
+            };
+            reader.readAsText(archivo);
+        }
+
         function actualizarTituloPestana() {
-            const vistos = estado.vistos.size;
-            document.title = `Mia va al Colegio - ${vistos}/37 ⭐`;
+            document.title = `Mia va al Colegio - ${estado.vistos.size}/37 ⭐`;
         }
 
         function actualizarUIProgreso() {
@@ -2104,8 +997,7 @@ function precargarMotorDeVoz() {
             void emergente.offsetWidth;
             emergente.style.animation = 'rebotar 0.8s ease-out';
             const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
-            mensaje.innerHTML =
-                `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
+            mensaje.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
             if (rimas[item.id]) {
                 rimaDiv.textContent = '🎵 ' + rimas[item.id];
                 rimaDiv.style.display = 'block';
@@ -2142,6 +1034,9 @@ function precargarMotorDeVoz() {
             if (vistos >= 37) medallas[3].style.opacity = '1';
         }
 
+        // ============================================================
+        // JUEGO
+        // ============================================================
         let juegoLetraActual = '';
         let juegoOpcionesArray = [];
 
@@ -2151,9 +1046,7 @@ function precargarMotorDeVoz() {
             document.getElementById('juegoResultado').style.color = '';
             const disponibles = elementos.filter((_, i) => estado.vistos.has(i));
             const filtrados = getElementosFiltrados();
-            const disponiblesFiltrados = disponibles.filter(item =>
-                filtrados.some(f => f.id === item.id)
-            );
+            const disponiblesFiltrados = disponibles.filter(item => filtrados.some(f => f.id === item.id));
             if (disponiblesFiltrados.length < 3) {
                 document.getElementById('juegoResultado').textContent = '😊 ¡Aprende más primero! (Necesitas al menos 3)';
                 document.getElementById('juegoResultado').style.color = '#FF9F43';
@@ -2168,7 +1061,6 @@ function precargarMotorDeVoz() {
             const distractores = shuffled.slice(0, 2);
             juegoOpcionesArray = [objetivo, ...distractores].sort(() => Math.random() - 0.5);
             document.getElementById('juegoPista').textContent = '🔊 ¡Encuentra la respuesta!';
-            document.getElementById('juegoResultado').textContent = '';
             const container = document.getElementById('juegoOpciones');
             container.innerHTML = '';
             juegoOpcionesArray.forEach(op => {
@@ -2186,8 +1078,7 @@ function precargarMotorDeVoz() {
             });
             setTimeout(() => {
                 if (audioActivado) {
-                    const mensaje = '¡Busca! ' + objetivo.id + ' ' + objetivo.id + ' ' + objetivo.id;
-                    reproducirSonido(mensaje);
+                    reproducirSonido('¡Busca! ' + objetivo.id + ' ' + objetivo.id + ' ' + objetivo.id);
                 }
             }, 500);
         }
@@ -2198,8 +1089,7 @@ function precargarMotorDeVoz() {
             botones.forEach(btn => {
                 btn.disabled = true;
                 if (btn.dataset.letra === juegoLetraActual) btn.classList.add('correcta');
-                if (btn.dataset.letra === letraElegida && letraElegida !== juegoLetraActual) btn.classList.add(
-                    'incorrecta');
+                if (btn.dataset.letra === letraElegida && letraElegida !== juegoLetraActual) btn.classList.add('incorrecta');
             });
             if (letraElegida === juegoLetraActual) {
                 estado.aciertos++;
@@ -2244,8 +1134,7 @@ function precargarMotorDeVoz() {
                 const angulo = Math.random() * 2 * Math.PI;
                 const distancia = 80 + Math.random() * 200;
                 setTimeout(() => {
-                    estrella.style.transform =
-                        `translate(${Math.cos(angulo) * distancia}px, ${Math.sin(angulo) * distancia - 150}px) scale(0.1)`;
+                    estrella.style.transform = `translate(${Math.cos(angulo) * distancia}px, ${Math.sin(angulo) * distancia - 150}px) scale(0.1)`;
                     estrella.style.opacity = '0';
                 }, 50);
                 setTimeout(() => { estrella.remove(); }, 1500);
@@ -2268,16 +1157,13 @@ function precargarMotorDeVoz() {
             });
             const item = elementos[estado.indiceActual];
             const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
-            mensaje.innerHTML =
-                `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
+            mensaje.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
             guardarProgreso();
         }
 
         function generarBurbujas() {
             const escenario = document.getElementById('escenario');
-            const colores = ['rgba(255,107,107,0.2)', 'rgba(255,217,61,0.2)', 'rgba(79,195,247,0.2)',
-                'rgba(107,203,119,0.2)', 'rgba(192,132,252,0.2)'
-            ];
+            const colores = ['rgba(255,107,107,0.2)', 'rgba(255,217,61,0.2)', 'rgba(79,195,247,0.2)', 'rgba(107,203,119,0.2)', 'rgba(192,132,252,0.2)'];
             for (let i = 0; i < 12; i++) {
                 const burbuja = document.createElement('div');
                 burbuja.className = 'burbuja';
@@ -2294,101 +1180,104 @@ function precargarMotorDeVoz() {
         }
 
         // ============================================================
-// 📦 SERVICE WORKER - Registro + actualización automática
-// ============================================================
+        // SERVICE WORKER
+        // ============================================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js', { updateViaCache: 'none' })
+                .then((registration) => {
+                    console.log('📦 Service Worker registrado');
+                    registration.update().catch(() => {});
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        console.log('🆕 Nueva versión del SW detectada');
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    console.log('✅ Nueva versión lista');
+                                    mostrarAvisoActualizacion();
+                                } else {
+                                    console.log('🎉 SW instalado por primera vez');
+                                }
+                            }
+                        });
+                    });
+                    if (registration.waiting) mostrarAvisoActualizacion();
+                    let refrescando = false;
+                    navigator.serviceWorker.addEventListener('controllerchange', () => {
+                        if (!refrescando) {
+                            refrescando = true;
+                            console.log('🔄 Recargando con nueva versión...');
+                            window.location.reload();
+                        }
+                    });
+                })
+                .catch((err) => console.log('❌ Error al registrar SW:', err));
 
+                setInterval(() => {
+                    navigator.serviceWorker.getRegistration().then((reg) => {
+                        if (reg) reg.update().catch(() => {});
+                    });
+                }, 30 * 60 * 1000);
 
-// ============================================================
-// 🔔 Aviso al usuario de nueva versión disponible
-// ============================================================
-function mostrarAvisoActualizacion() {
-    if (document.getElementById('avisoActualizacion')) return;
-
-    const aviso = document.createElement('div');
-    aviso.id = 'avisoActualizacion';
-    aviso.innerHTML = `
-        <span style="font-size:1.6rem;">🎉</span>
-        <span style="flex:1; line-height:1.3;">
-            <strong>¡Nueva versión de Mia!</strong><br>
-            <small style="color:#888;">Pulsa para actualizar</small>
-        </span>
-        <button id="btnActualizar" style="
-            background: linear-gradient(135deg, #6BCB77, #4CAF50);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 3px 0 #2E7D32;
-        ">🔄 Actualizar</button>
-    `;
-    aviso.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        background: #fff;
-        color: #333;
-        padding: 14px 20px;
-        border-radius: 50px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-        font-family: 'Quicksand', sans-serif;
-        font-weight: 600;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        z-index: 99999;
-        max-width: 92%;
-        min-width: 280px;
-        border: 3px solid #FFD93D;
-        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    `;
-
-    document.body.appendChild(aviso);
-
-    // Animación de entrada
-    requestAnimationFrame(() => {
-        setTimeout(() => {
-            aviso.style.transform = 'translateX(-50%) translateY(0)';
-        }, 100);
-    });
-
-    const btn = document.getElementById('btnActualizar');
-    btn.addEventListener('click', () => {
-        btn.textContent = '⏳ Actualizando...';
-        btn.disabled = true;
-
-        navigator.serviceWorker.ready.then((reg) => {
-            if (reg.waiting) {
-                reg.waiting.postMessage({ tipo: 'SKIP_WAITING' });
-            }
-        });
-
-        setTimeout(() => {
-            window.location.reload();
-        }, 2000);
-    });
-
-    // Auto-actualización tras 30s
-    setTimeout(() => {
-        if (document.getElementById('avisoActualizacion')) {
-            console.log('⏰ Auto-actualizando tras 30s...');
-            btn.click();
+                navigator.serviceWorker.addEventListener('message', (event) => {
+                    if (event.data && event.data.tipo === 'NUEVA_VERSION') {
+                        console.log('📢 SW notifica versión:', event.data.version);
+                        mostrarAvisoActualizacion();
+                    }
+                });
+            });
         }
-    }, 30000);
-}
-function init() {
+
+        function mostrarAvisoActualizacion() {
+            if (document.getElementById('avisoActualizacion')) return;
+            const aviso = document.createElement('div');
+            aviso.id = 'avisoActualizacion';
+            aviso.innerHTML = `
+                <span style="font-size:1.6rem;">🎉</span>
+                <span style="flex:1; line-height:1.3;">
+                    <strong>¡Nueva versión de Mia!</strong><br>
+                    <small style="color:#888;">Pulsa para actualizar</small>
+                </span>
+                <button id="btnActualizar" style="background: linear-gradient(135deg, #6BCB77, #4CAF50); color: white; border: none; border-radius: 25px; padding: 10px 20px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; box-shadow: 0 3px 0 #2E7D32;">🔄 Actualizar</button>
+            `;
+            aviso.style.cssText = `position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: #fff; color: #333; padding: 14px 20px; border-radius: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 14px; z-index: 99999; max-width: 92%; min-width: 280px; border: 3px solid #FFD93D; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);`;
+            document.body.appendChild(aviso);
+            requestAnimationFrame(() => {
+                setTimeout(() => { aviso.style.transform = 'translateX(-50%) translateY(0)'; }, 100);
+            });
+            const btn = document.getElementById('btnActualizar');
+            btn.addEventListener('click', () => {
+                btn.textContent = '⏳ Actualizando...';
+                btn.disabled = true;
+                navigator.serviceWorker.ready.then((reg) => {
+                    if (reg.waiting) reg.waiting.postMessage({ tipo: 'SKIP_WAITING' });
+                });
+                setTimeout(() => { window.location.reload(); }, 2000);
+            });
+            setTimeout(() => {
+                if (document.getElementById('avisoActualizacion')) {
+                    console.log('⏰ Auto-actualizando tras 30s...');
+                    btn.click();
+                }
+            }, 30000);
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function init() {
             totalLetrasSpan.textContent = elementos.length;
             cargarProgreso();
             generarBurbujas();
             aplicarTema(estado.tema);
+            precargarMotorDeVoz();
+
             document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
                 el.classList.toggle('seleccionado', el.dataset.mascota === estado.mascota);
             });
+            document.getElementById('vozVolumen').value = estado.vozVolumen;
+            document.getElementById('vozVolumenValor').textContent = estado.vozVolumen.toFixed(1);
             document.getElementById('vozVelocidad').value = estado.vozVelocidad;
             document.getElementById('vozVelocidadValor').textContent = estado.vozVelocidad;
             document.getElementById('vozTono').value = estado.vozTono;
@@ -2408,29 +1297,36 @@ function init() {
             console.log('🌐 Backend:', BACKEND_URL);
         }
 
+        // ============================================================
+        // EVENT LISTENERS
+        // ============================================================
         btnIniciar.addEventListener('click', function() {
-    pantallaInicio.classList.add('oculto');
-    contenedorPrincipal.style.display = 'block';
-    audioActivado = true;
-    estadoSonido.textContent = '🔊 Audio activado!';
-    
-    // 🔥 PRIMERO: precarga el motor de voz (aprovecha el gesto del usuario)
-    precargarMotorDeVoz();
-    
-    // ⏱️ Pequeña espera para que el motor se inicialice, luego arranca
-    setTimeout(() => {
-        init();
-    }, 300);
-});
+            pantallaInicio.classList.add('oculto');
+            contenedorPrincipal.style.display = 'block';
+            audioActivado = true;
+            estadoSonido.textContent = '🔊 Audio activado!';
+            precargarMotorDeVoz();
+            setTimeout(() => { init(); }, 300);
+        });
+
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                if (tab === 'personalizar') {
+                    pedirPinPadres(() => {
+                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
+                        btn.classList.add('activo');
+                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('activo'));
+                        document.getElementById('tab-personalizar').classList.add('activo');
+                    });
+                    return;
+                }
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
                 this.classList.add('activo');
-                const tab = this.dataset.tab;
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('activo'));
                 document.getElementById('tab-' + tab).classList.add('activo');
-                if (tab === 'juego') { setTimeout(() => { iniciarJuego(); }, 300); }
-                if (tab === 'progreso') { actualizarPanelProgreso(); }
+                if (tab === 'juego') setTimeout(() => { iniciarJuego(); }, 300);
+                if (tab === 'progreso') actualizarPanelProgreso();
             });
         });
 
@@ -2442,10 +1338,7 @@ function init() {
                 guardarProgreso();
                 crearIndicador();
                 const filtrados = getElementosFiltrados();
-                if (filtrados.length > 0) {
-                    const idx = elementos.indexOf(filtrados[0]);
-                    mostrarElemento(idx);
-                }
+                if (filtrados.length > 0) mostrarElemento(elementos.indexOf(filtrados[0]));
             });
         });
 
@@ -2454,8 +1347,7 @@ function init() {
             const filtrados = getElementosFiltrados();
             const actual = filtrados.indexOf(elementos[estado.indiceActual]);
             const nuevo = (actual + 1) % filtrados.length;
-            const idx = elementos.indexOf(filtrados[nuevo]);
-            mostrarElemento(idx);
+            mostrarElemento(elementos.indexOf(filtrados[nuevo]));
         });
 
         document.getElementById('anterior').addEventListener('click', () => {
@@ -2463,36 +1355,28 @@ function init() {
             const filtrados = getElementosFiltrados();
             const actual = filtrados.indexOf(elementos[estado.indiceActual]);
             const nuevo = (actual - 1 + filtrados.length) % filtrados.length;
-            const idx = elementos.indexOf(filtrados[nuevo]);
-            mostrarElemento(idx);
+            mostrarElemento(elementos.indexOf(filtrados[nuevo]));
         });
 
         document.getElementById('aleatorio').addEventListener('click', () => {
             if (estaSonando) return;
             const filtrados = getElementosFiltrados();
             let nuevo;
-            do {
-                nuevo = Math.floor(Math.random() * filtrados.length);
-            } while (nuevo === filtrados.indexOf(elementos[estado.indiceActual]) && filtrados.length > 1);
-            const idx = elementos.indexOf(filtrados[nuevo]);
-            mostrarElemento(idx);
+            do { nuevo = Math.floor(Math.random() * filtrados.length); }
+            while (nuevo === filtrados.indexOf(elementos[estado.indiceActual]) && filtrados.length > 1);
+            mostrarElemento(elementos.indexOf(filtrados[nuevo]));
         });
 
         btnSonido.addEventListener('click', () => {
-            if (!audioActivado) {
-                estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
-                return;
-            }
+            if (!audioActivado) { estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero'; return; }
             if (estaSonando) return;
-            const item = elementos[estado.indiceActual];
-            reproducirSonidoAlegre(item);
+            reproducirSonidoAlegre(elementos[estado.indiceActual]);
         });
 
         emergente.addEventListener('click', function() {
             if (estaSonando) return;
-            const item = elementos[estado.indiceActual];
             this.classList.add('explotar');
-            if (audioActivado) reproducirSonidoAlegre(item);
+            if (audioActivado) reproducirSonidoAlegre(elementos[estado.indiceActual]);
             crearEstrellas();
             setTimeout(() => this.classList.remove('explotar'), 700);
         });
@@ -2505,6 +1389,19 @@ function init() {
 
         document.querySelectorAll('#selectorTema .opcion').forEach(el => {
             el.addEventListener('click', () => aplicarTema(el.dataset.tema));
+        });
+
+        document.getElementById('vozVolumen').addEventListener('input', function() {
+            estado.vozVolumen = parseFloat(this.value);
+            document.getElementById('vozVolumenValor').textContent = estado.vozVolumen.toFixed(1);
+            if (audioActivado) {
+                const test = new SpeechSynthesisUtterance('Volumen');
+                test.volume = estado.vozVolumen;
+                test.rate = 1.2;
+                test.pitch = 1.5;
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(test);
+            }
         });
 
         document.getElementById('vozVelocidad').addEventListener('input', function() {
@@ -2522,22 +1419,32 @@ function init() {
             alert('💾 ¡Preferencias guardadas!');
         });
 
-        document.getElementById('btnReiniciar').addEventListener('click', () => {
-            if (confirm('⚠️ ¿Seguro que quieres reiniciar todo el progreso?')) {
-                localStorage.removeItem('miaProgreso');
-                estado.vistos = new Set();
-                estado.contadorRepeticiones = 0;
-                estado.nivel = 1;
-                estado.estrellas = 0;
-                estado.aciertos = 0;
-                estado.fallos = 0;
-                estado.indiceActual = 0;
-                celebracion.style.display = 'none';
-                actualizarUIProgreso();
-                mostrarElemento(0);
-                setTimeout(() => iniciarJuego(), 500);
-                alert('🔄 Progreso reiniciado');
+        document.getElementById('btnReiniciar').addEventListener('click', reiniciarProgreso);
+
+        document.getElementById('btnExportar').addEventListener('click', exportarProgreso);
+
+        document.getElementById('btnImportar').addEventListener('click', () => {
+            document.getElementById('inputImportar').click();
+        });
+
+        document.getElementById('inputImportar').addEventListener('change', (e) => {
+            const archivo = e.target.files[0];
+            if (archivo) {
+                importarProgreso(archivo);
+                e.target.value = '';
             }
+        });
+
+        document.getElementById('btnCambiarPin').addEventListener('click', () => {
+            const pinActual = prompt('Introduce el PIN actual:');
+            if (pinActual !== estado.pin) { alert('❌ PIN incorrecto'); return; }
+            const pinNuevo = prompt('Introduce el nuevo PIN (4 dígitos):');
+            if (!pinNuevo || !/^\d{4}$/.test(pinNuevo)) { alert('❌ El PIN debe tener exactamente 4 dígitos'); return; }
+            const pinConfirmar = prompt('Confirma el nuevo PIN:');
+            if (pinNuevo !== pinConfirmar) { alert('❌ Los PIN no coinciden'); return; }
+            estado.pin = pinNuevo;
+            guardarProgreso();
+            alert('✅ PIN cambiado correctamente');
         });
 
         document.addEventListener('keydown', (e) => {
@@ -2547,6 +1454,23 @@ function init() {
             if (e.key === ' ' || e.key === 'Space') {
                 e.preventDefault();
                 btnSonido.click();
+            }
+        });
+
+        // Modal Padres
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnAceptar = document.getElementById('btnPinAceptar');
+            const btnCancelar = document.getElementById('btnPinCancelar');
+            const inputPin = document.getElementById('inputPin');
+            if (btnAceptar) btnAceptar.addEventListener('click', verificarPin);
+            if (btnCancelar) btnCancelar.addEventListener('click', cerrarModalPadres);
+            if (inputPin) {
+                inputPin.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') verificarPin();
+                });
+                inputPin.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                });
             }
         });
 
@@ -2561,9 +1485,9 @@ function init() {
         console.log('🎮 Juego: Inicia automáticamente');
         console.log('📦 PWA: Instalable como app desde el navegador');
         console.log('🎉 Celebración: Aparece al completar las 37 letras y números');
-        console.log('🎨 Icono personalizado en pantalla de inicio');
         console.log('🎤 Selector de voces implementado (sin grabación de voz)');
         console.log('🔒 Sin captura de audio del menor (protección de datos)');
+        console.log('🔊 Control de volumen + 👶 Modo Padres (PIN: 1234) + 💾 Export/Import');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
