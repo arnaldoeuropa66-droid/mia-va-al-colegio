@@ -2251,19 +2251,125 @@
             }
         }
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('📦 Service Worker registrado con éxito:', registration);
-                    })
-                    .catch(err => {
-                        console.log('❌ Error al registrar Service Worker:', err);
-                    });
-            });
-        }
+        // ============================================================
+// 📦 SERVICE WORKER - Registro + actualización automática
+// ============================================================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+                console.log('📦 Service Worker registrado con éxito');
 
-        function init() {
+                // 🔄 Detectar nueva versión disponible
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    console.log('🆕 Nueva versión del SW detectada');
+
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('✅ Nueva versión lista para activar');
+                            // Muestra aviso al usuario
+                            mostrarAvisoActualizacion();
+                        }
+                    });
+                });
+
+                // Si ya hay un SW esperando, avisa
+                if (registration.waiting) {
+                    mostrarAvisoActualizacion();
+                }
+
+                // 🔁 Detectar cuando el SW toma el control tras recargar
+                let refrescando = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (!refrescando) {
+                        refrescando = true;
+                        console.log('🔄 Nueva versión activa, recargando...');
+                        window.location.reload();
+                    }
+                });
+            })
+            .catch(err => {
+                console.log('❌ Error al registrar Service Worker:', err);
+            });
+
+        // 🔄 Comprobar actualizaciones cada hora
+        setInterval(() => {
+            navigator.serviceWorker.getRegistration().then(reg => {
+                if (reg) reg.update();
+            });
+        }, 60 * 60 * 1000);
+    });
+
+    // 📢 Escuchar mensajes del Service Worker
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.tipo === 'NUEVA_VERSION') {
+            console.log('📢 SW notifica nueva versión:', event.data.version);
+            mostrarAvisoActualizacion();
+        }
+    });
+}
+
+// ============================================================
+// 🔔 Aviso al usuario de nueva versión disponible
+// ============================================================
+function mostrarAvisoActualizacion() {
+    // Evita duplicados
+    if (document.getElementById('avisoActualizacion')) return;
+
+    const aviso = document.createElement('div');
+    aviso.id = 'avisoActualizacion';
+    aviso.innerHTML = `
+        <span style="font-size:1.4rem;">🎉</span>
+        <span style="flex:1;">¡Hay una nueva versión de Mia!</span>
+        <button id="btnActualizar" style="
+            background:#6BCB77;
+            color:white;
+            border:none;
+            border-radius:20px;
+            padding:8px 16px;
+            font-family:'Quicksand', sans-serif;
+            font-weight:700;
+            font-size:0.85rem;
+            cursor:pointer;
+            box-shadow:0 3px 0 #2E7D32;
+        ">Actualizar</button>
+    `;
+    aviso.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        color: #333;
+        padding: 12px 18px;
+        border-radius: 40px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        z-index: 99999;
+        max-width: 90%;
+        animation: fadeIn 0.4s ease;
+        border: 3px solid #FFD93D;
+    `;
+
+    document.body.appendChild(aviso);
+
+    document.getElementById('btnActualizar').addEventListener('click', () => {
+        // Envía mensaje al SW para que se active ya
+        navigator.serviceWorker.getRegistration().then(reg => {
+            if (reg && reg.waiting) {
+                reg.waiting.postMessage({ tipo: 'SKIP_WAITING' });
+            }
+        });
+        aviso.remove();
+    });
+}
+function init() {
             totalLetrasSpan.textContent = elementos.length;
             cargarProgreso();
             generarBurbujas();
