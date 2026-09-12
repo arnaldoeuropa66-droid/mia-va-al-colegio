@@ -9,10 +9,13 @@
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="theme-color" content="#FF6B6B">
+
+    <!-- ✅ PWA: metas corregidas y unificadas -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Mia Colegio">
-    
+
     <!-- Meta tags para compartir en redes sociales -->
     <meta property="og:title" content="Mia va al Colegio">
     <meta property="og:description" content="🧸 ¡Aprende letras y números jugando con Mia! App educativa para niños.">
@@ -22,13 +25,7 @@
     <meta name="twitter:title" content="Mia va al Colegio">
     <meta name="twitter:description" content="🧸 ¡Aprende letras y números jugando con Mia!">
     <meta name="twitter:image" content="icon-512.png">
-    <!-- Reemplaza o complementa con: -->
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">  <!-- mantener para iOS antiguos -->
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Mia Colegio">
 
-    
     <!-- Fuente infantil -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -775,10 +772,6 @@
             padding: 20px;
             text-align: center;
         }
-        
-        /* ============================================================
-           NUEVO: Icono en pantalla de inicio
-           ============================================================ */
         .icono-inicio {
             width: 150px;
             height: 150px;
@@ -789,7 +782,6 @@
             background: white;
             padding: 8px;
         }
-        
         @keyframes flotarIcono {
             0%, 100% {
                 transform: translateY(0) scale(1);
@@ -798,7 +790,6 @@
                 transform: translateY(-12px) scale(1.05);
             }
         }
-        
         .pantalla-inicio h1 {
             font-size: 3.5rem;
             color: #FF6B6B;
@@ -836,7 +827,6 @@
         .oculto {
             display: none !important;
         }
-
         #celebracion {
             position: fixed;
             top: 0;
@@ -920,7 +910,6 @@
                 opacity: 0;
             }
         }
-
         @media (max-width: 1024px) {
             .contenedor {
                 padding: 25px 30px;
@@ -967,7 +956,6 @@
                 border-radius: 25px;
             }
         }
-
         @media (max-width: 767px) {
             .contenedor {
                 padding: 16px 14px;
@@ -1159,7 +1147,6 @@
                 border-radius: 22px;
             }
         }
-
         @media (max-width: 380px) {
             .contenedor {
                 padding: 12px 10px;
@@ -1265,7 +1252,6 @@
                 border-radius: 18px;
             }
         }
-
         @media (max-height: 500px) and (orientation: landscape) {
             .contenedor {
                 max-height: 98vh;
@@ -1324,7 +1310,6 @@
                 border-radius: 15px;
             }
         }
-
         @supports (padding: max(0px)) {
             .contenedor {
                 padding-left: max(14px, env(safe-area-inset-left));
@@ -1333,10 +1318,6 @@
                 padding-bottom: max(16px, env(safe-area-inset-bottom));
             }
         }
-
-        /* ============================================================
-           NUEVO: Selector de voz
-           ============================================================ */
         #selectorVoz:hover {
             border-color: #6BCB77 !important;
             transform: scale(1.02);
@@ -1541,7 +1522,7 @@
                     <option value="">Cargando voces...</option>
                 </select>
                 <p style="font-size: 0.8rem; color: #999; margin-top: 6px;">
-                    Elige la voz que más te guste para Mia
+                    Elige la voz que más te guste para Mia (⭐ local = más estable, ☁️ requiere internet)
                 </p>
             </div>
 
@@ -1674,6 +1655,18 @@
         let juegoBloqueado = false;
         let vocesDisponibles = [];
 
+        // ============================================================
+        // ✅ NUEVO: Variables para cola de voz y debounce de backend
+        // ============================================================
+        let colaVoz = [];
+        let hablandoAhora = false;
+        let syncTimeout = null;
+
+        // Voces problemáticas conocidas (fallan en Chrome/Android)
+        const VOCES_PROBLEMATICAS = [
+            'Google español de Estados Unidos'
+        ];
+
         const emergente = document.getElementById('emergente');
         const mensaje = document.getElementById('mensaje');
         const btnSonido = document.getElementById('btnSonido');
@@ -1745,45 +1738,44 @@
         }
 
         // ============================================================
-        // SINCRONIZACIÓN CON EL BACKEND
+        // ✅ NUEVO: Sincronización con backend con DEBOUNCE
+        // Evita múltiples llamadas seguidas y no interrumpe la voz
         // ============================================================
-
-        async function sincronizarProgresoConBackend() {
-            try {
-                const datos = {
-                    indiceActual: estado.indiceActual,
-                    contadorRepeticiones: estado.contadorRepeticiones,
-                    nivel: estado.nivel,
-                    estrellas: estado.estrellas,
-                    vistos: Array.from(estado.vistos),
-                    aciertos: estado.aciertos,
-                    fallos: estado.fallos,
-                    ultimaSesion: estado.ultimaSesion,
-                    tema: estado.tema,
-                    mascota: estado.mascota,
-                    vozVelocidad: estado.vozVelocidad,
-                    vozTono: estado.vozTono,
-                    vozSeleccionada: estado.vozSeleccionada,
-                    filtro: estado.filtro
-                };
-
-                const respuesta = await fetch(`${BACKEND_URL}/api/progreso`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datos)
-                });
-
-                if (respuesta.ok) {
-                    const resultado = await respuesta.json();
-                    console.log('☁️ Progreso sincronizado con el backend:', resultado);
-                } else {
-                    console.warn('⚠️ Error al sincronizar:', respuesta.status);
+        function sincronizarProgresoConBackend() {
+            clearTimeout(syncTimeout);
+            syncTimeout = setTimeout(async () => {
+                try {
+                    const datos = {
+                        indiceActual: estado.indiceActual,
+                        contadorRepeticiones: estado.contadorRepeticiones,
+                        nivel: estado.nivel,
+                        estrellas: estado.estrellas,
+                        vistos: Array.from(estado.vistos),
+                        aciertos: estado.aciertos,
+                        fallos: estado.fallos,
+                        ultimaSesion: estado.ultimaSesion,
+                        tema: estado.tema,
+                        mascota: estado.mascota,
+                        vozVelocidad: estado.vozVelocidad,
+                        vozTono: estado.vozTono,
+                        vozSeleccionada: estado.vozSeleccionada,
+                        filtro: estado.filtro
+                    };
+                    const respuesta = await fetch(`${BACKEND_URL}/api/progreso`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                    if (respuesta.ok) {
+                        const resultado = await respuesta.json();
+                        console.log('☁️ Progreso sincronizado:', resultado.mensaje || 'OK');
+                    } else {
+                        console.warn('⚠️ Error al sincronizar:', respuesta.status);
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Backend no disponible:', error.message);
                 }
-            } catch (error) {
-                console.warn('⚠️ No se pudo conectar con el backend:', error.message);
-            }
+            }, 1000); // agrupa cambios en 1s
         }
 
         async function probarConexionBackend() {
@@ -1807,26 +1799,30 @@
                 console.warn('⚠️ Web Speech API no soportada');
                 return;
             }
-
             vocesDisponibles = window.speechSynthesis.getVoices();
             console.log('🎤 Voces detectadas:', vocesDisponibles.length);
-
             if (vocesDisponibles.length === 0) {
                 setTimeout(cargarVocesDisponibles, 500);
                 return;
             }
-
             llenarSelectorVoces();
         }
 
+        // ✅ NUEVO: Filtra voces problemáticas y marca locales/remotas
         function llenarSelectorVoces() {
             const selector = document.getElementById('selectorVoz');
             if (!selector) return;
-
             selector.innerHTML = '';
 
-            const vocesEspanol = vocesDisponibles.filter(v => v.lang.startsWith('es'));
-            const otrasVoces = vocesDisponibles.filter(v => !v.lang.startsWith('es'));
+            const vocesFiltradas = vocesDisponibles.filter(v =>
+                !VOCES_PROBLEMATICAS.includes(v.name)
+            );
+
+            const vocesEspanol = vocesFiltradas.filter(v => v.lang.startsWith('es'));
+            const otrasVoces = vocesFiltradas.filter(v => !v.lang.startsWith('es'));
+
+            // Ordenar: locales primero
+            vocesEspanol.sort((a, b) => (b.localService ? 1 : 0) - (a.localService ? 1 : 0));
 
             const opcionDefault = document.createElement('option');
             opcionDefault.value = '';
@@ -1839,7 +1835,8 @@
                 vocesEspanol.forEach(voz => {
                     const opcion = document.createElement('option');
                     opcion.value = voz.name;
-                    opcion.textContent = `${voz.name} (${voz.lang})`;
+                    const marca = voz.localService ? '⭐' : '☁️';
+                    opcion.textContent = `${marca} ${voz.name} (${voz.lang})`;
                     grupoEspanol.appendChild(opcion);
                 });
                 selector.appendChild(grupoEspanol);
@@ -1851,7 +1848,8 @@
                 otrasVoces.forEach(voz => {
                     const opcion = document.createElement('option');
                     opcion.value = voz.name;
-                    opcion.textContent = `${voz.name} (${voz.lang})`;
+                    const marca = voz.localService ? '⭐' : '☁️';
+                    opcion.textContent = `${marca} ${voz.name} (${voz.lang})`;
                     grupoOtras.appendChild(opcion);
                 });
                 selector.appendChild(grupoOtras);
@@ -1867,7 +1865,7 @@
                 reproducirSonido('¡Hola! Soy Mia. ¡Vamos a aprender!');
             });
 
-            console.log('✅ Selector de voces llenado');
+            console.log(`✅ Selector de voces llenado (${vocesFiltradas.length} disponibles, ${VOCES_PROBLEMATICAS.length} filtradas)`);
         }
 
         function obtenerVozElegida() {
@@ -1875,7 +1873,8 @@
                 vocesDisponibles = window.speechSynthesis.getVoices();
             }
 
-            if (estado.vozSeleccionada) {
+            // Voz manual (solo si NO es problemática)
+            if (estado.vozSeleccionada && !VOCES_PROBLEMATICAS.includes(estado.vozSeleccionada)) {
                 const vozManual = vocesDisponibles.find(v => v.name === estado.vozSeleccionada);
                 if (vozManual) {
                     console.log('🎤 Usando voz manual:', vozManual.name);
@@ -1883,37 +1882,54 @@
                 }
             }
 
+            // Voces preferidas (prioriza LOCALES antes que remotas)
             const nombresPreferidos = [
-                'Google español',
-                'Microsoft Sabina',
-                'Microsoft Helena',
-                'Microsoft Laura',
-                'Mónica',
-                'Paulina',
-                'Marisol',
-                'Lucía'
+                'Microsoft Sabina', 'Microsoft Helena', 'Microsoft Laura',
+                'Mónica', 'Monica', 'Paulina', 'Marisol', 'Lucía', 'Lucia'
             ];
 
+            // 1) Buscar locales preferidas
             for (const nombre of nombresPreferidos) {
-                const voz = vocesDisponibles.find(v => 
-                    v.lang.startsWith('es') && v.name.includes(nombre)
+                const voz = vocesDisponibles.find(v =>
+                    v.lang.startsWith('es') &&
+                    v.name.includes(nombre) &&
+                    v.localService
                 );
                 if (voz) {
-                    console.log('🎤 Usando voz preferida:', voz.name);
+                    console.log('🎤 Usando voz preferida local:', voz.name);
                     return voz;
                 }
             }
 
-            const vozEspanol = vocesDisponibles.find(v => v.lang.startsWith('es'));
-            if (vozEspanol) {
-                console.log('🎤 Usando voz en español:', vozEspanol.name);
-                return vozEspanol;
+            // 2) Buscar cualquier local en español
+            let voz = vocesDisponibles.find(v =>
+                v.lang.startsWith('es') &&
+                v.localService &&
+                !VOCES_PROBLEMATICAS.includes(v.name)
+            );
+            if (voz) {
+                console.log('🎤 Usando voz local en español:', voz.name);
+                return voz;
+            }
+
+            // 3) Cualquier voz en español (evitando problemáticas)
+            voz = vocesDisponibles.find(v =>
+                v.lang.startsWith('es') &&
+                !VOCES_PROBLEMATICAS.includes(v.name)
+            );
+            if (voz) {
+                console.log('🎤 Usando voz en español:', voz.name);
+                return voz;
             }
 
             console.log('⚠️ No hay voces en español, usando la primera');
             return vocesDisponibles[0] || null;
         }
 
+        // ============================================================
+        // ✅ NUEVO: reproducirSonido con COLA y cancelación segura
+        // Evita el error "interrupted" al pisar utterances
+        // ============================================================
         function reproducirSonido(texto) {
             if (!audioActivado) {
                 estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
@@ -1923,9 +1939,16 @@
                 estadoSonido.textContent = '⚠️ Tu navegador no soporta voz';
                 return;
             }
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance();
-            utterance.text = texto;
+            _hablarInterno(texto);
+        }
+
+        function _hablarInterno(texto) {
+            // Cancelar suavemente cualquier utterance pendiente
+            if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+                window.speechSynthesis.cancel();
+            }
+
+            const utterance = new SpeechSynthesisUtterance(texto);
             utterance.lang = 'es-ES';
             utterance.rate = estado.vozVelocidad;
             utterance.pitch = estado.vozTono;
@@ -1934,29 +1957,52 @@
             const vozElegida = obtenerVozElegida();
             if (vozElegida) {
                 utterance.voice = vozElegida;
+                utterance.lang = vozElegida.lang;
             }
 
             estaSonando = true;
+            hablandoAhora = true;
             emergente.classList.add('sonando');
             barraSonido.classList.add('activa');
             iconoOido.textContent = '🔊';
             estadoSonido.textContent = '🎤 ' + texto;
-            window.speechSynthesis.speak(utterance);
+
             utterance.onend = function() {
                 estaSonando = false;
+                hablandoAhora = false;
                 emergente.classList.remove('sonando');
                 barraSonido.classList.remove('activa');
                 iconoOido.textContent = '👂';
                 estadoSonido.textContent = '✅ ¡Listo!';
             };
+
             utterance.onerror = function(event) {
-                console.error('❌ Error de voz:', event);
+                // 'interrupted' y 'canceled' son normales al cancelar
+                if (event.error === 'interrupted' || event.error === 'canceled') {
+                    console.log('🔇 Voz cancelada (normal):', event.error);
+                } else {
+                    console.warn('⚠️ Error de voz:', event.error, '| Voz:', utterance.voice?.name);
+                }
                 estaSonando = false;
+                hablandoAhora = false;
                 emergente.classList.remove('sonando');
                 barraSonido.classList.remove('activa');
-                iconoOido.textContent = '⚠️';
-                estadoSonido.textContent = '⚠️ Error de voz';
+                iconoOido.textContent = '👂';
+                estadoSonido.textContent = '✅ ¡Listo!';
             };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // ✅ NUEVO: función para detener voz (útil al cambiar de pantalla)
+        function detenerVoz() {
+            colaVoz = [];
+            hablandoAhora = false;
+            estaSonando = false;
+            window.speechSynthesis.cancel();
+            emergente.classList.remove('sonando');
+            barraSonido.classList.remove('activa');
+            iconoOido.textContent = '👂';
         }
 
         function reproducirSonidoAlegre(item) {
@@ -2048,10 +2094,7 @@
             actualizarPanelProgreso();
             actualizarTituloPestana();
             guardarProgreso();
-            
-            // Sincronizar con el backend
             sincronizarProgresoConBackend();
-
             if (estado.vistos.size === 37) {
                 setTimeout(() => { mostrarCelebracion(); }, 500);
             }
@@ -2313,13 +2356,8 @@
             document.getElementById('juegoAciertos').textContent = estado.aciertos;
             document.getElementById('juegoFallos').textContent = estado.fallos;
             actualizarPanelProgreso();
-            
-            // Cargar voces disponibles
             cargarVocesDisponibles();
-            
-            // Probar conexión con el backend
             probarConexionBackend();
-            
             setTimeout(() => { iniciarJuego(); }, 1000);
             console.log('🏫 Mia va al Colegio - Iniciado!');
             console.log('🌐 Backend:', BACKEND_URL);
@@ -2518,7 +2556,7 @@
         console.log('📦 PWA: Instalable como app desde el navegador');
         console.log('🎉 Celebración: Aparece al completar las 37 letras y números');
         console.log('🎨 Icono personalizado en pantalla de inicio');
-        console.log('🎤 Selector de voces implementado');
+        console.log('🎤 Selector de voces implementado (con filtro de voces problemáticas)');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
