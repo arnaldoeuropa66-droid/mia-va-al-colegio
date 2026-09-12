@@ -1,186 +1,166 @@
 // ============================================================
-// 🚀 Mia va al Colegio - Service Worker
+// 📦 SERVICE WORKER - Registro con auto-update mejorado
 // ============================================================
-// Versión del caché. 
-// ⚠️ IMPORTANTE: Incrementar este número cada vez que hagas deploy
-// Ejemplo: 'v1' → 'v2' → 'v3' ...
-// ============================================================
-// Antes
-// Después de otro cambio
-const CACHE_VERSION = 'v3';
-const CACHE_NAME = `mia-colegio-${CACHE_VERSION}`;
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js', {
+            updateViaCache: 'none'  // ← Fuerza a no usar caché HTTP para el SW
+        })
+        .then((registration) => {
+            console.log('📦 Service Worker registrado');
 
-// Archivos que se cachean al instalar (para funcionar offline)
-const ARCHIVOS_CACHE = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/icon-192.png',
-    '/icon-512.png',
-    'https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap'
-];
+            // Forzar comprobación de actualización al arrancar
+            registration.update().catch(() => {});
 
-// ============================================================
-// INSTALL - Se ejecuta cuando se instala el SW
-// ============================================================
-self.addEventListener('install', (event) => {
-    console.log('📦 Mia - Service Worker instalando...');
-    console.log('📦 Versión del caché:', CACHE_VERSION);
+            // 🔄 Detectar nueva versión durante la sesión
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                console.log('🆕 Nueva versión del SW detectada');
 
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('📦 Cache abierto:', CACHE_NAME);
-                // addAll falla si un recurso no existe, por eso los añadimos uno a uno
-                return Promise.all(
-                    ARCHIVOS_CACHE.map((url) =>
-                        cache.add(url).catch((err) => {
-                            console.warn('⚠️ No se pudo cachear:', url, err.message);
-                        })
-                    )
-                );
-            })
-            .then(() => {
-                console.log('✅ Service Worker instalado');
-                // Activa el nuevo SW inmediatamente sin esperar a cerrar pestañas
-                return self.skipWaiting();
-            })
-    );
-});
-
-// ============================================================
-// ACTIVATE - Se ejecuta cuando el SW toma el control
-// ============================================================
-self.addEventListener('activate', (event) => {
-    console.log('🔄 Mia - Service Worker activando...');
-
-    event.waitUntil(
-        caches.keys()
-            .then((nombresCaches) => {
-                // Elimina TODOS los cachés antiguos que NO sean el actual
-                return Promise.all(
-                    nombresCaches.map((nombre) => {
-                        if (nombre !== CACHE_NAME) {
-                            console.log('🗑️ Eliminando caché antiguo:', nombre);
-                            return caches.delete(nombre);
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed') {
+                        if (navigator.serviceWorker.controller) {
+                            // Hay una versión nueva lista para activar
+                            console.log('✅ Nueva versión lista');
+                            mostrarAvisoActualizacion(registration);
+                        } else {
+                            // Primera instalación
+                            console.log('🎉 SW instalado por primera vez');
                         }
-                    })
-                );
-            })
-            .then(() => {
-                console.log('✅ Service Worker activado');
-                // Toma el control de todas las pestañas abiertas inmediatamente
-                return self.clients.claim();
-            })
-            .then(() => {
-                // Notifica a todas las pestañas que hay nueva versión
-                return self.clients.matchAll().then((clients) => {
-                    clients.forEach((client) => {
-                        client.postMessage({
-                            tipo: 'NUEVA_VERSION',
-                            version: CACHE_VERSION
-                        });
-                    });
-                });
-            })
-    );
-});
-
-// ============================================================
-// FETCH - Estrategia de caché para cada petición
-// ============================================================
-self.addEventListener('fetch', (event) => {
-    const { request } = event;
-    const url = new URL(request.url);
-
-    // Ignorar peticiones que no son GET
-    if (request.method !== 'GET') return;
-
-    // Ignorar peticiones al backend (siempre deben ir a la red)
-    if (url.origin.includes('backend-mia.arnaldoeuropa66.workers.dev')) {
-        return;
-    }
-
-    // Ignorar peticiones de extensiones del navegador
-    if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
-
-    // ============================================================
-    // Estrategia 1: NETWORK-FIRST para el index.html
-    // Siempre intenta la red primero, cae al caché si falla.
-    // Así los cambios se ven INMEDIATAMENTE.
-    // ============================================================
-    if (url.pathname === '/' || url.pathname === '/index.html') {
-        event.respondWith(
-            fetch(request)
-                .then((response) => {
-                    // Guarda una copia actualizada en caché
-                    const responseClone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(request, responseClone);
-                    });
-                    return response;
-                })
-                .catch(() => {
-                    // Si no hay red, sirve la versión cacheada
-                    console.log('📴 Offline - sirviendo index.html desde caché');
-                    return caches.match(request);
-                })
-        );
-        return;
-    }
-
-    // ============================================================
-    // Estrategia 2: CACHE-FIRST para recursos estáticos
-    // (iconos, manifest, fuentes) - más rápido
-    // ============================================================
-    event.respondWith(
-        caches.match(request)
-            .then((cachedResponse) => {
-                if (cachedResponse) {
-                    // Actualiza el caché en segundo plano (stale-while-revalidate)
-                    fetch(request).then((networkResponse) => {
-                        if (networkResponse && networkResponse.ok) {
-                            caches.open(CACHE_NAME).then((cache) => {
-                                cache.put(request, networkResponse);
-                            });
-                        }
-                    }).catch(() => {});
-                    return cachedResponse;
-                }
-
-                // No está en caché: búscalo en la red y guárdalo
-                return fetch(request).then((response) => {
-                    // No cachear respuestas que no sean OK
-                    if (!response || response.status !== 200 || response.type === 'opaque') {
-                        return response;
                     }
-                    const responseClone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(request, responseClone);
-                    });
-                    return response;
                 });
-            })
-            .catch(() => {
-                // Si todo falla y es una navegación, devuelve el index cacheado
-                if (request.mode === 'navigate') {
-                    return caches.match('/index.html');
+            });
+
+            // Si ya hay un SW esperando al arrancar, avisa
+            if (registration.waiting) {
+                console.log('⏳ Hay un SW esperando');
+                mostrarAvisoActualizacion(registration);
+            }
+
+            // 🔁 Detecta cuando el SW toma el control tras la actualización
+            let refrescando = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refrescando) {
+                    refrescando = true;
+                    console.log('🔄 Recargando con nueva versión...');
+                    window.location.reload();
                 }
-            })
-    );
-});
+            });
+        })
+        .catch((err) => {
+            console.log('❌ Error al registrar SW:', err);
+        });
+
+        // 🔄 Comprobar actualizaciones cada 30 minutos
+        setInterval(() => {
+            navigator.serviceWorker.getRegistration().then((reg) => {
+                if (reg) reg.update().catch(() => {});
+            });
+        }, 30 * 60 * 1000);
+
+        // 📢 Escuchar mensajes del SW
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data && event.data.tipo === 'NUEVA_VERSION') {
+                console.log('📢 SW notifica versión:', event.data.version);
+                mostrarAvisoActualizacion(null);
+            }
+        });
+    });
+}
 
 // ============================================================
-// MENSAJES desde la app
+// 🔔 Aviso visual de nueva versión
 // ============================================================
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.tipo === 'SKIP_WAITING') {
-        console.log('⏭️ Saltando espera del Service Worker');
-        self.skipWaiting();
-    }
-    if (event.data && event.data.tipo === 'OBTENER_VERSION') {
-        event.ports[0].postMessage({ version: CACHE_VERSION });
-    }
-});
+function mostrarAvisoActualizacion(registration) {
+    // Evita duplicados
+    if (document.getElementById('avisoActualizacion')) return;
 
-console.log('🚀 Mia - Service Worker cargado | Versión:', CACHE_VERSION);
+    const aviso = document.createElement('div');
+    aviso.id = 'avisoActualizacion';
+    aviso.innerHTML = `
+        <span style="font-size:1.6rem;">🎉</span>
+        <span style="flex:1; line-height:1.3;">
+            <strong>¡Nueva versión de Mia!</strong><br>
+            <small style="color:#888;">Pulsa para actualizar</small>
+        </span>
+        <button id="btnActualizar" style="
+            background: linear-gradient(135deg, #6BCB77, #4CAF50);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #2E7D32;
+            transition: all 0.15s;
+        ">🔄 Actualizar</button>
+    `;
+    aviso.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: #fff;
+        color: #333;
+        padding: 14px 20px;
+        border-radius: 50px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        z-index: 99999;
+        max-width: 92%;
+        min-width: 280px;
+        border: 3px solid #FFD93D;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    `;
+
+    document.body.appendChild(aviso);
+
+    // Animación de entrada
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            aviso.style.transform = 'translateX(-50%) translateY(0)';
+        }, 100);
+    });
+
+    const btn = document.getElementById('btnActualizar');
+    btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateY(-2px)';
+        btn.style.boxShadow = '0 5px 0 #2E7D32';
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translateY(0)';
+        btn.style.boxShadow = '0 3px 0 #2E7D32';
+    });
+
+    btn.addEventListener('click', () => {
+        btn.textContent = '⏳ Actualizando...';
+        btn.disabled = true;
+
+        // Envía mensaje al SW para activación inmediata
+        navigator.serviceWorker.ready.then((reg) => {
+            if (reg.waiting) {
+                reg.waiting.postMessage({ tipo: 'SKIP_WAITING' });
+            }
+        });
+
+        // Por si acaso, recarga tras 2s
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+    });
+
+    // Auto-actualización tras 30s si el usuario no hace nada
+    setTimeout(() => {
+        if (document.getElementById('avisoActualizacion')) {
+            console.log('⏰ Auto-actualizando tras 30s...');
+            btn.click();
+        }
+    }, 30000);
+}
