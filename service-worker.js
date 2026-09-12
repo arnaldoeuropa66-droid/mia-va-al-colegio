@@ -6,11 +6,6 @@
 // Ejemplo: 'v1' → 'v2' → 'v3' ...
 // ============================================================
 // Antes
-const CACHE_VERSION = 'v1';
-
-// Después de un cambio
-const CACHE_VERSION = 'v2';
-
 // Después de otro cambio
 const CACHE_VERSION = 'v3';
 const CACHE_NAME = `mia-colegio-${CACHE_VERSION}`;
