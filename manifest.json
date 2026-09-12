@@ -1,24 +1,77 @@
 {
-  "name": "Mia va al Colegio",
-  "short_name": "Mia Colegio",
-  "description": "Aprende letras y números jugando con Mia",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#FFF8E7",
-  "theme_color": "#FF6B6B",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+    "name": "Mia va al Colegio",
+    "short_name": "Mia Colegio",
+    "description": "🧸 App educativa para que los niños aprendan letras y números jugando con Mia. ¡Con voz, rimas y juegos!",
+    "lang": "es-ES",
+    "dir": "ltr",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "display_override": ["standalone", "minimal-ui"],
+    "orientation": "portrait",
+    "background_color": "#FFF8E7",
+    "theme_color": "#FF6B6B",
+    "categories": ["education", "kids", "games"],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshot-mobile.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Pantalla principal de Mia va al Colegio"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Aprender letras",
+            "short_name": "Letras",
+            "description": "Ir directamente a la sección de letras",
+            "url": "/?tab=aprender",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Jugar",
+            "short_name": "Juego",
+            "description": "Ir directamente al juego de adivinanzas",
+            "url": "/?tab=juego",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
 }
