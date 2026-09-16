@@ -120,6 +120,15 @@
         .barra-sonido.activa .relleno { animation: barraLatido 1.5s ease-in-out; }
         @keyframes barraLatido { 0% { width: 0%; } 25% { width: 100%; } 50% { width: 60%; } 75% { width: 100%; } 100% { width: 0%; } }
         #iconoOido { font-size: 1.6rem; line-height: 1; }
+        .icono-emojis {
+            width: 40px; height: 40px; object-fit: contain;
+            display: inline-block; vertical-align: middle;
+            margin-right: 6px;
+        }
+        .icono-emoji-grande {
+            width: 80px; height: 80px; object-fit: contain;
+            display: inline-block; vertical-align: middle;
+        }
         .mascota {
             font-size: 1.15rem; color: #6C4A7C; background: #F3E8FF; padding: 10px 20px; border-radius: 40px;
             display: inline-block; margin-top: 4px; min-height: 52px; border: 2px solid #C084FC;
@@ -128,6 +137,12 @@
         }
         body.tema-espacio .mascota { background: rgba(255, 255, 255, 0.08); border-color: #4FC3F7; color: #fff; }
         .mascota-emoji { font-size: 1.8rem; display: inline-block; animation: saltarMascota 2s infinite; }
+        .mascota-icono {
+            width: 40px; height: 40px; object-fit: contain;
+            display: inline-block; vertical-align: middle;
+            margin-right: 6px;
+            animation: saltarMascota 2s infinite;
+        }
         @keyframes saltarMascota { 0%, 100% { transform: translateY(0) rotate(0deg); } 25% { transform: translateY(-8px) rotate(-8deg); } 75% { transform: translateY(-8px) rotate(8deg); } }
         .estado-sonido { font-size: 0.8rem; color: #999; margin-top: 4px; font-weight: 600; word-wrap: break-word; overflow-wrap: break-word; }
         .info-extra { display: flex; justify-content: center; gap: 10px; margin-top: 8px; color: #888; font-size: 0.8rem; flex-wrap: wrap; font-weight: 600; }
@@ -176,11 +191,15 @@
         .personalizacion .opcion {
             padding: 8px 16px; border-radius: 30px; border: 3px solid #ddd; cursor: pointer; transition: all 0.3s;
             background: white; font-size: 1.4rem; touch-action: manipulation; user-select: none; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
         }
         .personalizacion .opcion:active { transform: scale(0.92); }
         .personalizacion .opcion.seleccionado { border-color: #6BCB77; background: #E8F5E9; box-shadow: 0 0 20px rgba(107, 203, 119, 0.25); }
         body.tema-espacio .personalizacion .opcion { background: #2a2a4a; border-color: #444; color: #fff; }
         body.tema-espacio .personalizacion .opcion.seleccionado { border-color: #4FC3F7; background: #1a3a5a; }
+        .personalizacion .opcion img {
+            width: 40px; height: 40px; object-fit: contain;
+        }
         .configuracion { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 8px 0; }
         .configuracion label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; }
         .configuracion input[type="range"] { width: 80px; accent-color: #6BCB77; }
@@ -216,6 +235,8 @@
             #celebracion h1 { font-size: 2.8rem; }
             #celebracion p { font-size: 1.4rem; }
             .icono-inicio { width: 130px; height: 130px; border-radius: 25px; }
+            .icono-emojis { width: 36px; height: 36px; }
+            .mascota-icono { width: 36px; height: 36px; }
         }
         @media (max-width: 767px) {
             .contenedor { padding: 16px 14px; border-radius: 35px; width: 96%; margin: 10px auto; max-height: 97vh; border-width: 3px; }
@@ -234,6 +255,8 @@
             #iconoOido { font-size: 1.4rem; }
             .mascota { font-size: 0.9rem; padding: 8px 12px; min-height: 48px; border-radius: 30px; width: 100%; max-width: 100%; box-sizing: border-box; line-height: 1.3; }
             .mascota-emoji { font-size: 1.3rem; }
+            .mascota-icono { width: 32px; height: 32px; }
+            .icono-emojis { width: 30px; height: 30px; }
             .info-extra { gap: 6px; font-size: 0.7rem; }
             .info-extra span { padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; }
             .dot { width: 8px; height: 8px; }
@@ -250,6 +273,7 @@
             .panel-progreso .barra-progreso { height: 14px; }
             .rima { font-size: 0.85rem; padding: 10px 12px; line-height: 1.35; width: 100%; box-sizing: border-box; }
             .personalizacion .opcion { padding: 6px 12px; font-size: 1.2rem; border-radius: 25px; border-width: 2px; }
+            .personalizacion .opcion img { width: 32px; height: 32px; }
             .configuracion { gap: 10px; }
             .configuracion label { font-size: 0.8rem; }
             .configuracion input[type="range"] { width: 60px; }
@@ -270,6 +294,7 @@
             #opcionSI, #opcionNO { width: 100px !important; height: 100px !important; font-size: 1.1rem !important; }
             .escenario { height: auto; min-height: 160px; padding: 5px; }
             .emergente { font-size: 80px !important; letter-spacing: 3px; }
+            .icono-emoji-grande { width: 60px; height: 60px; }
         }
         @media (max-width: 380px) {
             .contenedor { padding: 12px 10px; border-radius: 25px; width: 98%; }
@@ -283,6 +308,8 @@
             .juego-opciones { gap: 6px; }
             .mascota { font-size: 0.8rem; padding: 6px 10px; min-height: 44px; }
             .mascota-emoji { font-size: 1.2rem; }
+            .mascota-icono { width: 28px; height: 28px; }
+            .icono-emojis { width: 26px; height: 26px; }
             .btn.repetir { font-size: 0.8rem; padding: 8px 14px; min-height: 36px; min-width: 70px; }
             .barra-sonido { width: 50px; height: 5px; }
             #iconoOido { font-size: 1.1rem; }
@@ -303,6 +330,7 @@
             #palabraDiscriminar { font-size: 0.9rem !important; }
             #opcionSI, #opcionNO { width: 90px !important; height: 90px !important; font-size: 0.95rem !important; }
             .btn-filtro[data-subtab] { font-size: 0.6rem !important; padding: 6px 6px !important; min-height: 36px; }
+            .icono-emoji-grande { width: 50px; height: 50px; }
         }
         @media (max-height: 500px) and (orientation: landscape) {
             .contenedor { max-height: 98vh; padding: 12px 20px; }
@@ -392,7 +420,7 @@
             </div>
             <div style="width: 100%;">
                 <span class="mascota" id="mensaje" style="width: 100%; box-sizing: border-box;">
-                    <span class="mascota-emoji">🧸</span> Mia dice: ¡A de Avión! ✈️
+                    <img src="iconos/oso.png" alt="oso" class="mascota-icono"> Mia dice: ¡A de Avión! ✈️
                 </span>
             </div>
             <div class="estado-sonido" id="estadoSonido">🔇 Haz clic en "Repetir" para escuchar</div>
@@ -425,7 +453,7 @@
             </div>
             <div style="width: 100%;">
                 <span class="mascota" id="mensajeSilaba" style="width: 100%; box-sizing: border-box;">
-                    <span class="mascota-emoji">🧸</span> Mia dice: ¡MA de Mamá! 👩
+                    <img src="iconos/oso.png" alt="oso" class="mascota-icono"> Mia dice: ¡MA de Mamá! 👩
                 </span>
             </div>
             <div class="estado-sonido" id="estadoSonidoSilaba">🔇 Haz clic en "Repetir" para escuchar</div>
@@ -456,7 +484,7 @@
             </div>
             <div style="width: 100%;">
                 <span class="mascota" id="mensajePalabra" style="width: 100%; box-sizing: border-box;">
-                    <span class="mascota-emoji">🧸</span> Mia dice: ¡MAMÁ! 👩
+                    <img src="iconos/oso.png" alt="oso" class="mascota-icono"> Mia dice: ¡MAMÁ! 👩
                 </span>
             </div>
             <div class="estado-sonido" id="estadoSonidoPalabra">🔇 Haz clic en "Repetir" para escuchar</div>
@@ -502,7 +530,7 @@
 
                 <div style="width: 100%;">
                     <span class="mascota" id="mensajeS" style="width: 100%; box-sizing: border-box;">
-                        <span class="mascota-emoji">🧸</span> Mia dice: ¡SOL! ☀️
+                        <img src="iconos/oso.png" alt="oso" class="mascota-icono"> Mia dice: ¡SOL! ☀️
                     </span>
                 </div>
 
@@ -550,7 +578,7 @@
 
                 <div style="width: 100%;">
                     <span class="mascota" id="mensajeTrabalenguas" style="width: 100%; box-sizing: border-box;">
-                        <span class="mascota-emoji">🧸</span> Escucha y repite despacio
+                        <img src="iconos/oso.png" alt="oso" class="mascota-icono"> Escucha y repite despacio
                     </span>
                 </div>
 
@@ -668,11 +696,12 @@
             <h2 style="color:#6C4A7C; margin-bottom:8px; font-size:1.3rem; font-weight:700;">🎨 Personaliza a Mia</h2>
             <h3 style="font-size:1rem; color:#6C4A7C; margin-top:6px; font-weight:700;">🧸 Elige tu mascota</h3>
             <div class="personalizacion" id="selectorMascota">
-                <div class="opcion seleccionado" data-mascota="🧸">🧸</div>
-                <div class="opcion" data-mascota="🐼">🐼</div>
-                <div class="opcion" data-mascota="🦊">🦊</div>
-                <div class="opcion" data-mascota="🐨">🐨</div>
-                <div class="opcion" data-mascota="🦄">🦄</div>
+                <div class="opcion seleccionado" data-mascota="oso"><img src="iconos/oso.png" alt="oso"></div>
+                <div class="opcion" data-mascota="perro"><img src="iconos/perro.png" alt="perro"></div>
+                <div class="opcion" data-mascota="gato"><img src="iconos/gato.png" alt="gato"></div>
+                <div class="opcion" data-mascota="zorro"><img src="iconos/zorro.png" alt="zorro"></div>
+                <div class="opcion" data-mascota="koala"><img src="iconos/koala.png" alt="koala"></div>
+                <div class="opcion" data-mascota="leon"><img src="iconos/leon.png" alt="leon"></div>
             </div>
 
             <h3 style="font-size:1rem; color:#6C4A7C; margin-top:12px; font-weight:700;">🎨 Tema visual</h3>
@@ -713,44 +742,59 @@
             return id;
         }
 
+        // ============================================================
+        // ICONOS DE ANIMALES Y OBJETOS (Fluent 3D)
+        // ============================================================
+        const iconos = {
+            'A': 'iconos/avion.png', 'B': 'iconos/bebe-persona.png', 'C': 'iconos/casa.png',
+            'D': 'iconos/delfin.png', 'E': 'iconos/estrella.png', 'F': 'iconos/flor.png',
+            'G': 'iconos/gato.png', 'H': 'iconos/helado.png', 'I': 'iconos/isla.png',
+            'J': 'iconos/jirafa.png', 'K': 'iconos/koala.png', 'L': 'iconos/luna.png',
+            'M': 'iconos/mariposa.png', 'N': 'iconos/nube.png', 'Ñ': 'iconos/nandu.png',
+            'O': 'iconos/oso.png', 'P': 'iconos/pelota.png', 'Q': 'iconos/queso.png',
+            'R': 'iconos/raton.png', 'S': 'iconos/sol.png', 'T': 'iconos/tortuga.png',
+            'U': 'iconos/uva.png', 'V': 'iconos/vaca.png', 'W': 'iconos/regalo.png',
+            'X': 'iconos/xilofono.png', 'Y': 'iconos/helado.png', 'Z': 'iconos/zorro.png'
+        };
+
         const elementos = [
-            { id: 'A', tipo: 'letra', color: '#FF6B6B', mensaje: '¡A de Avión! ✈️', sonido: 'A', ejemplo: 'Avión' },
-            { id: 'B', tipo: 'letra', color: '#FF9F43', mensaje: '¡B de Bebé! 👶', sonido: 'B', ejemplo: 'Bebé' },
-            { id: 'C', tipo: 'letra', color: '#FECA57', mensaje: '¡C de Casa! 🏠', sonido: 'C', ejemplo: 'Casa' },
-            { id: 'D', tipo: 'letra', color: '#6BCB77', mensaje: '¡D de Delfín! 🐬', sonido: 'D', ejemplo: 'Delfín' },
-            { id: 'E', tipo: 'letra', color: '#4FC3F7', mensaje: '¡E de Estrella! ⭐', sonido: 'E', ejemplo: 'Estrella' },
-            { id: 'F', tipo: 'letra', color: '#5B86E5', mensaje: '¡F de Flor! 🌸', sonido: 'F', ejemplo: 'Flor' },
-            { id: 'G', tipo: 'letra', color: '#A29BFE', mensaje: '¡G de Gato! 🐱', sonido: 'G', ejemplo: 'Gato' },
-            { id: 'H', tipo: 'letra', color: '#FD79A8', mensaje: '¡H de Helado! 🍦', sonido: 'H', ejemplo: 'Helado' },
-            { id: 'I', tipo: 'letra', color: '#00CEC9', mensaje: '¡I de Isla! 🏝️', sonido: 'I', ejemplo: 'Isla' },
-            { id: 'J', tipo: 'letra', color: '#FDCB6E', mensaje: '¡J de Jirafa! 🦒', sonido: 'J', ejemplo: 'Jirafa' },
-            { id: 'K', tipo: 'letra', color: '#E17055', mensaje: '¡K de Koala! 🐨', sonido: 'K', ejemplo: 'Koala' },
-            { id: 'L', tipo: 'letra', color: '#74B9FF', mensaje: '¡L de Luna! 🌙', sonido: 'L', ejemplo: 'Luna' },
-            { id: 'M', tipo: 'letra', color: '#55EFC4', mensaje: '¡M de Mariposa! 🦋', sonido: 'M', ejemplo: 'Mariposa' },
-            { id: 'N', tipo: 'letra', color: '#FAB1A0', mensaje: '¡N de Nube! ☁️', sonido: 'N', ejemplo: 'Nube' },
-            { id: 'Ñ', tipo: 'letra', color: '#81ECEC', mensaje: '¡Ñ de Ñandú! 🐦', sonido: 'eñe', ejemplo: 'Ñandú' },
-            { id: 'O', tipo: 'letra', color: '#FF7675', mensaje: '¡O de Oso! 🐻', sonido: 'O', ejemplo: 'Oso' },
-            { id: 'P', tipo: 'letra', color: '#FDCB6E', mensaje: '¡P de Pelota! ⚽', sonido: 'P', ejemplo: 'Pelota' },
-            { id: 'Q', tipo: 'letra', color: '#A29BFE', mensaje: '¡Q de Queso! 🧀', sonido: 'Q', ejemplo: 'Queso' },
-            { id: 'R', tipo: 'letra', color: '#FF6B6B', mensaje: '¡R de Ratón! 🐭', sonido: 'R', ejemplo: 'Ratón' },
-            { id: 'S', tipo: 'letra', color: '#6BCB77', mensaje: '¡S de Sol! ☀️', sonido: 'S', ejemplo: 'Sol' },
-            { id: 'T', tipo: 'letra', color: '#4FC3F7', mensaje: '¡T de Tortuga! 🐢', sonido: 'T', ejemplo: 'Tortuga' },
-            { id: 'U', tipo: 'letra', color: '#C084FC', mensaje: '¡U de Uva! 🍇', sonido: 'U', ejemplo: 'Uva' },
-            { id: 'V', tipo: 'letra', color: '#FF9F43', mensaje: '¡V de Vaca! 🐄', sonido: 'V', ejemplo: 'Vaca' },
-            { id: 'W', tipo: 'letra', color: '#FECA57', mensaje: '¡W de Wafle! 🧇', sonido: 'doble u', ejemplo: 'Wafle' },
-            { id: 'X', tipo: 'letra', color: '#5B86E5', mensaje: '¡X de Xilófono!', sonido: 'equis', ejemplo: 'Xilófono' },
-            { id: 'Y', tipo: 'letra', color: '#FD79A8', mensaje: '¡Y de Yogur! 🥛', sonido: 'y', ejemplo: 'Yogur' },
-            { id: 'Z', tipo: 'letra', color: '#00CEC9', mensaje: '¡Z de Zorro! 🦊', sonido: 'Z', ejemplo: 'Zorro' },
-            { id: '0', tipo: 'numero', color: '#FF6B6B', mensaje: '¡El número 0! 🔵', sonido: 'cero', ejemplo: 'cero' },
-            { id: '1', tipo: 'numero', color: '#FF9F43', mensaje: '¡El número 1! ☝️', sonido: 'uno', ejemplo: 'uno' },
-            { id: '2', tipo: 'numero', color: '#FECA57', mensaje: '¡El número 2! 🦆', sonido: 'dos', ejemplo: 'dos' },
-            { id: '3', tipo: 'numero', color: '#6BCB77', mensaje: '¡El número 3! 🍭', sonido: 'tres', ejemplo: 'tres' },
-            { id: '4', tipo: 'numero', color: '#4FC3F7', mensaje: '¡El número 4! 🐢', sonido: 'cuatro', ejemplo: 'cuatro' },
-            { id: '5', tipo: 'numero', color: '#5B86E5', mensaje: '¡El número 5! ⭐', sonido: 'cinco', ejemplo: 'cinco' },
-            { id: '6', tipo: 'numero', color: '#A29BFE', mensaje: '¡El número 6! 🐶', sonido: 'seis', ejemplo: 'seis' },
-            { id: '7', tipo: 'numero', color: '#FD79A8', mensaje: '¡El número 7! 🌈', sonido: 'siete', ejemplo: 'siete' },
-            { id: '8', tipo: 'numero', color: '#00CEC9', mensaje: '¡El número 8! 🐙', sonido: 'ocho', ejemplo: 'ocho' },
-            { id: '9', tipo: 'numero', color: '#FDCB6E', mensaje: '¡El número 9! 🎈', sonido: 'nueve', ejemplo: 'nueve' }
+            { id: 'A', tipo: 'letra', color: '#FF6B6B', mensaje: '¡A de Avión!', icono: 'iconos/avion.png', sonido: 'A', ejemplo: 'Avión' },
+            { id: 'B', tipo: 'letra', color: '#FF9F43', mensaje: '¡B de Bebé!', icono: 'iconos/bebe-persona.png', sonido: 'B', ejemplo: 'Bebé' },
+            { id: 'C', tipo: 'letra', color: '#FECA57', mensaje: '¡C de Casa!', icono: 'iconos/casa.png', sonido: 'C', ejemplo: 'Casa' },
+            { id: 'D', tipo: 'letra', color: '#6BCB77', mensaje: '¡D de Delfín!', icono: 'iconos/delfin.png', sonido: 'D', ejemplo: 'Delfín' },
+            { id: 'E', tipo: 'letra', color: '#4FC3F7', mensaje: '¡E de Estrella!', icono: 'iconos/estrella.png', sonido: 'E', ejemplo: 'Estrella' },
+            { id: 'F', tipo: 'letra', color: '#5B86E5', mensaje: '¡F de Flor!', icono: 'iconos/flor.png', sonido: 'F', ejemplo: 'Flor' },
+            { id: 'G', tipo: 'letra', color: '#A29BFE', mensaje: '¡G de Gato!', icono: 'iconos/gato.png', sonido: 'G', ejemplo: 'Gato' },
+            { id: 'H', tipo: 'letra', color: '#FD79A8', mensaje: '¡H de Helado!', icono: 'iconos/helado.png', sonido: 'H', ejemplo: 'Helado' },
+            { id: 'I', tipo: 'letra', color: '#00CEC9', mensaje: '¡I de Isla!', icono: 'iconos/isla.png', sonido: 'I', ejemplo: 'Isla' },
+            { id: 'J', tipo: 'letra', color: '#FDCB6E', mensaje: '¡J de Jirafa!', icono: 'iconos/jirafa.png', sonido: 'J', ejemplo: 'Jirafa' },
+            { id: 'K', tipo: 'letra', color: '#E17055', mensaje: '¡K de Koala!', icono: 'iconos/koala.png', sonido: 'K', ejemplo: 'Koala' },
+            { id: 'L', tipo: 'letra', color: '#74B9FF', mensaje: '¡L de Luna!', icono: 'iconos/luna.png', sonido: 'L', ejemplo: 'Luna' },
+            { id: 'M', tipo: 'letra', color: '#55EFC4', mensaje: '¡M de Mariposa!', icono: 'iconos/mariposa.png', sonido: 'M', ejemplo: 'Mariposa' },
+            { id: 'N', tipo: 'letra', color: '#FAB1A0', mensaje: '¡N de Nube!', icono: 'iconos/nube.png', sonido: 'N', ejemplo: 'Nube' },
+            { id: 'Ñ', tipo: 'letra', color: '#81ECEC', mensaje: '¡Ñ de Ñandú!', icono: 'iconos/nandu.png', sonido: 'eñe', ejemplo: 'Ñandú' },
+            { id: 'O', tipo: 'letra', color: '#FF7675', mensaje: '¡O de Oso!', icono: 'iconos/oso.png', sonido: 'O', ejemplo: 'Oso' },
+            { id: 'P', tipo: 'letra', color: '#FDCB6E', mensaje: '¡P de Pelota!', icono: 'iconos/pelota.png', sonido: 'P', ejemplo: 'Pelota' },
+            { id: 'Q', tipo: 'letra', color: '#A29BFE', mensaje: '¡Q de Queso!', icono: 'iconos/queso.png', sonido: 'Q', ejemplo: 'Queso' },
+            { id: 'R', tipo: 'letra', color: '#FF6B6B', mensaje: '¡R de Ratón!', icono: 'iconos/raton.png', sonido: 'R', ejemplo: 'Ratón' },
+            { id: 'S', tipo: 'letra', color: '#6BCB77', mensaje: '¡S de Sol!', icono: 'iconos/sol.png', sonido: 'S', ejemplo: 'Sol' },
+            { id: 'T', tipo: 'letra', color: '#4FC3F7', mensaje: '¡T de Tortuga!', icono: 'iconos/tortuga.png', sonido: 'T', ejemplo: 'Tortuga' },
+            { id: 'U', tipo: 'letra', color: '#C084FC', mensaje: '¡U de Uva!', icono: 'iconos/uva.png', sonido: 'U', ejemplo: 'Uva' },
+            { id: 'V', tipo: 'letra', color: '#FF9F43', mensaje: '¡V de Vaca!', icono: 'iconos/vaca.png', sonido: 'V', ejemplo: 'Vaca' },
+            { id: 'W', tipo: 'letra', color: '#FECA57', mensaje: '¡W de Wafle!', icono: 'iconos/regalo.png', sonido: 'doble u', ejemplo: 'Wafle' },
+            { id: 'X', tipo: 'letra', color: '#5B86E5', mensaje: '¡X de Xilófono!', icono: 'iconos/xilofono.png', sonido: 'equis', ejemplo: 'Xilófono' },
+            { id: 'Y', tipo: 'letra', color: '#FD79A8', mensaje: '¡Y de Yogur!', icono: 'iconos/helado.png', sonido: 'y', ejemplo: 'Yogur' },
+            { id: 'Z', tipo: 'letra', color: '#00CEC9', mensaje: '¡Z de Zorro!', icono: 'iconos/zorro.png', sonido: 'Z', ejemplo: 'Zorro' },
+            { id: '0', tipo: 'numero', color: '#FF6B6B', mensaje: '¡El número 0!', icono: '', sonido: 'cero', ejemplo: 'cero' },
+            { id: '1', tipo: 'numero', color: '#FF9F43', mensaje: '¡El número 1!', icono: '', sonido: 'uno', ejemplo: 'uno' },
+            { id: '2', tipo: 'numero', color: '#FECA57', mensaje: '¡El número 2!', icono: '', sonido: 'dos', ejemplo: 'dos' },
+            { id: '3', tipo: 'numero', color: '#6BCB77', mensaje: '¡El número 3!', icono: '', sonido: 'tres', ejemplo: 'tres' },
+            { id: '4', tipo: 'numero', color: '#4FC3F7', mensaje: '¡El número 4!', icono: '', sonido: 'cuatro', ejemplo: 'cuatro' },
+            { id: '5', tipo: 'numero', color: '#5B86E5', mensaje: '¡El número 5!', icono: '', sonido: 'cinco', ejemplo: 'cinco' },
+            { id: '6', tipo: 'numero', color: '#A29BFE', mensaje: '¡El número 6!', icono: '', sonido: 'seis', ejemplo: 'seis' },
+            { id: '7', tipo: 'numero', color: '#FD79A8', mensaje: '¡El número 7!', icono: '', sonido: 'siete', ejemplo: 'siete' },
+            { id: '8', tipo: 'numero', color: '#00CEC9', mensaje: '¡El número 8!', icono: '', sonido: 'ocho', ejemplo: 'ocho' },
+            { id: '9', tipo: 'numero', color: '#FDCB6E', mensaje: '¡El número 9!', icono: '', sonido: 'nueve', ejemplo: 'nueve' }
         ];
 
         const rimas = {
@@ -794,31 +838,31 @@
         };
 
         const silabas = [
-            { id: 'MA', color: '#FF6B6B', mensaje: '¡MA de Mamá! 👩', ejemplo: 'Mamá' },
-            { id: 'ME', color: '#FF9F43', mensaje: '¡ME de Mesa! 🪑', ejemplo: 'Mesa' },
-            { id: 'MI', color: '#FECA57', mensaje: '¡MI de Miel! 🍯', ejemplo: 'Miel' },
-            { id: 'MO', color: '#6BCB77', mensaje: '¡MO de Mono! 🐵', ejemplo: 'Mono' },
-            { id: 'MU', color: '#4FC3F7', mensaje: '¡MU de Música! 🎵', ejemplo: 'Música' },
-            { id: 'PA', color: '#5B86E5', mensaje: '¡PA de Papá! 👨', ejemplo: 'Papá' },
-            { id: 'PE', color: '#A29BFE', mensaje: '¡PE de Perro! 🐶', ejemplo: 'Perro' },
-            { id: 'PI', color: '#FD79A8', mensaje: '¡PI de Piña! 🍍', ejemplo: 'Piña' },
-            { id: 'PO', color: '#00CEC9', mensaje: '¡PO de Pollo! 🐔', ejemplo: 'Pollo' },
-            { id: 'PU', color: '#FDCB6E', mensaje: '¡PU de Puerta! 🚪', ejemplo: 'Puerta' },
-            { id: 'LA', color: '#E17055', mensaje: '¡LA de Lápiz! ✏️', ejemplo: 'Lápiz' },
-            { id: 'LE', color: '#74B9FF', mensaje: '¡LE de León! 🦁', ejemplo: 'León' },
-            { id: 'LI', color: '#55EFC4', mensaje: '¡LI de Libro! 📚', ejemplo: 'Libro' },
-            { id: 'LO', color: '#FAB1A0', mensaje: '¡LO de Loro! 🦜', ejemplo: 'Loro' },
-            { id: 'LU', color: '#81ECEC', mensaje: '¡LU de Luna! 🌙', ejemplo: 'Luna' },
-            { id: 'SA', color: '#FF7675', mensaje: '¡SA de Sapo! 🐸', ejemplo: 'Sapo' },
-            { id: 'SE', color: '#FDCB6E', mensaje: '¡SE de Semáforo! 🚦', ejemplo: 'Semáforo' },
-            { id: 'SI', color: '#A29BFE', mensaje: '¡SI de Silla! 🪑', ejemplo: 'Silla' },
-            { id: 'SO', color: '#FF6B6B', mensaje: '¡SO de Sol! ☀️', ejemplo: 'Sol' },
-            { id: 'SU', color: '#6BCB77', mensaje: '¡SU de Submarino! 🚢', ejemplo: 'Submarino' },
-            { id: 'TA', color: '#4FC3F7', mensaje: '¡TA de Taza! ☕', ejemplo: 'Taza' },
-            { id: 'TE', color: '#C084FC', mensaje: '¡TE de Teléfono! 📱', ejemplo: 'Teléfono' },
-            { id: 'TI', color: '#FF9F43', mensaje: '¡TI de Tigre! 🐯', ejemplo: 'Tigre' },
-            { id: 'TO', color: '#FECA57', mensaje: '¡TO de Tomate! 🍅', ejemplo: 'Tomate' },
-            { id: 'TU', color: '#5B86E5', mensaje: '¡TU de Tucán! 🦜', ejemplo: 'Tucán' }
+            { id: 'MA', color: '#FF6B6B', mensaje: '¡MA de Mamá!', icono: 'iconos/mama.png', ejemplo: 'Mamá' },
+            { id: 'ME', color: '#FF9F43', mensaje: '¡ME de Mesa!', icono: 'iconos/mesa.png', ejemplo: 'Mesa' },
+            { id: 'MI', color: '#FECA57', mensaje: '¡MI de Miel!', icono: 'iconos/miel.png', ejemplo: 'Miel' },
+            { id: 'MO', color: '#6BCB77', mensaje: '¡MO de Mono!', icono: 'iconos/mono.png', ejemplo: 'Mono' },
+            { id: 'MU', color: '#4FC3F7', mensaje: '¡MU de Música!', icono: 'iconos/musica.png', ejemplo: 'Música' },
+            { id: 'PA', color: '#5B86E5', mensaje: '¡PA de Papá!', icono: 'iconos/papa.png', ejemplo: 'Papá' },
+            { id: 'PE', color: '#A29BFE', mensaje: '¡PE de Perro!', icono: 'iconos/perro.png', ejemplo: 'Perro' },
+            { id: 'PI', color: '#FD79A8', mensaje: '¡PI de Piña!', icono: 'iconos/pina.png', ejemplo: 'Piña' },
+            { id: 'PO', color: '#00CEC9', mensaje: '¡PO de Pollo!', icono: 'iconos/pollo.png', ejemplo: 'Pollo' },
+            { id: 'PU', color: '#FDCB6E', mensaje: '¡PU de Puerta!', icono: 'iconos/puerta.png', ejemplo: 'Puerta' },
+            { id: 'LA', color: '#E17055', mensaje: '¡LA de Lápiz!', icono: 'iconos/lapiz.png', ejemplo: 'Lápiz' },
+            { id: 'LE', color: '#74B9FF', mensaje: '¡LE de León!', icono: 'iconos/leon.png', ejemplo: 'León' },
+            { id: 'LI', color: '#55EFC4', mensaje: '¡LI de Libro!', icono: 'iconos/libro.png', ejemplo: 'Libro' },
+            { id: 'LO', color: '#FAB1A0', mensaje: '¡LO de Loro!', icono: 'iconos/loro.png', ejemplo: 'Loro' },
+            { id: 'LU', color: '#81ECEC', mensaje: '¡LU de Luna!', icono: 'iconos/luna.png', ejemplo: 'Luna' },
+            { id: 'SA', color: '#FF7675', mensaje: '¡SA de Sapo!', icono: 'iconos/sapo.png', ejemplo: 'Sapo' },
+            { id: 'SE', color: '#FDCB6E', mensaje: '¡SE de Semáforo!', icono: 'iconos/semaforo.png', ejemplo: 'Semáforo' },
+            { id: 'SI', color: '#A29BFE', mensaje: '¡SI de Silla!', icono: 'iconos/silla.png', ejemplo: 'Silla' },
+            { id: 'SO', color: '#FF6B6B', mensaje: '¡SO de Sol!', icono: 'iconos/sol.png', ejemplo: 'Sol' },
+            { id: 'SU', color: '#6BCB77', mensaje: '¡SU de Submarino!', icono: 'iconos/submarino.png', ejemplo: 'Submarino' },
+            { id: 'TA', color: '#4FC3F7', mensaje: '¡TA de Taza!', icono: 'iconos/taza.png', ejemplo: 'Taza' },
+            { id: 'TE', color: '#C084FC', mensaje: '¡TE de Teléfono!', icono: 'iconos/telefono.png', ejemplo: 'Teléfono' },
+            { id: 'TI', color: '#FF9F43', mensaje: '¡TI de Tigre!', icono: 'iconos/tigre.png', ejemplo: 'Tigre' },
+            { id: 'TO', color: '#FECA57', mensaje: '¡TO de Tomate!', icono: 'iconos/tomate.png', ejemplo: 'Tomate' },
+            { id: 'TU', color: '#5B86E5', mensaje: '¡TU de Tucán!', icono: 'iconos/tucan.png', ejemplo: 'Tucán' }
         ];
 
         const rimasSilabas = {
@@ -850,32 +894,32 @@
         };
 
         const palabras = [
-            { id: 'MAMÁ', color: '#FF6B6B', emoji: '👩', mensaje: '¡MAMÁ! 👩', ejemplo: 'Mamá' },
-            { id: 'PAPÁ', color: '#FF9F43', emoji: '👨', mensaje: '¡PAPÁ! 👨', ejemplo: 'Papá' },
-            { id: 'BEBÉ', color: '#FECA57', emoji: '👶', mensaje: '¡BEBÉ! 👶', ejemplo: 'Bebé' },
-            { id: 'ABUELO', color: '#6BCB77', emoji: '👴', mensaje: '¡ABUELO! 👴', ejemplo: 'Abuelo' },
-            { id: 'ABUELA', color: '#4FC3F7', emoji: '👵', mensaje: '¡ABUELA! 👵', ejemplo: 'Abuela' },
-            { id: 'GATO', color: '#5B86E5', emoji: '🐱', mensaje: '¡GATO! 🐱', ejemplo: 'Gato' },
-            { id: 'PERRO', color: '#A29BFE', emoji: '🐶', mensaje: '¡PERRO! 🐶', ejemplo: 'Perro' },
-            { id: 'PATO', color: '#FD79A8', emoji: '🦆', mensaje: '¡PATO! 🦆', ejemplo: 'Pato' },
-            { id: 'OSO', color: '#00CEC9', emoji: '🐻', mensaje: '¡OSO! 🐻', ejemplo: 'Oso' },
-            { id: 'LEÓN', color: '#FDCB6E', emoji: '🦁', mensaje: '¡LEÓN! 🦁', ejemplo: 'León' },
-            { id: 'TIGRE', color: '#E17055', emoji: '🐯', mensaje: '¡TIGRE! 🐯', ejemplo: 'Tigre' },
-            { id: 'SOL', color: '#74B9FF', emoji: '☀️', mensaje: '¡SOL! ☀️', ejemplo: 'Sol' },
-            { id: 'LUNA', color: '#55EFC4', emoji: '🌙', mensaje: '¡LUNA! 🌙', ejemplo: 'Luna' },
-            { id: 'ESTRELLA', color: '#FAB1A0', emoji: '⭐', mensaje: '¡ESTRELLA! ⭐', ejemplo: 'Estrella' },
-            { id: 'FLOR', color: '#81ECEC', emoji: '🌸', mensaje: '¡FLOR! 🌸', ejemplo: 'Flor' },
-            { id: 'ÁRBOL', color: '#FF7675', emoji: '🌳', mensaje: '¡ÁRBOL! 🌳', ejemplo: 'Árbol' },
-            { id: 'CASA', color: '#FDCB6E', emoji: '🏠', mensaje: '¡CASA! 🏠', ejemplo: 'Casa' },
-            { id: 'PELOTA', color: '#A29BFE', emoji: '⚽', mensaje: '¡PELOTA! ⚽', ejemplo: 'Pelota' },
-            { id: 'LIBRO', color: '#FF6B6B', emoji: '📚', mensaje: '¡LIBRO! 📚', ejemplo: 'Libro' },
-            { id: 'LÁPIZ', color: '#6BCB77', emoji: '✏️', mensaje: '¡LÁPIZ! ✏️', ejemplo: 'Lápiz' },
-            { id: 'SILLA', color: '#4FC3F7', emoji: '🪑', mensaje: '¡SILLA! 🪑', ejemplo: 'Silla' },
-            { id: 'PAN', color: '#C084FC', emoji: '🍞', mensaje: '¡PAN! 🍞', ejemplo: 'Pan' },
-            { id: 'LECHE', color: '#FF9F43', emoji: '🥛', mensaje: '¡LECHE! 🥛', ejemplo: 'Leche' },
-            { id: 'MANZANA', color: '#FECA57', emoji: '🍎', mensaje: '¡MANZANA! 🍎', ejemplo: 'Manzana' },
-            { id: 'UVA', color: '#5B86E5', emoji: '🍇', mensaje: '¡UVA! 🍇', ejemplo: 'Uva' },
-            { id: 'QUESO', color: '#A29BFE', emoji: '🧀', mensaje: '¡QUESO! 🧀', ejemplo: 'Queso' }
+            { id: 'MAMÁ', color: '#FF6B6B', icono: 'iconos/mama.png', mensaje: '¡MAMÁ!', ejemplo: 'Mamá' },
+            { id: 'PAPÁ', color: '#FF9F43', icono: 'iconos/papa.png', mensaje: '¡PAPÁ!', ejemplo: 'Papá' },
+            { id: 'BEBÉ', color: '#FECA57', icono: 'iconos/bebe-persona.png', mensaje: '¡BEBÉ!', ejemplo: 'Bebé' },
+            { id: 'ABUELO', color: '#6BCB77', icono: 'iconos/abuelo.png', mensaje: '¡ABUELO!', ejemplo: 'Abuelo' },
+            { id: 'ABUELA', color: '#4FC3F7', icono: 'iconos/abuela.png', mensaje: '¡ABUELA!', ejemplo: 'Abuela' },
+            { id: 'GATO', color: '#5B86E5', icono: 'iconos/gato.png', mensaje: '¡GATO!', ejemplo: 'Gato' },
+            { id: 'PERRO', color: '#A29BFE', icono: 'iconos/perro.png', mensaje: '¡PERRO!', ejemplo: 'Perro' },
+            { id: 'PATO', color: '#FD79A8', icono: 'iconos/pato.png', mensaje: '¡PATO!', ejemplo: 'Pato' },
+            { id: 'OSO', color: '#00CEC9', icono: 'iconos/oso.png', mensaje: '¡OSO!', ejemplo: 'Oso' },
+            { id: 'LEÓN', color: '#FDCB6E', icono: 'iconos/leon.png', mensaje: '¡LEÓN!', ejemplo: 'León' },
+            { id: 'TIGRE', color: '#E17055', icono: 'iconos/tigre.png', mensaje: '¡TIGRE!', ejemplo: 'Tigre' },
+            { id: 'SOL', color: '#74B9FF', icono: 'iconos/sol.png', mensaje: '¡SOL!', ejemplo: 'Sol' },
+            { id: 'LUNA', color: '#55EFC4', icono: 'iconos/luna.png', mensaje: '¡LUNA!', ejemplo: 'Luna' },
+            { id: 'ESTRELLA', color: '#FAB1A0', icono: 'iconos/estrella.png', mensaje: '¡ESTRELLA!', ejemplo: 'Estrella' },
+            { id: 'FLOR', color: '#81ECEC', icono: 'iconos/flor.png', mensaje: '¡FLOR!', ejemplo: 'Flor' },
+            { id: 'ÁRBOL', color: '#FF7675', icono: 'iconos/arbol.png', mensaje: '¡ÁRBOL!', ejemplo: 'Árbol' },
+            { id: 'CASA', color: '#FDCB6E', icono: 'iconos/casa.png', mensaje: '¡CASA!', ejemplo: 'Casa' },
+            { id: 'PELOTA', color: '#A29BFE', icono: 'iconos/pelota.png', mensaje: '¡PELOTA!', ejemplo: 'Pelota' },
+            { id: 'LIBRO', color: '#FF6B6B', icono: 'iconos/libro.png', mensaje: '¡LIBRO!', ejemplo: 'Libro' },
+            { id: 'LÁPIZ', color: '#6BCB77', icono: 'iconos/lapiz.png', mensaje: '¡LÁPIZ!', ejemplo: 'Lápiz' },
+            { id: 'SILLA', color: '#4FC3F7', icono: 'iconos/silla.png', mensaje: '¡SILLA!', ejemplo: 'Silla' },
+            { id: 'PAN', color: '#C084FC', icono: 'iconos/pan.png', mensaje: '¡PAN!', ejemplo: 'Pan' },
+            { id: 'LECHE', color: '#FF9F43', icono: 'iconos/leche.png', mensaje: '¡LECHE!', ejemplo: 'Leche' },
+            { id: 'MANZANA', color: '#FECA57', icono: 'iconos/manzana.png', mensaje: '¡MANZANA!', ejemplo: 'Manzana' },
+            { id: 'UVA', color: '#5B86E5', icono: 'iconos/uva.png', mensaje: '¡UVA!', ejemplo: 'Uva' },
+            { id: 'QUESO', color: '#A29BFE', icono: 'iconos/queso.png', mensaje: '¡QUESO!', ejemplo: 'Queso' }
         ];
 
         const rimasPalabras = {
@@ -908,34 +952,34 @@
         };
 
         const palabrasS = [
-            { id: 'SOL', color: '#FF6B6B', emoji: '☀️', posicion: 'inicio', mensaje: '¡SOL! ☀️' },
-            { id: 'SOPA', color: '#FF9F43', emoji: '🍲', posicion: 'inicio', mensaje: '¡SOPA! 🍲' },
-            { id: 'SILLA', color: '#FECA57', emoji: '🪑', posicion: 'inicio', mensaje: '¡SILLA! 🪑' },
-            { id: 'SAPO', color: '#6BCB77', emoji: '🐸', posicion: 'inicio', mensaje: '¡SAPO! 🐸' },
-            { id: 'SIRENA', color: '#4FC3F7', emoji: '🧜‍♀️', posicion: 'inicio', mensaje: '¡SIRENA! 🧜‍♀️' },
-            { id: 'SEMÁFORO', color: '#5B86E5', emoji: '🚦', posicion: 'inicio', mensaje: '¡SEMÁFORO! 🚦' },
-            { id: 'SANDÍA', color: '#A29BFE', emoji: '🍉', posicion: 'inicio', mensaje: '¡SANDÍA! 🍉' },
-            { id: 'SOMBRERO', color: '#FD79A8', emoji: '🎩', posicion: 'inicio', mensaje: '¡SOMBRERO! 🎩' },
-            { id: 'CANGREJO', color: '#E17055', emoji: '🦀', posicion: 'inicio', mensaje: '¡CANGREJO! 🦀' },
-            { id: 'CANCIÓN', color: '#00CEC9', emoji: '🎵', posicion: 'inicio', mensaje: '¡CANCIÓN! 🎵' },
-            { id: 'SALSA', color: '#FDCB6E', emoji: '🥣', posicion: 'inicio', mensaje: '¡SALSA! 🥣' },
-            { id: 'MESA', color: '#74B9FF', emoji: '🪑', posicion: 'medio', mensaje: '¡MESA! 🪑' },
-            { id: 'CASA', color: '#55EFC4', emoji: '🏠', posicion: 'medio', mensaje: '¡CASA! 🏠' },
-            { id: 'ROSA', color: '#FAB1A0', emoji: '🌹', posicion: 'medio', mensaje: '¡ROSA! 🌹' },
-            { id: 'OSO', color: '#81ECEC', emoji: '🐻', posicion: 'medio', mensaje: '¡OSO! 🐻' },
-            { id: 'ISLA', color: '#FF7675', emoji: '🏝️', posicion: 'medio', mensaje: '¡ISLA! 🏝️' },
-            { id: 'MÚSICA', color: '#FDCB6E', emoji: '🎶', posicion: 'medio', mensaje: '¡MÚSICA! 🎶' },
-            { id: 'PISCINA', color: '#A29BFE', emoji: '🏊', posicion: 'medio', mensaje: '¡PISCINA! 🏊' },
-            { id: 'VASO', color: '#FF6B6B', emoji: '🥛', posicion: 'medio', mensaje: '¡VASO! 🥛' },
-            { id: 'BESO', color: '#6BCB77', emoji: '💋', posicion: 'medio', mensaje: '¡BESO! 💋' },
-            { id: 'AUTOBÚS', color: '#4FC3F7', emoji: '🚌', posicion: 'final', mensaje: '¡AUTOBÚS! 🚌' },
-            { id: 'LÁPIZ', color: '#C084FC', emoji: '✏️', posicion: 'final', mensaje: '¡LÁPIZ! ✏️' },
-            { id: 'COMPÁS', color: '#FF9F43', emoji: '📐', posicion: 'final', mensaje: '¡COMPÁS! 📐' },
-            { id: 'PEZ', color: '#FECA57', emoji: '🐟', posicion: 'final', mensaje: '¡PEZ! 🐟' },
-            { id: 'VOZ', color: '#5B86E5', emoji: '🗣️', posicion: 'final', mensaje: '¡VOZ! 🗣️' },
-            { id: 'LUZ', color: '#A29BFE', emoji: '💡', posicion: 'final', mensaje: '¡LUZ! 💡' },
-            { id: 'NARIZ', color: '#FD79A8', emoji: '👃', posicion: 'final', mensaje: '¡NARIZ! 👃' },
-            { id: 'AJEDREZ', color: '#00CEC9', emoji: '♟️', posicion: 'final', mensaje: '¡AJEDREZ! ♟️' }
+            { id: 'SOL', color: '#FF6B6B', icono: 'iconos/sol.png', posicion: 'inicio', mensaje: '¡SOL!' },
+            { id: 'SOPA', color: '#FF9F43', icono: 'iconos/sopa.png', posicion: 'inicio', mensaje: '¡SOPA!' },
+            { id: 'SILLA', color: '#FECA57', icono: 'iconos/silla.png', posicion: 'inicio', mensaje: '¡SILLA!' },
+            { id: 'SAPO', color: '#6BCB77', icono: 'iconos/sapo.png', posicion: 'inicio', mensaje: '¡SAPO!' },
+            { id: 'SIRENA', color: '#4FC3F7', icono: 'iconos/sirena.png', posicion: 'inicio', mensaje: '¡SIRENA!' },
+            { id: 'SEMÁFORO', color: '#5B86E5', icono: 'iconos/semaforo.png', posicion: 'inicio', mensaje: '¡SEMÁFORO!' },
+            { id: 'SANDÍA', color: '#A29BFE', icono: 'iconos/sandia.png', posicion: 'inicio', mensaje: '¡SANDÍA!' },
+            { id: 'SOMBRERO', color: '#FD79A8', icono: 'iconos/regalo.png', posicion: 'inicio', mensaje: '¡SOMBRERO!' },
+            { id: 'CANGREJO', color: '#E17055', icono: 'iconos/cangrejo.png', posicion: 'inicio', mensaje: '¡CANGREJO!' },
+            { id: 'CANCIÓN', color: '#00CEC9', icono: 'iconos/cancion.png', posicion: 'inicio', mensaje: '¡CANCIÓN!' },
+            { id: 'SALSA', color: '#FDCB6E', icono: 'iconos/salsa.png', posicion: 'inicio', mensaje: '¡SALSA!' },
+            { id: 'MESA', color: '#74B9FF', icono: 'iconos/mesa.png', posicion: 'medio', mensaje: '¡MESA!' },
+            { id: 'CASA', color: '#55EFC4', icono: 'iconos/casa.png', posicion: 'medio', mensaje: '¡CASA!' },
+            { id: 'ROSA', color: '#FAB1A0', icono: 'iconos/rosa.png', posicion: 'medio', mensaje: '¡ROSA!' },
+            { id: 'OSO', color: '#81ECEC', icono: 'iconos/oso.png', posicion: 'medio', mensaje: '¡OSO!' },
+            { id: 'ISLA', color: '#FF7675', icono: 'iconos/isla.png', posicion: 'medio', mensaje: '¡ISLA!' },
+            { id: 'MÚSICA', color: '#FDCB6E', icono: 'iconos/musica.png', posicion: 'medio', mensaje: '¡MÚSICA!' },
+            { id: 'PISCINA', color: '#A29BFE', icono: 'iconos/piscina.png', posicion: 'medio', mensaje: '¡PISCINA!' },
+            { id: 'VASO', color: '#FF6B6B', icono: 'iconos/taza.png', posicion: 'medio', mensaje: '¡VASO!' },
+            { id: 'BESO', color: '#6BCB77', icono: 'iconos/corazon.png', posicion: 'medio', mensaje: '¡BESO!' },
+            { id: 'AUTOBÚS', color: '#4FC3F7', icono: 'iconos/autobus.png', posicion: 'final', mensaje: '¡AUTOBÚS!' },
+            { id: 'LÁPIZ', color: '#C084FC', icono: 'iconos/lapiz.png', posicion: 'final', mensaje: '¡LÁPIZ!' },
+            { id: 'COMPÁS', color: '#FF9F43', icono: 'iconos/lapiz.png', posicion: 'final', mensaje: '¡COMPÁS!' },
+            { id: 'PEZ', color: '#FECA57', icono: 'iconos/pez.png', posicion: 'final', mensaje: '¡PEZ!' },
+            { id: 'VOZ', color: '#5B86E5', icono: 'iconos/cancion.png', posicion: 'final', mensaje: '¡VOZ!' },
+            { id: 'LUZ', color: '#A29BFE', icono: 'iconos/sol.png', posicion: 'final', mensaje: '¡LUZ!' },
+            { id: 'NARIZ', color: '#FD79A8', icono: 'iconos/raton.png', posicion: 'final', mensaje: '¡NARIZ!' },
+            { id: 'AJEDREZ', color: '#00CEC9', icono: 'iconos/regalo.png', posicion: 'final', mensaje: '¡AJEDREZ!' }
         ];
 
         const rimasS = {
@@ -1004,7 +1048,7 @@
             indiceActual: 0, contadorRepeticiones: 0, nivel: 1, estrellas: 0,
             vistos: new Set(), aciertos: 0, fallos: 0,
             ultimaSesion: new Date().toLocaleString(),
-            tema: 'escuela', mascota: '🧸',
+            tema: 'escuela', mascota: 'oso',
             vozVelocidad: 0.5, vozTono: 1.8, vozSeleccionada: null, filtro: 'todas'
         };
 
@@ -1205,7 +1249,7 @@
                     estado.aciertos = datos.aciertos || 0;
                     estado.fallos = datos.fallos || 0;
                     estado.tema = datos.tema || 'escuela';
-                    estado.mascota = datos.mascota || '🧸';
+                    estado.mascota = datos.mascota || 'oso';
                     estado.vozVelocidad = datos.vozVelocidad || 0.5;
                     estado.vozTono = datos.vozTono || 1.8;
                     estado.vozSeleccionada = datos.vozSeleccionada || null;
@@ -1364,15 +1408,15 @@
                 const numTexto = numeros[parseInt(id)] || id;
                 textoFinal = `¡El número ${id}! ${numTexto} ${numTexto} ${numTexto}`;
             } else if (id === 'M') {
-                textoFinal = '¡M de Mariposa! ¡M! ¡M! ¡Mariposa! 🦋';
+                textoFinal = '¡M de Mariposa! ¡M! ¡M! ¡Mariposa!';
             } else if (id === 'O') {
-                textoFinal = '¡O de Oso! ¡O! ¡O! ¡Oso! 🐻';
+                textoFinal = '¡O de Oso! ¡O! ¡O! ¡Oso!';
             } else if (id === 'Ñ') {
-                textoFinal = '¡Eñe! ¡Eñe! ¡Eñe de Ñandú! 🐦';
+                textoFinal = '¡Eñe! ¡Eñe! ¡Eñe de Ñandú!';
             } else if (id === 'X') {
                 textoFinal = '¡Equis! ¡Equis! ¡Equis de Xilófono!';
             } else if (id === 'W') {
-                textoFinal = '¡Doble u! ¡Doble u! ¡Doble u de Wafle! 🧇';
+                textoFinal = '¡Doble u! ¡Doble u! ¡Doble u de Wafle!';
             } else {
                 const formas = [
                     `¡${id}! ¡${id}! ¡${id} de ${ejemplo}!`,
@@ -1449,7 +1493,7 @@
                     estado.fallos = parsed.fallos || 0;
                     estado.ultimaSesion = parsed.ultimaSesion || new Date().toLocaleString();
                     estado.tema = parsed.tema || 'escuela';
-                    estado.mascota = parsed.mascota || '🧸';
+                    estado.mascota = parsed.mascota || 'oso';
                     estado.vozVelocidad = parsed.vozVelocidad || 0.5;
                     estado.vozTono = parsed.vozTono || 1.8;
                     estado.vozSeleccionada = parsed.vozSeleccionada || null;
@@ -1616,8 +1660,8 @@
             emergente.style.animation = 'none';
             void emergente.offsetWidth;
             emergente.style.animation = 'rebotar 0.8s ease-out';
-            const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
-            mensaje.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
+            const iconoHtml = item.icono ? `<img src="${item.icono}" alt="${item.ejemplo}" class="mascota-icono">` : '';
+            mensaje.innerHTML = `${iconoHtml} Mia dice: ${item.mensaje}`;
             if (rimas[item.id]) {
                 rimaDiv.textContent = '🎵 ' + rimas[item.id];
                 rimaDiv.style.display = 'block';
@@ -1646,7 +1690,8 @@
             void emergenteSilabas.offsetWidth;
             emergenteSilabas.style.animation = 'rebotar 0.8s ease-out';
             const mensajeSilaba = document.getElementById('mensajeSilaba');
-            mensajeSilaba.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje}`;
+            const iconoHtml = item.icono ? `<img src="${item.icono}" alt="${item.ejemplo}" class="mascota-icono">` : '';
+            mensajeSilaba.innerHTML = `${iconoHtml} Mia dice: ${item.mensaje}`;
             const rimaSilaba = document.getElementById('rimaSilaba');
             if (rimasSilabas[item.id]) {
                 rimaSilaba.textContent = '🎵 ' + rimasSilabas[item.id];
@@ -1677,7 +1722,8 @@
             void emergentePalabras.offsetWidth;
             emergentePalabras.style.animation = 'rebotar 0.8s ease-out';
             const mensajePalabra = document.getElementById('mensajePalabra');
-            mensajePalabra.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje}`;
+            const iconoHtml = item.icono ? `<img src="${item.icono}" alt="${item.ejemplo}" class="mascota-icono">` : '';
+            mensajePalabra.innerHTML = `${iconoHtml} Mia dice: ${item.mensaje}`;
             const rimaPalabra = document.getElementById('rimaPalabra');
             if (rimasPalabras[item.id]) {
                 rimaPalabra.textContent = '🎵 ' + rimasPalabras[item.id];
@@ -1708,7 +1754,8 @@
             void emergenteS.offsetWidth;
             emergenteS.style.animation = 'rebotar 0.8s ease-out';
             const mensajeS = document.getElementById('mensajeS');
-            mensajeS.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje}`;
+            const iconoHtml = item.icono ? `<img src="${item.icono}" alt="${item.id}" class="mascota-icono">` : '';
+            mensajeS.innerHTML = `${iconoHtml} Mia dice: ${item.mensaje}`;
             const rimaS = document.getElementById('rimaS');
             if (rimasS[item.id]) {
                 rimaS.textContent = '🎵 ' + rimasS[item.id];
@@ -1740,7 +1787,7 @@
             void texto.offsetWidth;
             texto.style.animation = 'fadeIn 0.5s ease';
             const mensajeTrabalenguas = document.getElementById('mensajeTrabalenguas');
-            mensajeTrabalenguas.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Escucha y repite despacio`;
+            mensajeTrabalenguas.innerHTML = `<img src="iconos/oso.png" alt="oso" class="mascota-icono"> Escucha y repite despacio`;
             indiceTrabalenguasActual = indice;
             trabalenguasVistos.add(indice);
             document.getElementById('progresoTrabalenguas').textContent = trabalenguasVistos.size;
@@ -1954,8 +2001,9 @@
                 el.classList.toggle('seleccionado', el.dataset.mascota === mascota);
             });
             const item = elementos[estado.indiceActual];
-            const tipoEmoji = item.tipo === 'numero' ? '🔢' : '🔤';
-            mensaje.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje} ${tipoEmoji}`;
+            const iconoMascota = `iconos/${mascota}.png`;
+            const iconoHtml = item.icono ? `<img src="${item.icono}" alt="${item.ejemplo}" class="mascota-icono">` : '';
+            mensaje.innerHTML = `${iconoHtml} Mia dice: ${item.mensaje}`;
             guardarProgreso();
         }
 
@@ -2325,6 +2373,7 @@
         console.log('🗣️ Sección de ejercicios de S añadida');
         console.log('🚫 Sección de grabación eliminada (protección de datos)');
         console.log('📱 Disposición móvil corregida');
+        console.log('🎨 Iconos Fluent 3D implementados');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
