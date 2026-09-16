@@ -1326,6 +1326,28 @@
 </head>
 <body class="tema-escuela">
 
+    <!-- Botón de música (arriba a la derecha) -->
+    <button id="btnMusica" style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255,255,255,0.9);
+        border: 3px solid #C084FC;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 2000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        transition: all 0.3s;
+    ">🔇</button>
+
+    <!-- Audio de música de fondo -->
+    <audio id="musicaFondo" loop preload="auto">
+        <source src="musica-fondo.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="pantalla-inicio" id="pantallaInicio">
         <img src="icon-192.png" alt="Mia va al Colegio" class="icono-inicio">
         <h1>Mia va al Colegio</h1>
@@ -1526,13 +1548,13 @@
             <div class="configuracion">
                 <label>
                     Velocidad:
-                    <input type="range" id="vozVelocidad" min="0.3" max="1.0" step="0.05" value="0.55">
-                    <span id="vozVelocidadValor">0.55</span>
+                    <input type="range" id="vozVelocidad" min="0.3" max="1.0" step="0.05" value="0.5">
+                    <span id="vozVelocidadValor">0.5</span>
                 </label>
                 <label>
                     Tono:
-                    <input type="range" id="vozTono" min="0.8" max="2.0" step="0.1" value="1.6">
-                    <span id="vozTonoValor">1.6</span>
+                    <input type="range" id="vozTono" min="0.8" max="2.0" step="0.1" value="1.8">
+                    <span id="vozTonoValor">1.8</span>
                 </label>
             </div>
 
@@ -1651,8 +1673,8 @@
             ultimaSesion: new Date().toLocaleString(),
             tema: 'escuela',
             mascota: '🧸',
-            vozVelocidad: 0.55,
-            vozTono: 1.6,
+            vozVelocidad: 0.5,
+            vozTono: 1.8,
             vozSeleccionada: null,
             filtro: 'todas'
         };
@@ -1664,6 +1686,7 @@
         let chunks = [];
         let juegoBloqueado = false;
         let vocesDisponibles = [];
+        let musicaActivada = true;
 
         const emergente = document.getElementById('emergente');
         const mensaje = document.getElementById('mensaje');
@@ -1682,6 +1705,29 @@
         const indicadorProgreso = document.getElementById('indicadorProgreso');
         const rimaDiv = document.getElementById('rima');
         const celebracion = document.getElementById('celebracion');
+        const musicaFondo = document.getElementById('musicaFondo');
+        const btnMusica = document.getElementById('btnMusica');
+
+        // ============================================================
+        // MÚSICA DE FONDO
+        // ============================================================
+        if (musicaFondo) {
+            musicaFondo.volume = 0.2;
+        }
+
+        if (btnMusica) {
+            btnMusica.addEventListener('click', function() {
+                if (musicaActivada) {
+                    musicaFondo.pause();
+                    btnMusica.textContent = '🔇';
+                    musicaActivada = false;
+                } else {
+                    musicaFondo.play().catch(e => console.log('⚠️ Música:', e.message));
+                    btnMusica.textContent = '🔊';
+                    musicaActivada = true;
+                }
+            });
+        }
 
         function getElementosFiltrados() {
             if (estado.filtro === 'letras') return elementos.filter(e => e.tipo === 'letra');
@@ -1805,8 +1851,8 @@
                     estado.fallos = datos.fallos || 0;
                     estado.tema = datos.tema || 'escuela';
                     estado.mascota = datos.mascota || '🧸';
-                    estado.vozVelocidad = datos.vozVelocidad || 0.55;
-                    estado.vozTono = datos.vozTono || 1.6;
+                    estado.vozVelocidad = datos.vozVelocidad || 0.5;
+                    estado.vozTono = datos.vozTono || 1.8;
                     estado.vozSeleccionada = datos.vozSeleccionada || null;
                     estado.filtro = datos.filtro || 'todas';
                     
@@ -1834,7 +1880,7 @@
         }
 
         // ============================================================
-        // GESTIÓN DE VOCES
+        // GESTIÓN DE VOCES (MEJORADA)
         // ============================================================
 
         function cargarVocesDisponibles() {
@@ -1910,6 +1956,7 @@
                 vocesDisponibles = window.speechSynthesis.getVoices();
             }
 
+            // 1. Voz manual del usuario
             if (estado.vozSeleccionada) {
                 const vozManual = vocesDisponibles.find(v => v.name === estado.vozSeleccionada);
                 if (vozManual) {
@@ -1918,7 +1965,21 @@
                 }
             }
 
-            const nombresPreferidos = [
+            // 2. Buscar voces infantiles en español (prioridad alta)
+            const vozInfantil = vocesDisponibles.find(v => 
+                v.lang.startsWith('es') && 
+                (v.name.toLowerCase().includes('child') || 
+                 v.name.toLowerCase().includes('kids') ||
+                 v.name.toLowerCase().includes('niña') ||
+                 v.name.toLowerCase().includes('infantil'))
+            );
+            if (vozInfantil) {
+                console.log('👧 Usando voz infantil:', vozInfantil.name);
+                return vozInfantil;
+            }
+
+            // 3. Buscar voces femeninas en español
+            const nombresFemeninos = [
                 'Google español',
                 'Microsoft Sabina',
                 'Microsoft Helena',
@@ -1926,25 +1987,28 @@
                 'Mónica',
                 'Paulina',
                 'Marisol',
-                'Lucía'
+                'Lucía',
+                'Ana'
             ];
 
-            for (const nombre of nombresPreferidos) {
+            for (const nombre of nombresFemeninos) {
                 const voz = vocesDisponibles.find(v => 
                     v.lang.startsWith('es') && v.name.includes(nombre)
                 );
                 if (voz) {
-                    console.log('🎤 Usando voz preferida:', voz.name);
+                    console.log('👩 Usando voz femenina:', voz.name);
                     return voz;
                 }
             }
 
+            // 4. Cualquier voz en español
             const vozEspanol = vocesDisponibles.find(v => v.lang.startsWith('es'));
             if (vozEspanol) {
-                console.log('🎤 Usando voz en español:', vozEspanol.name);
+                console.log('🇪🇸 Usando voz en español:', vozEspanol.name);
                 return vozEspanol;
             }
 
+            // 5. Fallback: primera voz disponible
             console.log('⚠️ No hay voces en español, usando la primera');
             return vocesDisponibles[0] || null;
         }
@@ -2059,8 +2123,8 @@
                     estado.ultimaSesion = parsed.ultimaSesion || new Date().toLocaleString();
                     estado.tema = parsed.tema || 'escuela';
                     estado.mascota = parsed.mascota || '🧸';
-                    estado.vozVelocidad = parsed.vozVelocidad || 0.55;
-                    estado.vozTono = parsed.vozTono || 1.6;
+                    estado.vozVelocidad = parsed.vozVelocidad || 0.5;
+                    estado.vozTono = parsed.vozTono || 1.8;
                     estado.vozSeleccionada = parsed.vozSeleccionada || null;
                     estado.filtro = parsed.filtro || 'todas';
                     return true;
@@ -2330,11 +2394,9 @@
         async function init() {
             totalLetrasSpan.textContent = elementos.length;
             
-            // 1. Intentar recuperar progreso de la nube
             const recuperado = await recuperarProgresoDeLaNube();
             console.log('☁️ Progreso recuperado:', recuperado);
             
-            // 2. Si no hay en la nube, cargar desde localStorage
             if (!recuperado) {
                 cargarProgreso();
             }
@@ -2371,6 +2433,12 @@
             contenedorPrincipal.style.display = 'block';
             audioActivado = true;
             estadoSonido.textContent = '🔊 Audio activado!';
+            
+            // Iniciar música si está activada
+            if (musicaFondo && musicaActivada) {
+                musicaFondo.play().catch(e => console.log('⚠️ Música:', e.message));
+            }
+            
             init();
         });
 
@@ -2559,9 +2627,10 @@
         console.log('🎉 Celebración: Aparece al completar las 37 letras y números');
         console.log('🎨 Icono personalizado en pantalla de inicio');
         console.log('🎤 Selector de voces implementado');
+        console.log('🎵 Música de fondo activada');
         console.log('🌐 Backend conectado:', BACKEND_URL);
         console.log('💾 Base de datos D1: mia-progreso');
     </script>
 
 </body>
-</html>
+</html>  
