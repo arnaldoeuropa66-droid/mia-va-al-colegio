@@ -104,6 +104,7 @@
             color: white; cursor: pointer; box-shadow: 0 4px 0 #0288D1; transition: all 0.08s;
             font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif; touch-action: manipulation; min-height: 46px;
             display: inline-flex; align-items: center; justify-content: center; gap: 6px; user-select: none;
+            word-wrap: break-word; overflow-wrap: break-word; white-space: normal; line-height: 1.2;
         }
         .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0288D1; }
         .btn.secundario { background: #FFD93D; box-shadow: 0 4px 0 #F9A825; color: #333; }
@@ -122,14 +123,15 @@
         .mascota {
             font-size: 1.15rem; color: #6C4A7C; background: #F3E8FF; padding: 10px 20px; border-radius: 40px;
             display: inline-block; margin-top: 4px; min-height: 52px; border: 2px solid #C084FC;
-            transition: all 0.3s; max-width: 100%; word-wrap: break-word; font-weight: 600;
+            transition: all 0.3s; max-width: 100%; word-wrap: break-word; overflow-wrap: break-word;
+            word-break: break-word; font-weight: 600; line-height: 1.3;
         }
         body.tema-espacio .mascota { background: rgba(255, 255, 255, 0.08); border-color: #4FC3F7; color: #fff; }
         .mascota-emoji { font-size: 1.8rem; display: inline-block; animation: saltarMascota 2s infinite; }
         @keyframes saltarMascota { 0%, 100% { transform: translateY(0) rotate(0deg); } 25% { transform: translateY(-8px) rotate(-8deg); } 75% { transform: translateY(-8px) rotate(8deg); } }
-        .estado-sonido { font-size: 0.8rem; color: #999; margin-top: 4px; font-weight: 600; }
+        .estado-sonido { font-size: 0.8rem; color: #999; margin-top: 4px; font-weight: 600; word-wrap: break-word; overflow-wrap: break-word; }
         .info-extra { display: flex; justify-content: center; gap: 10px; margin-top: 8px; color: #888; font-size: 0.8rem; flex-wrap: wrap; font-weight: 600; }
-        .info-extra span { background: #f5f5f5; padding: 4px 14px; border-radius: 30px; transition: all 0.3s; }
+        .info-extra span { background: #f5f5f5; padding: 4px 14px; border-radius: 30px; transition: all 0.3s; word-wrap: break-word; overflow-wrap: break-word; text-align: center; }
         body.tema-espacio .info-extra span { background: rgba(255, 255, 255, 0.07); color: #aaa; }
         .indicador-progreso { display: flex; justify-content: center; gap: 3px; margin: 6px 0; flex-wrap: wrap; padding: 0 5px; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; display: inline-block; transition: all 0.3s; flex-shrink: 0; }
@@ -151,7 +153,7 @@
         .juego-opcion.incorrecta { border-color: #FF6B6B; background: #FFEBEE; animation: incorrecto 0.5s; }
         @keyframes correcto { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
         @keyframes incorrecto { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-15px); } 75% { transform: translateX(15px); } }
-        #juegoResultado { font-size: 1.3rem; margin: 8px 0; min-height: 45px; font-weight: 700; }
+        #juegoResultado { font-size: 1.3rem; margin: 8px 0; min-height: 45px; font-weight: 700; word-wrap: break-word; overflow-wrap: break-word; }
         .panel-progreso { text-align: left; padding: 15px; }
         .panel-progreso h3 { margin: 12px 0 6px; font-size: 1.1rem; color: #6C4A7C; font-weight: 700; }
         body.tema-espacio .panel-progreso h3 { color: #CE93D8; }
@@ -182,7 +184,7 @@
         .configuracion { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 8px 0; }
         .configuracion label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; }
         .configuracion input[type="range"] { width: 80px; accent-color: #6BCB77; }
-        .rima { font-size: 1.05rem; color: #6C4A7C; background: #F3E8FF; padding: 12px 18px; border-radius: 30px; margin: 8px 0; animation: fadeIn 0.4s; line-height: 1.4; font-weight: 600; }
+        .rima { font-size: 1.05rem; color: #6C4A7C; background: #F3E8FF; padding: 12px 18px; border-radius: 30px; margin: 8px 0; animation: fadeIn 0.4s; line-height: 1.4; font-weight: 600; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
         body.tema-espacio .rima { background: rgba(255, 255, 255, 0.07); color: #aaa; }
         .pantalla-inicio { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 248, 231, 0.97); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; gap: 20px; padding: 20px; text-align: center; }
         .icono-inicio { width: 150px; height: 150px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); animation: flotarIcono 3s ease-in-out infinite; object-fit: contain; background: white; padding: 8px; }
@@ -230,10 +232,10 @@
             .btn.repetir { font-size: 0.95rem; padding: 10px 20px; min-height: 44px; min-width: 100px; }
             .barra-sonido { width: 70px; height: 6px; }
             #iconoOido { font-size: 1.4rem; }
-            .mascota { font-size: 0.95rem; padding: 8px 14px; min-height: 44px; border-radius: 30px; }
-            .mascota-emoji { font-size: 1.5rem; }
+            .mascota { font-size: 0.9rem; padding: 8px 12px; min-height: 48px; border-radius: 30px; width: 100%; max-width: 100%; box-sizing: border-box; line-height: 1.3; }
+            .mascota-emoji { font-size: 1.3rem; }
             .info-extra { gap: 6px; font-size: 0.7rem; }
-            .info-extra span { padding: 3px 10px; border-radius: 20px; }
+            .info-extra span { padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; }
             .dot { width: 8px; height: 8px; }
             .indicador-progreso { gap: 3px; }
             .juego-opcion { width: 60px; height: 60px; font-size: 1.8rem; border-width: 3px; }
@@ -246,7 +248,7 @@
             .panel-progreso .estadistica { font-size: 0.8rem; padding: 5px 0; }
             .panel-progreso .medalla { font-size: 2.2rem; margin: 4px; }
             .panel-progreso .barra-progreso { height: 14px; }
-            .rima { font-size: 0.9rem; padding: 10px 14px; }
+            .rima { font-size: 0.85rem; padding: 10px 12px; line-height: 1.35; width: 100%; box-sizing: border-box; }
             .personalizacion .opcion { padding: 6px 12px; font-size: 1.2rem; border-radius: 25px; border-width: 2px; }
             .configuracion { gap: 10px; }
             .configuracion label { font-size: 0.8rem; }
@@ -259,7 +261,15 @@
             #celebracion .btn { font-size: 1.1rem; padding: 14px 30px; }
             .fuego { font-size: 2rem; }
             .icono-inicio { width: 110px; height: 110px; border-radius: 22px; }
-            #textoTrabalenguas { font-size: 1rem !important; }
+            #textoTrabalenguas { font-size: 0.95rem !important; line-height: 1.4 !important; padding: 10px !important; }
+            #escenarioTrabalenguas { height: auto !important; min-height: 200px; padding: 10px !important; }
+            #palabraDiscriminar { font-size: 1rem !important; line-height: 1.3; padding: 0 10px; }
+            #resultadoDiscriminar { font-size: 1rem !important; line-height: 1.3; padding: 0 10px; }
+            #btnLoDijeBien, #btnLoDijeBienTrabalenguas { font-size: 0.95rem !important; padding: 12px 20px !important; width: 100% !important; max-width: 280px !important; }
+            .btn-filtro[data-subtab] { font-size: 0.7rem !important; padding: 8px 8px !important; line-height: 1.2; min-height: 40px; flex: 1; white-space: normal; word-wrap: break-word; }
+            #opcionSI, #opcionNO { width: 100px !important; height: 100px !important; font-size: 1.1rem !important; }
+            .escenario { height: auto; min-height: 160px; padding: 5px; }
+            .emergente { font-size: 80px !important; letter-spacing: 3px; }
         }
         @media (max-width: 380px) {
             .contenedor { padding: 12px 10px; border-radius: 25px; width: 98%; }
@@ -268,16 +278,16 @@
             .emergente { font-size: 70px; letter-spacing: 2px; }
             .escenario { height: 130px; border-radius: 20px; }
             .btn { font-size: 0.85rem; padding: 10px 14px; min-height: 40px; max-width: 220px; }
-            .tab-btn { font-size: 0.55rem; padding: 4px 6px; min-height: 28px; min-width: 35px; }
+            .tab-btn { font-size: 0.55rem; padding: 5px 4px; min-height: 30px; min-width: 35px; }
             .juego-opcion { width: 50px; height: 50px; font-size: 1.5rem; border-width: 2px; }
             .juego-opciones { gap: 6px; }
-            .mascota { font-size: 0.8rem; padding: 6px 10px; min-height: 36px; }
+            .mascota { font-size: 0.8rem; padding: 6px 10px; min-height: 44px; }
             .mascota-emoji { font-size: 1.2rem; }
             .btn.repetir { font-size: 0.8rem; padding: 8px 14px; min-height: 36px; min-width: 70px; }
             .barra-sonido { width: 50px; height: 5px; }
             #iconoOido { font-size: 1.1rem; }
             .info-extra { font-size: 0.6rem; gap: 4px; }
-            .info-extra span { padding: 2px 8px; }
+            .info-extra span { padding: 2px 6px; font-size: 0.6rem; }
             .dot { width: 6px; height: 6px; }
             .pantalla-inicio h1 { font-size: 2rem; }
             .pantalla-inicio p { font-size: 0.9rem; }
@@ -288,6 +298,11 @@
             #celebracion .btn { font-size: 0.95rem; padding: 12px 25px; }
             .fuego { font-size: 1.5rem; }
             .icono-inicio { width: 90px; height: 90px; border-radius: 18px; }
+            .rima { font-size: 0.75rem; padding: 8px 10px; }
+            #textoTrabalenguas { font-size: 0.8rem !important; }
+            #palabraDiscriminar { font-size: 0.9rem !important; }
+            #opcionSI, #opcionNO { width: 90px !important; height: 90px !important; font-size: 0.95rem !important; }
+            .btn-filtro[data-subtab] { font-size: 0.6rem !important; padding: 6px 6px !important; min-height: 36px; }
         }
         @media (max-height: 500px) and (orientation: landscape) {
             .contenedor { max-height: 98vh; padding: 12px 20px; }
@@ -375,8 +390,8 @@
                 <div class="barra-sonido" id="barraSonido"><div class="relleno" id="barraRelleno"></div></div>
                 <span id="iconoOido">👂</span>
             </div>
-            <div>
-                <span class="mascota" id="mensaje">
+            <div style="width: 100%;">
+                <span class="mascota" id="mensaje" style="width: 100%; box-sizing: border-box;">
                     <span class="mascota-emoji">🧸</span> Mia dice: ¡A de Avión! ✈️
                 </span>
             </div>
@@ -408,8 +423,8 @@
                 <div class="barra-sonido" id="barraSonidoSilaba"><div class="relleno" id="barraRellenoSilaba"></div></div>
                 <span id="iconoOidoSilaba">👂</span>
             </div>
-            <div>
-                <span class="mascota" id="mensajeSilaba">
+            <div style="width: 100%;">
+                <span class="mascota" id="mensajeSilaba" style="width: 100%; box-sizing: border-box;">
                     <span class="mascota-emoji">🧸</span> Mia dice: ¡MA de Mamá! 👩
                 </span>
             </div>
@@ -439,8 +454,8 @@
                 <div class="barra-sonido" id="barraSonidoPalabra"><div class="relleno" id="barraRellenoPalabra"></div></div>
                 <span id="iconoOidoPalabra">👂</span>
             </div>
-            <div>
-                <span class="mascota" id="mensajePalabra">
+            <div style="width: 100%;">
+                <span class="mascota" id="mensajePalabra" style="width: 100%; box-sizing: border-box;">
                     <span class="mascota-emoji">🧸</span> Mia dice: ¡MAMÁ! 👩
                 </span>
             </div>
@@ -485,8 +500,8 @@
                     <span id="iconoOidoS">👂</span>
                 </div>
 
-                <div>
-                    <span class="mascota" id="mensajeS">
+                <div style="width: 100%;">
+                    <span class="mascota" id="mensajeS" style="width: 100%; box-sizing: border-box;">
                         <span class="mascota-emoji">🧸</span> Mia dice: ¡SOL! ☀️
                     </span>
                 </div>
@@ -496,7 +511,7 @@
                 <div class="rima" id="rimaS"></div>
 
                 <div class="botones" style="margin-top:10px;">
-                    <button class="btn repetir" id="btnLoDijeBien" style="background:#6BCB77; box-shadow: 0 4px 0 #2E7D32; font-size:1.1rem; padding:14px 30px;">
+                    <button class="btn repetir" id="btnLoDijeBien" style="background:#6BCB77; box-shadow: 0 4px 0 #2E7D32; font-size:1rem; padding:14px 24px; width: 100%; max-width: 280px; line-height: 1.2;">
                         ✅ ¡Lo dije bien!
                     </button>
                 </div>
@@ -511,8 +526,8 @@
             <div class="sub-tab-content" id="subtab-s-trabalenguas">
                 <h3 style="color:#6C4A7C; margin-bottom:10px; font-size:1.1rem; font-weight:700;">🎵 Trabalenguas con S</h3>
 
-                <div class="escenario" id="escenarioTrabalenguas" style="height: 220px; padding: 15px;">
-                    <div id="textoTrabalenguas" style="font-size: 1.3rem; color: #6C4A7C; font-weight: 600; text-align: center; padding: 15px; line-height: 1.6;">
+                <div class="escenario" id="escenarioTrabalenguas" style="height: auto; min-height: 200px; padding: 15px; display: flex; align-items: center; justify-content: center;">
+                    <div id="textoTrabalenguas" style="font-size: 1.2rem; color: #6C4A7C; font-weight: 600; text-align: center; padding: 10px; line-height: 1.5; width: 100%; word-wrap: break-word; overflow-wrap: break-word;">
                         Tres tristes tigres tragaban trigo en un trigal
                     </div>
                 </div>
@@ -533,8 +548,8 @@
                     <span id="iconoOidoTrabalenguas">👂</span>
                 </div>
 
-                <div>
-                    <span class="mascota" id="mensajeTrabalenguas">
+                <div style="width: 100%;">
+                    <span class="mascota" id="mensajeTrabalenguas" style="width: 100%; box-sizing: border-box;">
                         <span class="mascota-emoji">🧸</span> Escucha y repite despacio
                     </span>
                 </div>
@@ -542,7 +557,7 @@
                 <div class="estado-sonido" id="estadoSonidoTrabalenguas">🔇 Haz clic en "Repetir" para escuchar</div>
 
                 <div class="botones" style="margin-top:10px;">
-                    <button class="btn repetir" id="btnLoDijeBienTrabalenguas" style="background:#6BCB77; box-shadow: 0 4px 0 #2E7D32; font-size:1.1rem; padding:14px 30px;">
+                    <button class="btn repetir" id="btnLoDijeBienTrabalenguas" style="background:#6BCB77; box-shadow: 0 4px 0 #2E7D32; font-size:1rem; padding:14px 24px; width: 100%; max-width: 280px; line-height: 1.2;">
                         ✅ ¡Lo dije bien!
                     </button>
                 </div>
@@ -562,7 +577,7 @@
                     <div style="font-size: 3rem; color: #6C4A7C;" id="emojiDiscriminar">❓</div>
                 </div>
 
-                <div style="font-size: 1.3rem; color: #6C4A7C; font-weight: 700; margin: 12px 0;" id="palabraDiscriminar">
+                <div style="font-size: 1.3rem; color: #6C4A7C; font-weight: 700; margin: 12px 0; padding: 0 10px; word-wrap: break-word;" id="palabraDiscriminar">
                     🔊 Escucha...
                 </div>
 
@@ -581,7 +596,7 @@
                     </button>
                 </div>
 
-                <div id="resultadoDiscriminar" style="font-size: 1.2rem; margin: 10px 0; min-height: 45px; font-weight: 700;"></div>
+                <div id="resultadoDiscriminar" style="font-size: 1.2rem; margin: 10px 0; min-height: 45px; font-weight: 700; word-wrap: break-word; overflow-wrap: break-word;"></div>
 
                 <div class="botones" style="margin-top: 8px;">
                     <button class="btn repetir" id="btnNuevaDiscriminacion">🎲 Nueva palabra</button>
@@ -2309,6 +2324,7 @@
         console.log('📝 Sección de palabras añadida');
         console.log('🗣️ Sección de ejercicios de S añadida');
         console.log('🚫 Sección de grabación eliminada (protección de datos)');
+        console.log('📱 Disposición móvil corregida');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
