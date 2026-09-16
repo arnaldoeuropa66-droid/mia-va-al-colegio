@@ -61,7 +61,7 @@
             padding: 8px 16px; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: 700;
             cursor: pointer; transition: all 0.3s; font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
             background: #e8e8e8; color: #666; touch-action: manipulation; min-height: 38px;
-            flex: 1; min-width: 55px; max-width: 120px;
+            flex: 1; min-width: 55px; max-width: 130px;
         }
         .tab-btn:hover { transform: scale(1.05); }
         .tab-btn:active { transform: scale(0.95); }
@@ -70,6 +70,8 @@
         body.tema-espacio .tab-btn.activo { background: #4FC3F7; color: #fff; }
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.activo { display: block; }
+        .sub-tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .sub-tab-content.activo { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .escenario {
             height: 250px; display: flex; justify-content: center; align-items: center;
@@ -212,7 +214,7 @@
             .emergente { font-size: 120px; }
             .escenario { height: 220px; }
             .btn { padding: 11px 20px; font-size: 0.95rem; min-height: 42px; }
-            .tab-btn { padding: 8px 14px; font-size: 0.8rem; min-height: 36px; }
+            .tab-btn { padding: 8px 14px; font-size: 0.75rem; min-height: 36px; }
             .juego-opcion { width: 70px; height: 70px; font-size: 2.2rem; }
             #celebracion h1 { font-size: 2.8rem; }
             #celebracion p { font-size: 1.4rem; }
@@ -226,7 +228,7 @@
             .botones { gap: 8px; flex-direction: column; align-items: center; }
             .botones .btn { width: 100%; max-width: 280px; padding: 13px 18px; font-size: 1rem; min-height: 48px; border-radius: 35px; }
             .tabs { gap: 5px; }
-            .tab-btn { padding: 8px 10px; font-size: 0.7rem; min-height: 34px; min-width: 45px; flex: 1; border-radius: 25px; max-width: none; }
+            .tab-btn { padding: 6px 8px; font-size: 0.65rem; min-height: 34px; min-width: 45px; flex: 1; border-radius: 25px; max-width: none; }
             .emergente { font-size: 90px; letter-spacing: 4px; }
             .escenario { height: 160px; border-radius: 30px; border-width: 2px; }
             .indicador-sonido { gap: 10px; }
@@ -265,6 +267,7 @@
             #celebracion .btn { font-size: 1.1rem; padding: 14px 30px; }
             .fuego { font-size: 2rem; }
             .icono-inicio { width: 110px; height: 110px; border-radius: 22px; }
+            #textoTrabalenguas { font-size: 1rem !important; }
         }
         @media (max-width: 380px) {
             .contenedor { padding: 12px 10px; border-radius: 25px; width: 98%; }
@@ -273,7 +276,7 @@
             .emergente { font-size: 70px; letter-spacing: 2px; }
             .escenario { height: 130px; border-radius: 20px; }
             .btn { font-size: 0.85rem; padding: 10px 14px; min-height: 40px; max-width: 220px; }
-            .tab-btn { font-size: 0.6rem; padding: 5px 8px; min-height: 28px; min-width: 35px; }
+            .tab-btn { font-size: 0.55rem; padding: 4px 6px; min-height: 28px; min-width: 35px; }
             .juego-opcion { width: 50px; height: 50px; font-size: 1.5rem; border-width: 2px; }
             .juego-opciones { gap: 6px; }
             .mascota { font-size: 0.8rem; padding: 6px 10px; min-height: 36px; }
@@ -302,7 +305,7 @@
             .titulo-principal .mia { font-size: 1.5rem; }
             .botones .btn { padding: 8px 14px; font-size: 0.8rem; min-height: 34px; max-width: 180px; }
             .mascota { font-size: 0.8rem; padding: 6px 12px; min-height: 34px; }
-            .tab-btn { padding: 4px 10px; font-size: 0.65rem; min-height: 28px; }
+            .tab-btn { padding: 4px 8px; font-size: 0.6rem; min-height: 28px; }
             .indicador-progreso { margin: 3px 0; }
             .dot { width: 6px; height: 6px; }
             .juego-opcion { width: 45px; height: 45px; font-size: 1.3rem; }
@@ -353,10 +356,11 @@
             <button class="tab-btn activo" data-tab="aprender">📖 Aprender</button>
             <button class="tab-btn" data-tab="silabas">🔤 Sílabas</button>
             <button class="tab-btn" data-tab="palabras">📝 Palabras</button>
+            <button class="tab-btn" data-tab="ejercicios-s">🗣️ S</button>
             <button class="tab-btn" data-tab="juego">🎮 Juego</button>
             <button class="tab-btn" data-tab="grabacion">🎤 Grabar</button>
             <button class="tab-btn" data-tab="progreso">📊 Progreso</button>
-            <button class="tab-btn" data-tab="personalizar">🎨 Personalizar</button>
+            <button class="tab-btn" data-tab="personalizar">🎨 Personal</button>
         </div>
 
         <!-- PESTAÑA: APRENDER (NIVEL 1) -->
@@ -457,6 +461,148 @@
             </div>
         </div>
 
+        <!-- PESTAÑA: EJERCICIOS DE S (LOGOPEDIA) -->
+        <div class="tab-content" id="tab-ejercicios-s">
+            <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🗣️ Ejercicios de la S</h2>
+            <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Practica el sonido de la letra S</p>
+
+            <div class="tabs" style="margin-bottom:15px;">
+                <button class="btn-filtro activo" data-subtab="s-palabras" style="flex:1; min-width:70px;">🔊 Palabras</button>
+                <button class="btn-filtro" data-subtab="s-trabalenguas" style="flex:1; min-width:70px;">🎵 Trabalenguas</button>
+                <button class="btn-filtro" data-subtab="s-discriminar" style="flex:1; min-width:70px;">👂 Discriminar</button>
+            </div>
+
+            <!-- SUB-SECCIÓN 1: PALABRAS CON S -->
+            <div class="sub-tab-content activo" id="subtab-s-palabras">
+                <div class="escenario" id="escenarioS" style="height: 180px;">
+                    <div class="emergente" id="emergenteS" style="font-size: 80px; letter-spacing: 2px;">SOL</div>
+                </div>
+
+                <div class="indicador-progreso" id="indicadorProgresoS"></div>
+
+                <div class="botones">
+                    <button class="btn" id="anteriorS">⬅ Anterior</button>
+                    <button class="btn secundario" id="aleatorioS">🎲 Sorpresa</button>
+                    <button class="btn" id="siguienteS">Siguiente ➡</button>
+                </div>
+
+                <div class="indicador-sonido">
+                    <button class="btn repetir" id="btnSonidoS">🔊 Repetir</button>
+                    <div class="barra-sonido" id="barraSonidoS">
+                        <div class="relleno" id="barraRellenoS"></div>
+                    </div>
+                    <span id="iconoOidoS">👂</span>
+                </div>
+
+                <div>
+                    <span class="mascota" id="mensajeS">
+                        <span class="mascota-emoji">🧸</span> Mia dice: ¡SOL! ☀️
+                    </span>
+                </div>
+
+                <div class="estado-sonido" id="estadoSonidoS">🔇 Haz clic en "Repetir" para escuchar</div>
+
+                <div class="rima" id="rimaS"></div>
+
+                <div class="botones" style="margin-top:10px;">
+                    <button class="btn repetir" id="btnLoDijeBien" style="background:#6BCB77; box-shadow: 0 4px 0 #2E7D32; font-size:1.1rem; padding:14px 30px;">
+                        ✅ ¡Lo dije bien!
+                    </button>
+                </div>
+
+                <div class="info-extra">
+                    <span>⭐ Palabras S: <span id="progresoS">1</span>/<span id="totalS">28</span></span>
+                    <span>✅ Confirmadas: <span id="confirmadasS">0</span></span>
+                </div>
+            </div>
+
+            <!-- SUB-SECCIÓN 2: TRABALENGUAS -->
+            <div class="sub-tab-content" id="subtab-s-trabalenguas">
+                <h3 style="color:#6C4A7C; margin-bottom:10px; font-size:1.1rem; font-weight:700;">🎵 Trabalenguas con S</h3>
+
+                <div class="escenario" id="escenarioTrabalenguas" style="height: 220px; padding: 15px;">
+                    <div id="textoTrabalenguas" style="font-size: 1.3rem; color: #6C4A7C; font-weight: 600; text-align: center; padding: 15px; line-height: 1.6;">
+                        Tres tristes tigres tragaban trigo en un trigal
+                    </div>
+                </div>
+
+                <div class="indicador-progreso" id="indicadorProgresoTrabalenguas"></div>
+
+                <div class="botones">
+                    <button class="btn" id="anteriorTrabalenguas">⬅ Anterior</button>
+                    <button class="btn secundario" id="aleatorioTrabalenguas">🎲 Sorpresa</button>
+                    <button class="btn" id="siguienteTrabalenguas">Siguiente ➡</button>
+                </div>
+
+                <div class="indicador-sonido">
+                    <button class="btn repetir" id="btnSonidoTrabalenguas">🔊 Repetir</button>
+                    <div class="barra-sonido" id="barraSonidoTrabalenguas">
+                        <div class="relleno" id="barraRellenoTrabalenguas"></div>
+                    </div>
+                    <span id="iconoOidoTrabalenguas">👂</span>
+                </div>
+
+                <div>
+                    <span class="mascota" id="mensajeTrabalenguas">
+                        <span class="mascota-emoji">🧸</span> Escucha y repite despacio
+                    </span>
+                </div>
+
+                <div class="estado-sonido" id="estadoSonidoTrabalenguas">🔇 Haz clic en "Repetir" para escuchar</div>
+
+                <div class="botones" style="margin-top:10px;">
+                    <button class="btn repetir" id="btnLoDijeBienTrabalenguas" style="background:#6BCB77; box-shadow: 0 4px 0 #2E7D32; font-size:1.1rem; padding:14px 30px;">
+                        ✅ ¡Lo dije bien!
+                    </button>
+                </div>
+
+                <div class="info-extra">
+                    <span>⭐ Trabalenguas: <span id="progresoTrabalenguas">1</span>/<span id="totalTrabalenguas">5</span></span>
+                    <span>✅ Confirmados: <span id="confirmadosTrabalenguas">0</span></span>
+                </div>
+            </div>
+
+            <!-- SUB-SECCIÓN 3: DISCRIMINAR -->
+            <div class="sub-tab-content" id="subtab-s-discriminar">
+                <h3 style="color:#6C4A7C; margin-bottom:10px; font-size:1.1rem; font-weight:700;">👂 ¿Tiene la letra S?</h3>
+                <p style="color:#888; margin-bottom:15px; font-size:0.9rem; font-weight:600;">Escucha la palabra y elige</p>
+
+                <div class="escenario" id="escenarioDiscriminar" style="height: 150px;">
+                    <div style="font-size: 3rem; color: #6C4A7C;" id="emojiDiscriminar">❓</div>
+                </div>
+
+                <div style="font-size: 1.3rem; color: #6C4A7C; font-weight: 700; margin: 12px 0;" id="palabraDiscriminar">
+                    🔊 Escucha...
+                </div>
+
+                <div class="botones" style="margin: 12px 0;">
+                    <button class="btn repetir" id="btnEscucharDiscriminar" style="font-size:1.2rem; padding:14px 30px;">
+                        🔊 Escuchar palabra
+                    </button>
+                </div>
+
+                <div class="juego-opciones" id="opcionesDiscriminar" style="display: none;">
+                    <button class="juego-opcion" id="opcionSI" style="width: 110px; height: 110px; font-size: 1.3rem; background: #E8F5E9; border-color: #6BCB77; color: #2E7D32; font-weight: 700;">
+                        ✅ SÍ
+                    </button>
+                    <button class="juego-opcion" id="opcionNO" style="width: 110px; height: 110px; font-size: 1.3rem; background: #FFEBEE; border-color: #FF6B6B; color: #C62828; font-weight: 700;">
+                        ❌ NO
+                    </button>
+                </div>
+
+                <div id="resultadoDiscriminar" style="font-size: 1.2rem; margin: 10px 0; min-height: 45px; font-weight: 700;"></div>
+
+                <div class="botones" style="margin-top: 8px;">
+                    <button class="btn repetir" id="btnNuevaDiscriminacion">🎲 Nueva palabra</button>
+                </div>
+
+                <div class="info-extra">
+                    <span>✅ Aciertos: <span id="aciertosDiscriminar">0</span></span>
+                    <span>❌ Fallos: <span id="fallosDiscriminar">0</span></span>
+                </div>
+            </div>
+        </div>
+
         <!-- PESTAÑA: JUEGO -->
         <div class="tab-content" id="tab-juego">
             <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎮 Adivina la letra o número</h2>
@@ -503,6 +649,12 @@
                 <h3>📝 Palabras aprendidas</h3>
                 <div class="barra-progreso"><div class="relleno" id="barraProgresoPalabras" style="width:0%;"></div></div>
                 <p style="text-align:center; font-size:0.9rem; font-weight:600;"><span id="progresoTextoPalabras">0</span> de 25</p>
+
+                <h3>🗣️ Ejercicios de S</h3>
+                <div class="barra-progreso"><div class="relleno" id="barraProgresoS" style="width:0%;"></div></div>
+                <p style="text-align:center; font-size:0.9rem; font-weight:600;"><span id="progresoTextoS">0</span> de 28 palabras</p>
+                <p style="text-align:center; font-size:0.9rem; font-weight:600;">Trabalenguas: <span id="progresoTextoTrabalenguas">0</span>/5</p>
+                <p style="text-align:center; font-size:0.9rem; font-weight:600;">Discriminación: ✅ <span id="progresoAciertosDiscriminar">0</span> | ❌ <span id="progresoFallosDiscriminar">0</span></p>
 
                 <h3>🏅 Medallas</h3>
                 <div id="medallasContainer" style="text-align:center; margin:6px 0;">
@@ -767,21 +919,106 @@
             'QUESO': 'QUESO amarillo y sabroso, ¡me encanta!'
         };
 
+        // EJERCICIOS DE S
+        const palabrasS = [
+            { id: 'SOL', color: '#FF6B6B', emoji: '☀️', posicion: 'inicio', mensaje: '¡SOL! ☀️' },
+            { id: 'SOPA', color: '#FF9F43', emoji: '🍲', posicion: 'inicio', mensaje: '¡SOPA! 🍲' },
+            { id: 'SILLA', color: '#FECA57', emoji: '🪑', posicion: 'inicio', mensaje: '¡SILLA! 🪑' },
+            { id: 'SAPO', color: '#6BCB77', emoji: '🐸', posicion: 'inicio', mensaje: '¡SAPO! 🐸' },
+            { id: 'SIRENA', color: '#4FC3F7', emoji: '🧜‍♀️', posicion: 'inicio', mensaje: '¡SIRENA! 🧜‍♀️' },
+            { id: 'SEMÁFORO', color: '#5B86E5', emoji: '🚦', posicion: 'inicio', mensaje: '¡SEMÁFORO! 🚦' },
+            { id: 'SANDÍA', color: '#A29BFE', emoji: '🍉', posicion: 'inicio', mensaje: '¡SANDÍA! 🍉' },
+            { id: 'SOMBRERO', color: '#FD79A8', emoji: '🎩', posicion: 'inicio', mensaje: '¡SOMBRERO! 🎩' },
+            { id: 'CANGREJO', color: '#E17055', emoji: '🦀', posicion: 'inicio', mensaje: '¡CANGREJO! 🦀' },
+            { id: 'CANCIÓN', color: '#00CEC9', emoji: '🎵', posicion: 'inicio', mensaje: '¡CANCIÓN! 🎵' },
+            { id: 'SALSA', color: '#FDCB6E', emoji: '🥣', posicion: 'inicio', mensaje: '¡SALSA! 🥣' },
+            { id: 'MESA', color: '#74B9FF', emoji: '🪑', posicion: 'medio', mensaje: '¡MESA! 🪑' },
+            { id: 'CASA', color: '#55EFC4', emoji: '🏠', posicion: 'medio', mensaje: '¡CASA! 🏠' },
+            { id: 'ROSA', color: '#FAB1A0', emoji: '🌹', posicion: 'medio', mensaje: '¡ROSA! 🌹' },
+            { id: 'OSO', color: '#81ECEC', emoji: '🐻', posicion: 'medio', mensaje: '¡OSO! 🐻' },
+            { id: 'ISLA', color: '#FF7675', emoji: '🏝️', posicion: 'medio', mensaje: '¡ISLA! 🏝️' },
+            { id: 'MÚSICA', color: '#FDCB6E', emoji: '🎶', posicion: 'medio', mensaje: '¡MÚSICA! 🎶' },
+            { id: 'PISCINA', color: '#A29BFE', emoji: '🏊', posicion: 'medio', mensaje: '¡PISCINA! 🏊' },
+            { id: 'VASO', color: '#FF6B6B', emoji: '🥛', posicion: 'medio', mensaje: '¡VASO! 🥛' },
+            { id: 'BESO', color: '#6BCB77', emoji: '💋', posicion: 'medio', mensaje: '¡BESO! 💋' },
+            { id: 'AUTOBÚS', color: '#4FC3F7', emoji: '🚌', posicion: 'final', mensaje: '¡AUTOBÚS! 🚌' },
+            { id: 'LÁPIZ', color: '#C084FC', emoji: '✏️', posicion: 'final', mensaje: '¡LÁPIZ! ✏️' },
+            { id: 'COMPÁS', color: '#FF9F43', emoji: '📐', posicion: 'final', mensaje: '¡COMPÁS! 📐' },
+            { id: 'PEZ', color: '#FECA57', emoji: '🐟', posicion: 'final', mensaje: '¡PEZ! 🐟' },
+            { id: 'VOZ', color: '#5B86E5', emoji: '🗣️', posicion: 'final', mensaje: '¡VOZ! 🗣️' },
+            { id: 'LUZ', color: '#A29BFE', emoji: '💡', posicion: 'final', mensaje: '¡LUZ! 💡' },
+            { id: 'NARIZ', color: '#FD79A8', emoji: '👃', posicion: 'final', mensaje: '¡NARIZ! 👃' },
+            { id: 'AJEDREZ', color: '#00CEC9', emoji: '♟️', posicion: 'final', mensaje: '¡AJEDREZ! ♟️' }
+        ];
+
+        const rimasS = {
+            'SOL': 'El SOL brilla en el cielo, nos da calorcito.',
+            'SOPA': 'La SOPA está caliente, ¡sopla despacito!',
+            'SILLA': 'En la SILLA me siento, para descansar.',
+            'SAPO': 'El SAPO salta en el agua, ¡croac croac!',
+            'SIRENA': 'La SIRENA canta en el mar, con su cola de cristal.',
+            'SEMÁFORO': 'El SEMÁFORO dice: ¡alto! rojo, verde y amarillo.',
+            'SANDÍA': 'La SANDÍA es roja y dulce, ¡qué rica en verano!',
+            'SOMBRERO': 'El SOMBRERO me protege del sol, ¡qué bonito!',
+            'CANGREJO': 'El CANGREJO camina de lado, con sus pinzas.',
+            'CANCIÓN': 'La CANCIÓN suena bonita, ¡vamos a cantar!',
+            'SALSA': 'La SALSA es sabrosa, para la pasta o el pollo.',
+            'MESA': 'En la MESA pongo mi plato, para comer.',
+            'CASA': 'En mi CASA vivo feliz, con mi familia.',
+            'ROSA': 'La ROSA es una flor, con espinas y amor.',
+            'OSO': 'El OSO es grande y peludo, le encanta la miel.',
+            'ISLA': 'En la ISLA hay palmeras, y mucha arena.',
+            'MÚSICA': 'La MÚSICA suena, y me hace bailar.',
+            'PISCINA': 'En la PISCINA nado, ¡qué divertido!',
+            'VASO': 'En el VASO pongo agua, para beber.',
+            'BESO': 'Un BESO es un cariño, ¡te quiero mucho!',
+            'AUTOBÚS': 'En el AUTOBÚS viajamos, ¡qué divertido!',
+            'LÁPIZ': 'Con el LÁPIZ escribo, y dibujo.',
+            'COMPÁS': 'El COMPÁS hace círculos, ¡qué preciso!',
+            'PEZ': 'El PEZ nada en el agua, ¡glu glu!',
+            'VOZ': 'Mi VOZ suena fuerte, para cantar.',
+            'LUZ': 'La LUZ ilumina, todo a mi alrededor.',
+            'NARIZ': 'Con la NARIZ huelo, las flores y la comida.',
+            'AJEDREZ': 'El AJEDREZ es un juego, de reyes y peones.'
+        };
+
+        const trabalenguas = [
+            { id: 1, texto: 'Tres tristes tigres tragaban trigo en un trigal', color: '#FF6B6B' },
+            { id: 2, texto: 'El perro de San Roque no tiene rabo', color: '#FF9F43' },
+            { id: 3, texto: 'Sara saca sopa sabrosa', color: '#FECA57' },
+            { id: 4, texto: 'Si Sansón no sazona su salsa con sal, le sale sosa', color: '#6BCB77' },
+            { id: 5, texto: 'Pablito clavó un clavito, ¿qué clavito clavó Pablito?', color: '#4FC3F7' }
+        ];
+
+        const palabrasDiscriminar = [
+            { palabra: 'Sol', tieneS: true },
+            { palabra: 'Casa', tieneS: true },
+            { palabra: 'Perro', tieneS: false },
+            { palabra: 'Mesa', tieneS: true },
+            { palabra: 'Gato', tieneS: false },
+            { palabra: 'Sopa', tieneS: true },
+            { palabra: 'Luna', tieneS: false },
+            { palabra: 'Rosa', tieneS: true },
+            { palabra: 'Avión', tieneS: false },
+            { palabra: 'Silla', tieneS: true },
+            { palabra: 'Pelota', tieneS: false },
+            { palabra: 'Oso', tieneS: true },
+            { palabra: 'Libro', tieneS: false },
+            { palabra: 'Isla', tieneS: true },
+            { palabra: 'Flor', tieneS: false },
+            { palabra: 'Música', tieneS: true },
+            { palabra: 'Pan', tieneS: false },
+            { palabra: 'Vaso', tieneS: true },
+            { palabra: 'Tren', tieneS: false },
+            { palabra: 'Pez', tieneS: true }
+        ];
+
         let estado = {
-            indiceActual: 0,
-            contadorRepeticiones: 0,
-            nivel: 1,
-            estrellas: 0,
-            vistos: new Set(),
-            aciertos: 0,
-            fallos: 0,
+            indiceActual: 0, contadorRepeticiones: 0, nivel: 1, estrellas: 0,
+            vistos: new Set(), aciertos: 0, fallos: 0,
             ultimaSesion: new Date().toLocaleString(),
-            tema: 'escuela',
-            mascota: '🧸',
-            vozVelocidad: 0.5,
-            vozTono: 1.8,
-            vozSeleccionada: null,
-            filtro: 'todas'
+            tema: 'escuela', mascota: '🧸',
+            vozVelocidad: 0.5, vozTono: 1.8, vozSeleccionada: null, filtro: 'todas'
         };
 
         let estaSonando = false;
@@ -800,6 +1037,20 @@
         let indicePalabraActual = 0;
         let palabrasVistas = new Set();
         let contadorRepeticionesPalabra = 0;
+
+        let indiceSActual = 0;
+        let palabrasSVistas = new Set();
+        let palabrasSConfirmadas = new Set();
+        let contadorRepeticionesS = 0;
+
+        let indiceTrabalenguasActual = 0;
+        let trabalenguasVistos = new Set();
+        let trabalenguasConfirmados = new Set();
+
+        let palabraDiscriminarActual = null;
+        let aciertosDiscriminar = 0;
+        let fallosDiscriminar = 0;
+        let respuestaDiscriminarSeleccionada = false;
 
         const emergente = document.getElementById('emergente');
         const mensaje = document.getElementById('mensaje');
@@ -886,11 +1137,21 @@
                 palabrasVistas = new Set();
                 indicePalabraActual = 0;
                 contadorRepeticionesPalabra = 0;
+                palabrasSVistas = new Set();
+                palabrasSConfirmadas = new Set();
+                contadorRepeticionesS = 0;
+                trabalenguasVistos = new Set();
+                trabalenguasConfirmados = new Set();
+                aciertosDiscriminar = 0;
+                fallosDiscriminar = 0;
                 celebracion.style.display = 'none';
                 actualizarUIProgreso();
                 mostrarElemento(0);
                 mostrarSilaba(0);
                 mostrarPalabra(0);
+                mostrarPalabraS(0);
+                mostrarTrabalenguas(0);
+                nuevaDiscriminacion();
                 setTimeout(() => iniciarJuego(), 500);
                 alert('🔄 Progreso reiniciado');
             }
@@ -918,7 +1179,14 @@
                     silabasVistas: Array.from(silabasVistas),
                     contadorRepeticionesSilaba: contadorRepeticionesSilaba,
                     palabrasVistas: Array.from(palabrasVistas),
-                    contadorRepeticionesPalabra: contadorRepeticionesPalabra
+                    contadorRepeticionesPalabra: contadorRepeticionesPalabra,
+                    palabrasSVistas: Array.from(palabrasSVistas),
+                    palabrasSConfirmadas: Array.from(palabrasSConfirmadas),
+                    contadorRepeticionesS: contadorRepeticionesS,
+                    trabalenguasVistos: Array.from(trabalenguasVistos),
+                    trabalenguasConfirmados: Array.from(trabalenguasConfirmados),
+                    aciertosDiscriminar: aciertosDiscriminar,
+                    fallosDiscriminar: fallosDiscriminar
                 };
                 const respuesta = await fetch(`${BACKEND_URL}/api/progreso`, {
                     method: 'POST',
@@ -962,6 +1230,13 @@
                     contadorRepeticionesSilaba = datos.contadorRepeticionesSilaba || 0;
                     palabrasVistas = new Set(datos.palabrasVistas || []);
                     contadorRepeticionesPalabra = datos.contadorRepeticionesPalabra || 0;
+                    palabrasSVistas = new Set(datos.palabrasSVistas || []);
+                    palabrasSConfirmadas = new Set(datos.palabrasSConfirmadas || []);
+                    contadorRepeticionesS = datos.contadorRepeticionesS || 0;
+                    trabalenguasVistos = new Set(datos.trabalenguasVistos || []);
+                    trabalenguasConfirmados = new Set(datos.trabalenguasConfirmados || []);
+                    aciertosDiscriminar = datos.aciertosDiscriminar || 0;
+                    fallosDiscriminar = datos.fallosDiscriminar || 0;
                     console.log('☁️ Progreso recuperado de la nube:', datos);
                     return true;
                 }
@@ -1136,6 +1411,15 @@
             reproducirSonido(textoFinal);
         }
 
+        function reproducirSonidoS(item) {
+            const textoFinal = `¡${item.id}! ¡${item.id}! ¡${item.id}!`;
+            reproducirSonido(textoFinal);
+        }
+
+        function reproducirSonidoTrabalenguas(item) {
+            reproducirSonido(item.texto);
+        }
+
         function guardarProgreso() {
             const data = {
                 indiceActual: estado.indiceActual,
@@ -1155,7 +1439,14 @@
                 silabasVistas: Array.from(silabasVistas),
                 contadorRepeticionesSilaba: contadorRepeticionesSilaba,
                 palabrasVistas: Array.from(palabrasVistas),
-                contadorRepeticionesPalabra: contadorRepeticionesPalabra
+                contadorRepeticionesPalabra: contadorRepeticionesPalabra,
+                palabrasSVistas: Array.from(palabrasSVistas),
+                palabrasSConfirmadas: Array.from(palabrasSConfirmadas),
+                contadorRepeticionesS: contadorRepeticionesS,
+                trabalenguasVistos: Array.from(trabalenguasVistos),
+                trabalenguasConfirmados: Array.from(trabalenguasConfirmados),
+                aciertosDiscriminar: aciertosDiscriminar,
+                fallosDiscriminar: fallosDiscriminar
             };
             localStorage.setItem('miaProgreso', JSON.stringify(data));
         }
@@ -1183,6 +1474,13 @@
                     contadorRepeticionesSilaba = parsed.contadorRepeticionesSilaba || 0;
                     palabrasVistas = new Set(parsed.palabrasVistas || []);
                     contadorRepeticionesPalabra = parsed.contadorRepeticionesPalabra || 0;
+                    palabrasSVistas = new Set(parsed.palabrasSVistas || []);
+                    palabrasSConfirmadas = new Set(parsed.palabrasSConfirmadas || []);
+                    contadorRepeticionesS = parsed.contadorRepeticionesS || 0;
+                    trabalenguasVistos = new Set(parsed.trabalenguasVistos || []);
+                    trabalenguasConfirmados = new Set(parsed.trabalenguasConfirmados || []);
+                    aciertosDiscriminar = parsed.aciertosDiscriminar || 0;
+                    fallosDiscriminar = parsed.fallosDiscriminar || 0;
                     return true;
                 } catch (e) { console.error('Error cargando progreso:', e); }
             }
@@ -1280,6 +1578,52 @@
             });
         }
 
+        function crearIndicadorS() {
+            const indicador = document.getElementById('indicadorProgresoS');
+            if (!indicador) return;
+            indicador.innerHTML = '';
+            palabrasS.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.id = 'dot-s-' + i;
+                indicador.appendChild(dot);
+            });
+        }
+
+        function actualizarIndicadorS() {
+            palabrasS.forEach((_, i) => {
+                const dot = document.getElementById('dot-s-' + i);
+                if (dot) {
+                    dot.className = 'dot';
+                    if (i === indiceSActual) dot.classList.add('activo');
+                    if (palabrasSVistas.has(i)) dot.classList.add('visto');
+                }
+            });
+        }
+
+        function crearIndicadorTrabalenguas() {
+            const indicador = document.getElementById('indicadorProgresoTrabalenguas');
+            if (!indicador) return;
+            indicador.innerHTML = '';
+            trabalenguas.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.id = 'dot-trab-' + i;
+                indicador.appendChild(dot);
+            });
+        }
+
+        function actualizarIndicadorTrabalenguas() {
+            trabalenguas.forEach((_, i) => {
+                const dot = document.getElementById('dot-trab-' + i);
+                if (dot) {
+                    dot.className = 'dot';
+                    if (i === indiceTrabalenguasActual) dot.classList.add('activo');
+                    if (trabalenguasVistos.has(i)) dot.classList.add('visto');
+                }
+            });
+        }
+
         function mostrarElemento(indiceReal) {
             if (estaSonando) return;
             const item = elementos[indiceReal];
@@ -1371,6 +1715,105 @@
             }
         }
 
+        function mostrarPalabraS(indice) {
+            if (estaSonando) return;
+            const item = palabrasS[indice];
+            const emergenteS = document.getElementById('emergenteS');
+            emergenteS.textContent = item.id;
+            emergenteS.style.color = item.color;
+            emergenteS.style.animation = 'none';
+            void emergenteS.offsetWidth;
+            emergenteS.style.animation = 'rebotar 0.8s ease-out';
+            const mensajeS = document.getElementById('mensajeS');
+            mensajeS.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Mia dice: ${item.mensaje}`;
+            const rimaS = document.getElementById('rimaS');
+            if (rimasS[item.id]) {
+                rimaS.textContent = '🎵 ' + rimasS[item.id];
+                rimaS.style.display = 'block';
+            } else {
+                rimaS.style.display = 'none';
+            }
+            indiceSActual = indice;
+            palabrasSVistas.add(indice);
+            document.getElementById('progresoS').textContent = palabrasSVistas.size;
+            document.getElementById('totalS').textContent = palabrasS.length;
+            document.getElementById('confirmadasS').textContent = palabrasSConfirmadas.size;
+            crearIndicadorS();
+            actualizarIndicadorS();
+            actualizarPanelProgreso();
+            guardarProgreso();
+            if (audioActivado) {
+                setTimeout(() => { reproducirSonidoS(item); }, 500);
+            }
+        }
+
+        function mostrarTrabalenguas(indice) {
+            if (estaSonando) return;
+            const item = trabalenguas[indice];
+            const texto = document.getElementById('textoTrabalenguas');
+            texto.textContent = item.texto;
+            texto.style.color = item.color;
+            texto.style.animation = 'none';
+            void texto.offsetWidth;
+            texto.style.animation = 'fadeIn 0.5s ease';
+            const mensajeTrabalenguas = document.getElementById('mensajeTrabalenguas');
+            mensajeTrabalenguas.innerHTML = `<span class="mascota-emoji">${estado.mascota}</span> Escucha y repite despacio`;
+            indiceTrabalenguasActual = indice;
+            trabalenguasVistos.add(indice);
+            document.getElementById('progresoTrabalenguas').textContent = trabalenguasVistos.size;
+            document.getElementById('totalTrabalenguas').textContent = trabalenguas.length;
+            document.getElementById('confirmadosTrabalenguas').textContent = trabalenguasConfirmados.size;
+            crearIndicadorTrabalenguas();
+            actualizarIndicadorTrabalenguas();
+            actualizarPanelProgreso();
+            guardarProgreso();
+            if (audioActivado) {
+                setTimeout(() => { reproducirSonidoTrabalenguas(item); }, 500);
+            }
+        }
+
+        function nuevaDiscriminacion() {
+            respuestaDiscriminarSeleccionada = false;
+            palabraDiscriminarActual = palabrasDiscriminar[Math.floor(Math.random() * palabrasDiscriminar.length)];
+            document.getElementById('palabraDiscriminar').textContent = '🔊 Escucha la palabra...';
+            document.getElementById('emojiDiscriminar').textContent = '❓';
+            document.getElementById('resultadoDiscriminar').textContent = '';
+            document.getElementById('opcionesDiscriminar').style.display = 'none';
+            setTimeout(() => {
+                if (audioActivado) {
+                    reproducirSonido('Escucha bien... ' + palabraDiscriminarActual.palabra + '. ' + palabraDiscriminarActual.palabra);
+                }
+                setTimeout(() => {
+                    document.getElementById('opcionesDiscriminar').style.display = 'flex';
+                }, 1500);
+            }, 300);
+        }
+
+        function verificarDiscriminacion(tieneS) {
+            if (respuestaDiscriminarSeleccionada || !palabraDiscriminarActual) return;
+            respuestaDiscriminarSeleccionada = true;
+            const correcto = (tieneS === palabraDiscriminarActual.tieneS);
+            if (correcto) {
+                aciertosDiscriminar++;
+                document.getElementById('resultadoDiscriminar').textContent = '🎉 ¡Correcto! 🌟';
+                document.getElementById('resultadoDiscriminar').style.color = '#6BCB77';
+                document.getElementById('emojiDiscriminar').textContent = '✅';
+                if (audioActivado) reproducirSonido('¡Muy bien! ¡Correcto!');
+                crearEstrellas();
+            } else {
+                fallosDiscriminar++;
+                document.getElementById('resultadoDiscriminar').textContent = `😅 Era ${palabraDiscriminarActual.tieneS ? 'SÍ' : 'NO'}`;
+                document.getElementById('resultadoDiscriminar').style.color = '#FF6B6B';
+                document.getElementById('emojiDiscriminar').textContent = '❌';
+                if (audioActivado) reproducirSonido(`La palabra ${palabraDiscriminarActual.palabra} ${palabraDiscriminarActual.tieneS ? 'sí' : 'no'} tiene S`);
+            }
+            document.getElementById('aciertosDiscriminar').textContent = aciertosDiscriminar;
+            document.getElementById('fallosDiscriminar').textContent = fallosDiscriminar;
+            document.getElementById('palabraDiscriminar').textContent = `"${palabraDiscriminarActual.palabra}"`;
+            actualizarPanelProgreso();
+            guardarProgreso();
+        }
+
         function actualizarPanelProgreso() {
             const total = elementos.length;
             const vistos = estado.vistos.size;
@@ -1380,15 +1823,21 @@
 
             const totalSilabas = silabas.length;
             const vistasSilabas = silabasVistas.size;
-            const porcentajeSilabas = (vistasSilabas / totalSilabas) * 100;
-            document.getElementById('barraProgresoSilabas').style.width = porcentajeSilabas + '%';
+            document.getElementById('barraProgresoSilabas').style.width = (vistasSilabas / totalSilabas * 100) + '%';
             document.getElementById('progresoTextoSilabas').textContent = vistasSilabas;
 
             const totalPalabras = palabras.length;
             const vistasPalabras = palabrasVistas.size;
-            const porcentajePalabras = (vistasPalabras / totalPalabras) * 100;
-            document.getElementById('barraProgresoPalabras').style.width = porcentajePalabras + '%';
+            document.getElementById('barraProgresoPalabras').style.width = (vistasPalabras / totalPalabras * 100) + '%';
             document.getElementById('progresoTextoPalabras').textContent = vistasPalabras;
+
+            const totalS = palabrasS.length;
+            const vistasS = palabrasSVistas.size;
+            document.getElementById('barraProgresoS').style.width = (vistasS / totalS * 100) + '%';
+            document.getElementById('progresoTextoS').textContent = vistasS;
+            document.getElementById('progresoTextoTrabalenguas').textContent = trabalenguasVistos.size;
+            document.getElementById('progresoAciertosDiscriminar').textContent = aciertosDiscriminar;
+            document.getElementById('progresoFallosDiscriminar').textContent = fallosDiscriminar;
 
             document.getElementById('estRepeticiones').textContent = estado.contadorRepeticiones;
             document.getElementById('estAciertos').textContent = estado.aciertos;
@@ -1444,8 +1893,7 @@
             });
             setTimeout(() => {
                 if (audioActivado) {
-                    const mensaje = '¡Busca! ' + objetivo.id + ' ' + objetivo.id + ' ' + objetivo.id;
-                    reproducirSonido(mensaje);
+                    reproducirSonido('¡Busca! ' + objetivo.id + ' ' + objetivo.id + ' ' + objetivo.id);
                 }
             }, 500);
         }
@@ -1575,7 +2023,9 @@
             document.getElementById('vozTono').value = estado.vozTono;
             document.getElementById('vozTonoValor').textContent = estado.vozTono;
             document.querySelectorAll('.btn-filtro').forEach(el => {
-                el.classList.toggle('activo', el.dataset.tipo === estado.filtro);
+                if (el.dataset.tipo) {
+                    el.classList.toggle('activo', el.dataset.tipo === estado.filtro);
+                }
             });
             crearIndicador();
             mostrarElemento(estado.indiceActual);
@@ -1585,6 +2035,11 @@
             mostrarSilaba(0);
             crearIndicadorPalabras();
             mostrarPalabra(0);
+            crearIndicadorS();
+            mostrarPalabraS(0);
+            crearIndicadorTrabalenguas();
+            mostrarTrabalenguas(0);
+            nuevaDiscriminacion();
             actualizarPanelProgreso();
             cargarVocesDisponibles();
             probarConexionBackend();
@@ -1615,22 +2070,46 @@
                 if (tab === 'progreso') { actualizarPanelProgreso(); }
                 if (tab === 'silabas') { crearIndicadorSilabas(); mostrarSilaba(indiceSilabaActual); }
                 if (tab === 'palabras') { crearIndicadorPalabras(); mostrarPalabra(indicePalabraActual); }
+                if (tab === 'ejercicios-s') { crearIndicadorS(); mostrarPalabraS(indiceSActual); }
+            });
+        });
+
+        document.querySelectorAll('[data-subtab]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-subtab]').forEach(b => b.classList.remove('activo'));
+                this.classList.add('activo');
+                const subtab = this.dataset.subtab;
+                document.querySelectorAll('.sub-tab-content').forEach(c => c.classList.remove('activo'));
+                document.getElementById('subtab-' + subtab).classList.add('activo');
+                if (subtab === 's-palabras') {
+                    crearIndicadorS();
+                    mostrarPalabraS(indiceSActual);
+                }
+                if (subtab === 's-trabalenguas') {
+                    crearIndicadorTrabalenguas();
+                    mostrarTrabalenguas(indiceTrabalenguasActual);
+                }
+                if (subtab === 's-discriminar') {
+                    nuevaDiscriminacion();
+                }
             });
         });
 
         document.querySelectorAll('.btn-filtro').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('activo'));
-                this.classList.add('activo');
-                estado.filtro = this.dataset.tipo;
-                guardarProgreso();
-                crearIndicador();
-                const filtrados = getElementosFiltrados();
-                if (filtrados.length > 0) {
-                    const idx = elementos.indexOf(filtrados[0]);
-                    mostrarElemento(idx);
-                }
-            });
+            if (btn.dataset.tipo) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.btn-filtro[data-tipo]').forEach(b => b.classList.remove('activo'));
+                    this.classList.add('activo');
+                    estado.filtro = this.dataset.tipo;
+                    guardarProgreso();
+                    crearIndicador();
+                    const filtrados = getElementosFiltrados();
+                    if (filtrados.length > 0) {
+                        const idx = elementos.indexOf(filtrados[0]);
+                        mostrarElemento(idx);
+                    }
+                });
+            }
         });
 
         document.getElementById('siguiente').addEventListener('click', () => {
@@ -1638,8 +2117,7 @@
             const filtrados = getElementosFiltrados();
             const actual = filtrados.indexOf(elementos[estado.indiceActual]);
             const nuevo = (actual + 1) % filtrados.length;
-            const idx = elementos.indexOf(filtrados[nuevo]);
-            mostrarElemento(idx);
+            mostrarElemento(elementos.indexOf(filtrados[nuevo]));
         });
 
         document.getElementById('anterior').addEventListener('click', () => {
@@ -1647,8 +2125,7 @@
             const filtrados = getElementosFiltrados();
             const actual = filtrados.indexOf(elementos[estado.indiceActual]);
             const nuevo = (actual - 1 + filtrados.length) % filtrados.length;
-            const idx = elementos.indexOf(filtrados[nuevo]);
-            mostrarElemento(idx);
+            mostrarElemento(elementos.indexOf(filtrados[nuevo]));
         });
 
         document.getElementById('aleatorio').addEventListener('click', () => {
@@ -1658,78 +2135,144 @@
             do {
                 nuevo = Math.floor(Math.random() * filtrados.length);
             } while (nuevo === filtrados.indexOf(elementos[estado.indiceActual]) && filtrados.length > 1);
-            const idx = elementos.indexOf(filtrados[nuevo]);
-            mostrarElemento(idx);
+            mostrarElemento(elementos.indexOf(filtrados[nuevo]));
         });
 
         document.getElementById('siguienteSilaba').addEventListener('click', () => {
             if (estaSonando) return;
-            const nuevo = (indiceSilabaActual + 1) % silabas.length;
-            mostrarSilaba(nuevo);
+            mostrarSilaba((indiceSilabaActual + 1) % silabas.length);
         });
 
         document.getElementById('anteriorSilaba').addEventListener('click', () => {
             if (estaSonando) return;
-            const nuevo = (indiceSilabaActual - 1 + silabas.length) % silabas.length;
-            mostrarSilaba(nuevo);
+            mostrarSilaba((indiceSilabaActual - 1 + silabas.length) % silabas.length);
         });
 
         document.getElementById('aleatorioSilaba').addEventListener('click', () => {
             if (estaSonando) return;
             let nuevo;
-            do {
-                nuevo = Math.floor(Math.random() * silabas.length);
-            } while (nuevo === indiceSilabaActual && silabas.length > 1);
+            do { nuevo = Math.floor(Math.random() * silabas.length); } while (nuevo === indiceSilabaActual && silabas.length > 1);
             mostrarSilaba(nuevo);
         });
 
         document.getElementById('btnSonidoSilaba').addEventListener('click', () => {
-            if (!audioActivado) {
-                document.getElementById('estadoSonidoSilaba').textContent = '⚠️ Haz clic en "Empezar" primero';
-                return;
-            }
-            if (estaSonando) return;
+            if (!audioActivado || estaSonando) return;
             reproducirSonidoSilaba(silabas[indiceSilabaActual]);
         });
 
         document.getElementById('siguientePalabra').addEventListener('click', () => {
             if (estaSonando) return;
-            const nuevo = (indicePalabraActual + 1) % palabras.length;
-            mostrarPalabra(nuevo);
+            mostrarPalabra((indicePalabraActual + 1) % palabras.length);
         });
 
         document.getElementById('anteriorPalabra').addEventListener('click', () => {
             if (estaSonando) return;
-            const nuevo = (indicePalabraActual - 1 + palabras.length) % palabras.length;
-            mostrarPalabra(nuevo);
+            mostrarPalabra((indicePalabraActual - 1 + palabras.length) % palabras.length);
         });
 
         document.getElementById('aleatorioPalabra').addEventListener('click', () => {
             if (estaSonando) return;
             let nuevo;
-            do {
-                nuevo = Math.floor(Math.random() * palabras.length);
-            } while (nuevo === indicePalabraActual && palabras.length > 1);
+            do { nuevo = Math.floor(Math.random() * palabras.length); } while (nuevo === indicePalabraActual && palabras.length > 1);
             mostrarPalabra(nuevo);
         });
 
         document.getElementById('btnSonidoPalabra').addEventListener('click', () => {
-            if (!audioActivado) {
-                document.getElementById('estadoSonidoPalabra').textContent = '⚠️ Haz clic en "Empezar" primero';
-                return;
-            }
-            if (estaSonando) return;
+            if (!audioActivado || estaSonando) return;
             reproducirSonidoPalabra(palabras[indicePalabraActual]);
         });
 
-        btnSonido.addEventListener('click', () => {
-            if (!audioActivado) {
-                estadoSonido.textContent = '⚠️ Haz clic en "Empezar" primero';
-                return;
-            }
+        document.getElementById('siguienteS').addEventListener('click', () => {
             if (estaSonando) return;
-            const item = elementos[estado.indiceActual];
-            reproducirSonidoAlegre(item);
+            mostrarPalabraS((indiceSActual + 1) % palabrasS.length);
+        });
+
+        document.getElementById('anteriorS').addEventListener('click', () => {
+            if (estaSonando) return;
+            mostrarPalabraS((indiceSActual - 1 + palabrasS.length) % palabrasS.length);
+        });
+
+        document.getElementById('aleatorioS').addEventListener('click', () => {
+            if (estaSonando) return;
+            let nuevo;
+            do { nuevo = Math.floor(Math.random() * palabrasS.length); } while (nuevo === indiceSActual && palabrasS.length > 1);
+            mostrarPalabraS(nuevo);
+        });
+
+        document.getElementById('btnSonidoS').addEventListener('click', () => {
+            if (!audioActivado || estaSonando) return;
+            reproducirSonidoS(palabrasS[indiceSActual]);
+        });
+
+        document.getElementById('btnLoDijeBien').addEventListener('click', () => {
+            palabrasSConfirmadas.add(indiceSActual);
+            document.getElementById('confirmadasS').textContent = palabrasSConfirmadas.size;
+            const btn = document.getElementById('btnLoDijeBien');
+            btn.textContent = '✅ ¡Muy bien!';
+            btn.style.background = '#FFD93D';
+            btn.style.color = '#333';
+            if (audioActivado) reproducirSonido('¡Muy bien! ¡Sigue así!');
+            crearEstrellas();
+            guardarProgreso();
+            setTimeout(() => {
+                btn.textContent = '✅ ¡Lo dije bien!';
+                btn.style.background = '#6BCB77';
+                btn.style.color = 'white';
+            }, 2000);
+        });
+
+        document.getElementById('siguienteTrabalenguas').addEventListener('click', () => {
+            if (estaSonando) return;
+            mostrarTrabalenguas((indiceTrabalenguasActual + 1) % trabalenguas.length);
+        });
+
+        document.getElementById('anteriorTrabalenguas').addEventListener('click', () => {
+            if (estaSonando) return;
+            mostrarTrabalenguas((indiceTrabalenguasActual - 1 + trabalenguas.length) % trabalenguas.length);
+        });
+
+        document.getElementById('aleatorioTrabalenguas').addEventListener('click', () => {
+            if (estaSonando) return;
+            let nuevo;
+            do { nuevo = Math.floor(Math.random() * trabalenguas.length); } while (nuevo === indiceTrabalenguasActual && trabalenguas.length > 1);
+            mostrarTrabalenguas(nuevo);
+        });
+
+        document.getElementById('btnSonidoTrabalenguas').addEventListener('click', () => {
+            if (!audioActivado || estaSonando) return;
+            reproducirSonidoTrabalenguas(trabalenguas[indiceTrabalenguasActual]);
+        });
+
+        document.getElementById('btnLoDijeBienTrabalenguas').addEventListener('click', () => {
+            trabalenguasConfirmados.add(indiceTrabalenguasActual);
+            document.getElementById('confirmadosTrabalenguas').textContent = trabalenguasConfirmados.size;
+            const btn = document.getElementById('btnLoDijeBienTrabalenguas');
+            btn.textContent = '✅ ¡Muy bien!';
+            btn.style.background = '#FFD93D';
+            btn.style.color = '#333';
+            if (audioActivado) reproducirSonido('¡Muy bien! ¡Sigue así!');
+            crearEstrellas();
+            guardarProgreso();
+            setTimeout(() => {
+                btn.textContent = '✅ ¡Lo dije bien!';
+                btn.style.background = '#6BCB77';
+                btn.style.color = 'white';
+            }, 2000);
+        });
+
+        document.getElementById('btnEscucharDiscriminar').addEventListener('click', () => {
+            if (audioActivado && palabraDiscriminarActual) {
+                reproducirSonido(palabraDiscriminarActual.palabra + '. ' + palabraDiscriminarActual.palabra);
+            }
+        });
+
+        document.getElementById('btnNuevaDiscriminacion').addEventListener('click', nuevaDiscriminacion);
+        document.getElementById('opcionSI').addEventListener('click', () => verificarDiscriminacion(true));
+        document.getElementById('opcionNO').addEventListener('click', () => verificarDiscriminacion(false));
+
+        btnSonido.addEventListener('click', () => {
+            if (!audioActivado || estaSonando) return;
+            reproducirSonidoAlegre(elementos[estado.indiceActual]);
         });
 
         emergente.addEventListener('click', function() {
@@ -1812,27 +2355,7 @@
 
         document.getElementById('btnReiniciar').addEventListener('click', () => {
             if (confirm('⚠️ ¿Seguro que quieres reiniciar todo el progreso?')) {
-                localStorage.removeItem('miaProgreso');
-                estado.vistos = new Set();
-                estado.contadorRepeticiones = 0;
-                estado.nivel = 1;
-                estado.estrellas = 0;
-                estado.aciertos = 0;
-                estado.fallos = 0;
-                estado.indiceActual = 0;
-                silabasVistas = new Set();
-                indiceSilabaActual = 0;
-                contadorRepeticionesSilaba = 0;
-                palabrasVistas = new Set();
-                indicePalabraActual = 0;
-                contadorRepeticionesPalabra = 0;
-                celebracion.style.display = 'none';
-                actualizarUIProgreso();
-                mostrarElemento(0);
-                mostrarSilaba(0);
-                mostrarPalabra(0);
-                setTimeout(() => iniciarJuego(), 500);
-                alert('🔄 Progreso reiniciado');
+                reiniciarProgreso();
             }
         });
 
@@ -1860,6 +2383,7 @@
         console.log('🎵 Música de fondo activada');
         console.log('🔤 Sección de sílabas añadida');
         console.log('📝 Sección de palabras añadida');
+        console.log('🗣️ Sección de ejercicios de S añadida');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
