@@ -112,9 +112,6 @@
         .btn.repetir:active { box-shadow: 0 1px 0 #2E7D32; }
         .btn.iniciar { background: #FF8A9E; box-shadow: 0 5px 0 #C62828; color: white; font-size: 1.5rem; padding: 20px 50px; animation: pulse 1.5s infinite; }
         .btn.iniciar:active { box-shadow: 0 2px 0 #C62828; }
-        .btn.grabar { background: #FF6B6B; box-shadow: 0 4px 0 #C62828; color: white; }
-        .btn.grabar:active { box-shadow: 0 1px 0 #C62828; }
-        .btn.grabar.grabando { background: #ff0000; animation: pulse 0.5s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
         .indicador-sonido { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 6px 0; flex-wrap: wrap; }
         .barra-sonido { width: 100px; height: 8px; background: #e0e0e0; border-radius: 10px; overflow: hidden; display: inline-block; flex-shrink: 0; }
@@ -187,8 +184,6 @@
         .configuracion input[type="range"] { width: 80px; accent-color: #6BCB77; }
         .rima { font-size: 1.05rem; color: #6C4A7C; background: #F3E8FF; padding: 12px 18px; border-radius: 30px; margin: 8px 0; animation: fadeIn 0.4s; line-height: 1.4; font-weight: 600; }
         body.tema-espacio .rima { background: rgba(255, 255, 255, 0.07); color: #aaa; }
-        .grabacion { margin: 12px 0; }
-        .grabacion audio { width: 100%; max-width: 280px; margin: 8px 0; border-radius: 10px; }
         .pantalla-inicio { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 248, 231, 0.97); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; gap: 20px; padding: 20px; text-align: center; }
         .icono-inicio { width: 150px; height: 150px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); animation: flotarIcono 3s ease-in-out infinite; object-fit: contain; background: white; padding: 8px; }
         @keyframes flotarIcono { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.05); } }
@@ -252,8 +247,6 @@
             .panel-progreso .medalla { font-size: 2.2rem; margin: 4px; }
             .panel-progreso .barra-progreso { height: 14px; }
             .rima { font-size: 0.9rem; padding: 10px 14px; }
-            .grabacion .btn { font-size: 0.85rem; padding: 9px 16px; min-height: 40px; min-width: 70px; }
-            .grabacion audio { max-width: 100%; }
             .personalizacion .opcion { padding: 6px 12px; font-size: 1.2rem; border-radius: 25px; border-width: 2px; }
             .configuracion { gap: 10px; }
             .configuracion label { font-size: 0.8rem; }
@@ -261,7 +254,6 @@
             .pantalla-inicio h1 { font-size: 2.5rem; }
             .pantalla-inicio p { font-size: 1.1rem; }
             .pantalla-inicio .btn-iniciar { padding: 16px 35px; font-size: 1.4rem; border-radius: 50px; }
-            .grabacion .btn { margin: 3px; }
             #celebracion h1 { font-size: 2.2rem; }
             #celebracion p { font-size: 1.1rem; }
             #celebracion .btn { font-size: 1.1rem; padding: 14px 30px; }
@@ -358,7 +350,6 @@
             <button class="tab-btn" data-tab="palabras">📝 Palabras</button>
             <button class="tab-btn" data-tab="ejercicios-s">🗣️ S</button>
             <button class="tab-btn" data-tab="juego">🎮 Juego</button>
-            <button class="tab-btn" data-tab="grabacion">🎤 Grabar</button>
             <button class="tab-btn" data-tab="progreso">📊 Progreso</button>
             <button class="tab-btn" data-tab="personalizar">🎨 Personal</button>
         </div>
@@ -614,24 +605,6 @@
             <p style="color:#999; font-size:0.8rem; margin-top:8px; font-weight:600;">
                 ✅ Aciertos: <span id="juegoAciertos">0</span> | ❌ Fallos: <span id="juegoFallos">0</span>
             </p>
-        </div>
-
-        <!-- PESTAÑA: GRABACIÓN -->
-        <div class="tab-content" id="tab-grabacion">
-            <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🎤 Practica con Mia</h2>
-            <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Graba tu voz y escucha cómo pronuncias</p>
-            <div style="font-size:3.5rem; margin:8px 0; font-weight:700;" id="grabacionLetra">A</div>
-            <div class="grabacion">
-                <button class="btn grabar" id="btnGrabar">🎙️ Grabar</button>
-                <button class="btn" id="btnReproducirGrabacion">▶️ Escuchar</button>
-                <button class="btn secundario" id="btnEliminarGrabacion">🗑️ Eliminar</button>
-            </div>
-            <div style="margin:10px 0;">
-                <audio id="audioGrabacion" controls style="width:100%; max-width:280px;"></audio>
-            </div>
-            <div class="info-extra">
-                <span>📝 Última letra: <span id="ultimaGrabacion">-</span></span>
-            </div>
         </div>
 
         <!-- PESTAÑA: PROGRESO -->
@@ -919,7 +892,6 @@
             'QUESO': 'QUESO amarillo y sabroso, ¡me encanta!'
         };
 
-        // EJERCICIOS DE S
         const palabrasS = [
             { id: 'SOL', color: '#FF6B6B', emoji: '☀️', posicion: 'inicio', mensaje: '¡SOL! ☀️' },
             { id: 'SOPA', color: '#FF9F43', emoji: '🍲', posicion: 'inicio', mensaje: '¡SOPA! 🍲' },
@@ -1023,9 +995,6 @@
 
         let estaSonando = false;
         let audioActivado = false;
-        let grabacionActiva = false;
-        let mediaRecorder = null;
-        let chunks = [];
         let juegoBloqueado = false;
         let vocesDisponibles = [];
         let musicaActivada = true;
@@ -1644,7 +1613,6 @@
             estado.vistos.add(indiceReal);
             emergente.classList.remove('explotar');
             emergente.classList.remove('sonando');
-            document.getElementById('grabacionLetra').textContent = item.id;
             actualizarUIProgreso();
             if (audioActivado) {
                 setTimeout(() => { reproducirSonidoAlegre(item); }, 500);
@@ -2286,50 +2254,6 @@
 
         document.getElementById('juegoNuevo').addEventListener('click', iniciarJuego);
 
-        document.getElementById('btnGrabar').addEventListener('click', async () => {
-            if (grabacionActiva) {
-                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                    mediaRecorder.stop();
-                    grabacionActiva = false;
-                    document.getElementById('btnGrabar').textContent = '🎙️ Grabar';
-                    document.getElementById('btnGrabar').classList.remove('grabando');
-                }
-                return;
-            }
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                chunks = [];
-                mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'audio/webm' });
-                    const url = URL.createObjectURL(blob);
-                    const audio = document.getElementById('audioGrabacion');
-                    audio.src = url;
-                    document.getElementById('ultimaGrabacion').textContent = elementos[estado.indiceActual].id;
-                    guardarProgreso();
-                };
-                mediaRecorder.start();
-                grabacionActiva = true;
-                document.getElementById('btnGrabar').textContent = '⏹️ Detener';
-                document.getElementById('btnGrabar').classList.add('grabando');
-            } catch (err) {
-                alert('⚠️ No se pudo acceder al micrófono.');
-            }
-        });
-
-        document.getElementById('btnReproducirGrabacion').addEventListener('click', () => {
-            const audio = document.getElementById('audioGrabacion');
-            if (audio.src) { audio.play(); } else { alert('📢 Primero graba tu voz'); }
-        });
-
-        document.getElementById('btnEliminarGrabacion').addEventListener('click', () => {
-            const audio = document.getElementById('audioGrabacion');
-            audio.src = '';
-            audio.removeAttribute('src');
-            document.getElementById('ultimaGrabacion').textContent = '-';
-        });
-
         document.querySelectorAll('#selectorMascota .opcion').forEach(el => {
             el.addEventListener('click', () => cambiarMascota(el.dataset.mascota));
         });
@@ -2384,6 +2308,7 @@
         console.log('🔤 Sección de sílabas añadida');
         console.log('📝 Sección de palabras añadida');
         console.log('🗣️ Sección de ejercicios de S añadida');
+        console.log('🚫 Sección de grabación eliminada (protección de datos)');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
