@@ -223,6 +223,24 @@
         @keyframes caerConfeti { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; } }
         .fuego { position: fixed; font-size: 3rem; pointer-events: none; z-index: 10001; animation: explotar 1.5s ease-out forwards; }
         @keyframes explotar { 0% { transform: scale(0) rotate(0deg); opacity: 0; } 30% { transform: scale(1.5) rotate(180deg); opacity: 1; } 100% { transform: scale(2) rotate(360deg) translateY(-100px); opacity: 0; } }
+        .icono-inicio-emoji {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+            animation: saltarMascota 2s infinite;
+        }
+        .icono-boton-inicio {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            animation: saltarMascota 1.5s infinite;
+        }
         @media (max-width: 1024px) {
             .contenedor { padding: 25px 30px; border-radius: 50px; max-height: 94vh; width: 94%; }
             .titulo-principal { font-size: 2rem; }
@@ -285,6 +303,8 @@
             #celebracion .btn { font-size: 1.1rem; padding: 14px 30px; }
             .fuego { font-size: 2rem; }
             .icono-inicio { width: 110px; height: 110px; border-radius: 22px; }
+            .icono-inicio-emoji { width: 35px; height: 35px; margin-right: 6px; }
+            .icono-boton-inicio { width: 32px; height: 32px; margin-right: 8px; }
             #textoTrabalenguas { font-size: 0.95rem !important; line-height: 1.4 !important; padding: 10px !important; }
             #escenarioTrabalenguas { height: auto !important; min-height: 200px; padding: 10px !important; }
             #palabraDiscriminar { font-size: 1rem !important; line-height: 1.3; padding: 0 10px; }
@@ -295,6 +315,110 @@
             .escenario { height: auto; min-height: 160px; padding: 5px; }
             .emergente { font-size: 80px !important; letter-spacing: 3px; }
             .icono-emoji-grande { width: 60px; height: 60px; }
+
+            /* ===== REDISTRIBUCIÓN DE EJERCICIOS DE S ===== */
+            #tab-ejercicios-s .tabs {
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+            #tab-ejercicios-s .tabs .btn-filtro {
+                padding: 14px 12px !important;
+                font-size: 0.85rem !important;
+                min-height: 60px !important;
+                border-radius: 18px !important;
+                flex: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                line-height: 1.3 !important;
+                font-weight: 700 !important;
+                border-width: 3px !important;
+            }
+            #escenarioS {
+                height: auto !important;
+                min-height: 140px !important;
+                padding: 10px !important;
+                margin-bottom: 15px !important;
+            }
+            #emergenteS {
+                font-size: 65px !important;
+                letter-spacing: 2px !important;
+            }
+            #escenarioTrabalenguas {
+                min-height: 220px !important;
+                padding: 15px !important;
+                margin-bottom: 15px !important;
+            }
+            #textoTrabalenguas {
+                font-size: 1.05rem !important;
+                line-height: 1.5 !important;
+                padding: 10px !important;
+            }
+            #escenarioDiscriminar {
+                height: auto !important;
+                min-height: 130px !important;
+                padding: 10px !important;
+                margin-bottom: 15px !important;
+            }
+            #btnLoDijeBien, #btnLoDijeBienTrabalenguas {
+                font-size: 1.05rem !important;
+                padding: 16px 25px !important;
+                min-height: 55px !important;
+                width: 100% !important;
+                max-width: 300px !important;
+                margin-top: 15px !important;
+            }
+            #opcionSI, #opcionNO {
+                width: 130px !important;
+                height: 130px !important;
+                font-size: 1.4rem !important;
+                border-width: 4px !important;
+            }
+            #subtab-s-palabras .botones, #subtab-s-trabalenguas .botones {
+                gap: 12px !important;
+                margin: 15px 0 !important;
+            }
+            #subtab-s-palabras .indicador-sonido, #subtab-s-trabalenguas .indicador-sonido {
+                margin: 15px 0 !important;
+            }
+            #mensajeS, #mensajeTrabalenguas {
+                margin-top: 15px !important;
+                padding: 12px 18px !important;
+            }
+            #palabraDiscriminar {
+                font-size: 1.15rem !important;
+                padding: 12px 15px !important;
+                background: #F3E8FF !important;
+                border-radius: 20px !important;
+                margin: 15px 0 !important;
+            }
+            #resultadoDiscriminar {
+                font-size: 1.1rem !important;
+                min-height: 50px !important;
+                padding: 10px !important;
+                margin: 10px 0 !important;
+            }
+            #tab-ejercicios-s h3 {
+                font-size: 1rem !important;
+                margin-bottom: 15px !important;
+                padding: 10px !important;
+                background: #FFF8E7 !important;
+                border-radius: 15px !important;
+            }
+            #btnEscucharDiscriminar {
+                font-size: 1.05rem !important;
+                padding: 16px 30px !important;
+                min-height: 55px !important;
+                width: 100% !important;
+                max-width: 300px !important;
+            }
+            #btnNuevaDiscriminacion {
+                font-size: 1rem !important;
+                padding: 14px 30px !important;
+                min-height: 50px !important;
+                width: 100% !important;
+                max-width: 300px !important;
+            }
         }
         @media (max-width: 380px) {
             .contenedor { padding: 12px 10px; border-radius: 25px; width: 98%; }
@@ -331,6 +455,24 @@
             #opcionSI, #opcionNO { width: 90px !important; height: 90px !important; font-size: 0.95rem !important; }
             .btn-filtro[data-subtab] { font-size: 0.6rem !important; padding: 6px 6px !important; min-height: 36px; }
             .icono-emoji-grande { width: 50px; height: 50px; }
+            .icono-inicio-emoji { width: 28px; height: 28px; margin-right: 5px; }
+            .icono-boton-inicio { width: 26px; height: 26px; margin-right: 6px; }
+            #tab-ejercicios-s .tabs .btn-filtro {
+                padding: 12px 8px !important;
+                font-size: 0.75rem !important;
+                min-height: 55px !important;
+            }
+            #textoTrabalenguas {
+                font-size: 0.95rem !important;
+            }
+            #opcionSI, #opcionNO {
+                width: 110px !important;
+                height: 110px !important;
+                font-size: 1.2rem !important;
+            }
+            #emergenteS {
+                font-size: 55px !important;
+            }
         }
         @media (max-height: 500px) and (orientation: landscape) {
             .contenedor { max-height: 98vh; padding: 12px 20px; }
@@ -366,9 +508,15 @@
     <div class="pantalla-inicio" id="pantallaInicio">
         <img src="icon-192.png" alt="Mia va al Colegio" class="icono-inicio">
         <h1>Mia va al Colegio</h1>
-        <p>🧸 ¡Aprende letras, sílabas, palabras y números con Mia!</p>
+        <p>
+            <img src="iconos/oso.png" alt="oso" class="icono-inicio-emoji">
+            ¡Aprende letras, sílabas, palabras y números con Mia!
+        </p>
         <p style="font-size:1.1rem; color:#999; max-width:400px;">👉 Haz clic en el botón para empezar</p>
-        <button class="btn-iniciar" id="btnIniciar">🚀 ¡Empezar!</button>
+        <button class="btn-iniciar" id="btnIniciar">
+            <img src="iconos/cohete.png" alt="cohete" class="icono-boton-inicio">
+            ¡Empezar!
+        </button>
     </div>
 
     <div id="celebracion">
@@ -397,7 +545,7 @@
             <button class="tab-btn" data-tab="personalizar">🎨 Personal</button>
         </div>
 
-        <!-- PESTAÑA: APRENDER (NIVEL 1) -->
+        <!-- PESTAÑA: APRENDER -->
         <div class="tab-content activo" id="tab-aprender">
             <div class="filtro-tipo">
                 <button class="btn-filtro activo" data-tipo="todas">🌟 Todas</button>
@@ -433,7 +581,7 @@
             </div>
         </div>
 
-        <!-- PESTAÑA: SÍLABAS (NIVEL 2) -->
+        <!-- PESTAÑA: SÍLABAS -->
         <div class="tab-content" id="tab-silabas">
             <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🔤 Aprende las Sílabas</h2>
             <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Combina consonantes y vocales</p>
@@ -464,7 +612,7 @@
             </div>
         </div>
 
-        <!-- PESTAÑA: PALABRAS (NIVEL 3) -->
+        <!-- PESTAÑA: PALABRAS -->
         <div class="tab-content" id="tab-palabras">
             <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">📝 Aprende las Palabras</h2>
             <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Lee y aprende palabras completas</p>
@@ -495,7 +643,7 @@
             </div>
         </div>
 
-        <!-- PESTAÑA: EJERCICIOS DE S (LOGOPEDIA) -->
+        <!-- PESTAÑA: EJERCICIOS DE S -->
         <div class="tab-content" id="tab-ejercicios-s">
             <h2 style="color:#6C4A7C; margin-bottom:6px; font-size:1.3rem; font-weight:700;">🗣️ Ejercicios de la S</h2>
             <p style="color:#888; margin-bottom:10px; font-size:0.9rem; font-weight:600;">Practica el sonido de la letra S</p>
@@ -742,9 +890,6 @@
             return id;
         }
 
-        // ============================================================
-        // ICONOS DE ANIMALES Y OBJETOS (Fluent 3D)
-        // ============================================================
         const iconos = {
             'A': 'iconos/avion.png', 'B': 'iconos/bebe-persona.png', 'C': 'iconos/casa.png',
             'D': 'iconos/delfin.png', 'E': 'iconos/estrella.png', 'F': 'iconos/flor.png',
@@ -781,7 +926,7 @@
             { id: 'T', tipo: 'letra', color: '#4FC3F7', mensaje: '¡T de Tortuga!', icono: 'iconos/tortuga.png', sonido: 'T', ejemplo: 'Tortuga' },
             { id: 'U', tipo: 'letra', color: '#C084FC', mensaje: '¡U de Uva!', icono: 'iconos/uva.png', sonido: 'U', ejemplo: 'Uva' },
             { id: 'V', tipo: 'letra', color: '#FF9F43', mensaje: '¡V de Vaca!', icono: 'iconos/vaca.png', sonido: 'V', ejemplo: 'Vaca' },
-            { id: 'W', tipo: 'letra', color: '#FECA57', mensaje: '¡W de Wafle!', icono: 'iconos/wafle.png', sonido: 'doble u', ejemplo: 'Wafle' },
+            { id: 'W', tipo: 'letra', color: '#FECA57', mensaje: '¡W de Wafle!', icono: 'iconos/regalo.png', sonido: 'doble u', ejemplo: 'Wafle' },
             { id: 'X', tipo: 'letra', color: '#5B86E5', mensaje: '¡X de Xilófono!', icono: 'iconos/xilofono.png', sonido: 'equis', ejemplo: 'Xilófono' },
             { id: 'Y', tipo: 'letra', color: '#FD79A8', mensaje: '¡Y de Yogur!', icono: 'iconos/helado.png', sonido: 'y', ejemplo: 'Yogur' },
             { id: 'Z', tipo: 'letra', color: '#00CEC9', mensaje: '¡Z de Zorro!', icono: 'iconos/zorro.png', sonido: 'Z', ejemplo: 'Zorro' },
@@ -2001,7 +2146,6 @@
                 el.classList.toggle('seleccionado', el.dataset.mascota === mascota);
             });
             const item = elementos[estado.indiceActual];
-            const iconoMascota = `iconos/${mascota}.png`;
             const iconoHtml = item.icono ? `<img src="${item.icono}" alt="${item.ejemplo}" class="mascota-icono">` : '';
             mensaje.innerHTML = `${iconoHtml} Mia dice: ${item.mensaje}`;
             guardarProgreso();
@@ -2371,9 +2515,10 @@
         console.log('🔤 Sección de sílabas añadida');
         console.log('📝 Sección de palabras añadida');
         console.log('🗣️ Sección de ejercicios de S añadida');
-        console.log('🚫 Sección de grabación eliminada (protección de datos)');
+        console.log('🚫 Sección de grabación eliminada');
         console.log('📱 Disposición móvil corregida');
         console.log('🎨 Iconos Fluent 3D implementados');
+        console.log('🏫 Iconos Fluent en pantalla de inicio');
         console.log('🌐 Backend conectado:', BACKEND_URL);
     </script>
 
