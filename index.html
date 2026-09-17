@@ -495,6 +495,100 @@
         }
         #selectorVoz:hover { border-color: #6BCB77 !important; transform: scale(1.02); }
         #selectorVoz:focus { border-color: #6BCB77 !important; box-shadow: 0 0 15px rgba(107, 203, 119, 0.3); }
+
+        /* ============================================================
+           MEJORAS DE BOTONES PARA DEDOS PEQUEÑOS
+           ============================================================ */
+
+        /* Pestaña "S" con letra grande */
+        .tab-btn[data-tab="ejercicios-s"] {
+            font-weight: 900 !important;
+            position: relative;
+        }
+
+        .tab-btn[data-tab="ejercicios-s"] .letra-s {
+            font-size: 1.5em;
+            font-weight: 900;
+            color: #FF6B6B;
+            letter-spacing: 1px;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        body.tema-espacio .tab-btn[data-tab="ejercicios-s"] .letra-s {
+            color: #FFD93D;
+        }
+
+        /* Pestañas más grandes en móvil para dedos pequeños */
+        @media (max-width: 767px) {
+            .tabs {
+                gap: 8px !important;
+                margin: 15px 0 !important;
+            }
+            
+            .tab-btn {
+                min-height: 52px !important;
+                padding: 10px 8px !important;
+                font-size: 0.72rem !important;
+                border-radius: 20px !important;
+                flex: 1 !important;
+                min-width: 50px !important;
+                line-height: 1.2 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .tab-btn[data-tab="ejercicios-s"] .letra-s {
+                font-size: 1.8em;
+            }
+            
+            /* Botones de navegación más grandes */
+            .botones .btn {
+                min-height: 56px !important;
+                font-size: 1.05rem !important;
+                padding: 16px 20px !important;
+                border-radius: 30px !important;
+            }
+            
+            /* Botones de "Repetir" más grandes */
+            .btn.repetir {
+                min-height: 52px !important;
+                font-size: 1rem !important;
+                padding: 14px 25px !important;
+            }
+            
+            /* Filtros de tipo (Todas/Letras/Números) más grandes */
+            .filtro-tipo {
+                gap: 8px !important;
+                margin: 12px 0 !important;
+            }
+            
+            .filtro-tipo .btn-filtro {
+                min-height: 44px !important;
+                padding: 10px 16px !important;
+                font-size: 0.8rem !important;
+                border-radius: 22px !important;
+            }
+        }
+
+        /* Ajustes para móviles muy pequeños */
+        @media (max-width: 380px) {
+            .tab-btn {
+                min-height: 48px !important;
+                font-size: 0.65rem !important;
+                padding: 8px 6px !important;
+            }
+            
+            .tab-btn[data-tab="ejercicios-s"] .letra-s {
+                font-size: 1.5em;
+            }
+            
+            .botones .btn {
+                min-height: 50px !important;
+                font-size: 0.95rem !important;
+            }
+        }
     </style>
 </head>
 <body class="tema-escuela">
@@ -539,7 +633,9 @@
             <button class="tab-btn activo" data-tab="aprender">📖 Aprender</button>
             <button class="tab-btn" data-tab="silabas">🔤 Sílabas</button>
             <button class="tab-btn" data-tab="palabras">📝 Palabras</button>
-            <button class="tab-btn" data-tab="ejercicios-s">🗣️ S</button>
+            <button class="tab-btn" data-tab="ejercicios-s">
+                <span class="letra-s">S</span>
+            </button>
             <button class="tab-btn" data-tab="juego">🎮 Juego</button>
             <button class="tab-btn" data-tab="progreso">📊 Progreso</button>
             <button class="tab-btn" data-tab="personalizar">🎨 Personal</button>
@@ -2520,6 +2616,8 @@
         console.log('🎨 Iconos Fluent 3D implementados');
         console.log('🏫 Iconos Fluent en pantalla de inicio');
         console.log('🌐 Backend conectado:', BACKEND_URL);
+        console.log('✅ Pestaña S con letra grande aplicada');
+        console.log('✅ Botones agrandados para dedos pequeños');
     </script>
 
 </body>
