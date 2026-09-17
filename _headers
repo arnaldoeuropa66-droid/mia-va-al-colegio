@@ -1,3 +1,21 @@
 /*
+  X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
-  Access-Control-Allow-Origin: *
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/manifest.json
+  Cache-Control: no-cache
+
+/iconos/*
+  Cache-Control: public, max-age=2592000
+
+/service-worker.js
+  Cache-Control: no-cache
+
+/sitemap.xml
+  Content-Type: application/xml
