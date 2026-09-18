@@ -1,166 +1,328 @@
 // ============================================================
-// 📦 SERVICE WORKER - Registro con auto-update mejorado
+// SERVICE WORKER - Mia va al Colegio
+// Estrategia: Cache-first para assets, network-first para API
 // ============================================================
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js', {
-            updateViaCache: 'none'  // ← Fuerza a no usar caché HTTP para el SW
+
+const CACHE_NAME = 'mia-colegio-v2.1';
+const CACHE_STATIC = 'mia-static-v2.1';
+const CACHE_DYNAMIC = 'mia-dynamic-v2.1';
+
+// Assets que se cachean en la instalación
+const ASSETS_ESTATICOS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/privacidad.html',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/musica-fondo.mp3',
+  // Iconos principales
+  '/iconos/oso.png',
+  '/iconos/perro.png',
+  '/iconos/gato.png',
+  '/iconos/zorro.png',
+  '/iconos/koala.png',
+  '/iconos/leon.png',
+  '/iconos/cohete.png',
+  '/iconos/avion.png',
+  '/iconos/casa.png',
+  '/iconos/sol.png',
+  '/iconos/luna.png',
+  '/iconos/estrella.png',
+  '/iconos/flor.png',
+  '/iconos/pelota.png',
+  '/iconos/libro.png',
+  '/iconos/lapiz.png',
+  '/iconos/silla.png',
+  '/iconos/mama.png',
+  '/iconos/papa.png',
+  '/iconos/bebe-persona.png',
+  '/iconos/abuelo.png',
+  '/iconos/abuela.png',
+  '/iconos/pato.png',
+  '/iconos/tigre.png',
+  '/iconos/pan.png',
+  '/iconos/leche.png',
+  '/iconos/manzana.png',
+  '/iconos/uva.png',
+  '/iconos/queso.png',
+  '/iconos/arbol.png',
+  // Iconos de sílabas
+  '/iconos/mesa.png',
+  '/iconos/miel.png',
+  '/iconos/mono.png',
+  '/iconos/musica.png',
+  '/iconos/pina.png',
+  '/iconos/pollo.png',
+  '/iconos/puerta.png',
+  '/iconos/loro.png',
+  '/iconos/sapo.png',
+  '/iconos/semaforo.png',
+  '/iconos/submarino.png',
+  '/iconos/taza.png',
+  '/iconos/telefono.png',
+  '/iconos/tomate.png',
+  '/iconos/tucan.png',
+  // Iconos de S
+  '/iconos/sopa.png',
+  '/iconos/sandia.png',
+  '/iconos/sombrero.png',
+  '/iconos/cangrejo.png',
+  '/iconos/cancion.png',
+  '/iconos/salsa.png',
+  '/iconos/isla.png',
+  '/iconos/piscina.png',
+  '/iconos/vaso.png',
+  '/iconos/beso.png',
+  '/iconos/autobus.png',
+  '/iconos/pez.png',
+  '/iconos/nariz.png',
+  '/iconos/ajedrez.png',
+  '/iconos/delfin.png',
+  '/iconos/helado.png',
+  '/iconos/raton.png',
+  '/iconos/nube.png',
+  '/iconos/nandu.png',
+  '/iconos/tortuga.png',
+  '/iconos/vaca.png',
+  '/iconos/regalo.png',
+  '/iconos/xilofono.png',
+  '/iconos/jirafa.png',
+  // Iconos nuevos (sílabas ampliadas)
+  '/iconos/naranja.png',
+  '/iconos/nino.png',
+  '/iconos/dado.png',
+  '/iconos/diente.png',
+  '/iconos/dormir.png',
+  '/iconos/dulce.png',
+  '/iconos/ballena.png',
+  '/iconos/bicicleta.png',
+  '/iconos/boton.png',
+  '/iconos/buho.png',
+  '/iconos/ventana.png',
+  '/iconos/violin.png',
+  '/iconos/volcan.png',
+  '/iconos/vuelo.png',
+  '/iconos/rana.png',
+  '/iconos/risa.png',
+  '/iconos/rueda.png',
+  '/iconos/cebra.png',
+  '/iconos/cielo.png',
+  '/iconos/conejo.png',
+  '/iconos/cuna.png',
+  '/iconos/gemelo.png',
+  '/iconos/girasol.png',
+  '/iconos/gorro.png',
+  '/iconos/gusano.png',
+  '/iconos/foca.png',
+  '/iconos/feria.png',
+  '/iconos/fiesta.png',
+  '/iconos/foco.png',
+  '/iconos/fuego.png',
+  '/iconos/jardin.png',
+  '/iconos/jefe.png',
+  '/iconos/joya.png',
+  '/iconos/juguete.png'
+];
+
+// ============================================================
+// INSTALL - Cachear assets estáticos
+// ============================================================
+self.addEventListener('install', (event) => {
+  console.log('📦 SW: Instalando versión', CACHE_NAME);
+
+  event.waitUntil(
+    caches.open(CACHE_STATIC)
+      .then((cache) => {
+        console.log('📦 SW: Cacheando assets estáticos...');
+        // Cachear uno a uno para que un fallo no rompa todo
+        return Promise.allSettled(
+          ASSETS_ESTATICOS.map(url =>
+            cache.add(url).catch(err => {
+              console.warn('⚠️ SW: No se pudo cachear', url, err.message);
+            })
+          )
+        );
+      })
+      .then(() => {
+        console.log('✅ SW: Assets cacheados');
+        return self.skipWaiting();
+      })
+  );
+});
+
+// ============================================================
+// ACTIVATE - Limpiar caches antiguos
+// ============================================================
+self.addEventListener('activate', (event) => {
+  console.log('🔄 SW: Activando', CACHE_NAME);
+
+  event.waitUntil(
+    caches.keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames
+            .filter((name) => name !== CACHE_STATIC && name !== CACHE_DYNAMIC)
+            .map((name) => {
+              console.log('🗑️ SW: Eliminando cache antiguo:', name);
+              return caches.delete(name);
+            })
+        );
+      })
+      .then(() => {
+        console.log('✅ SW: Activado y limpio');
+        return self.clients.claim();
+      })
+  );
+});
+
+// ============================================================
+// FETCH - Estrategias de cache
+// ============================================================
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Ignorar métodos que no sean GET
+  if (request.method !== 'GET') return;
+
+  // Ignorar extensiones de navegador
+  if (url.protocol === 'chrome-extension:' || url.protocol === 'moz-extension:') return;
+
+  // ============================================================
+  // Estrategia 1: API del backend → Network-first
+  // ============================================================
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          // Cachear respuesta exitosa por si acaso
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_DYNAMIC).then(cache => cache.put(request, clone));
+          }
+          return response;
         })
-        .then((registration) => {
-            console.log('📦 Service Worker registrado');
-
-            // Forzar comprobación de actualización al arrancar
-            registration.update().catch(() => {});
-
-            // 🔄 Detectar nueva versión durante la sesión
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                console.log('🆕 Nueva versión del SW detectada');
-
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed') {
-                        if (navigator.serviceWorker.controller) {
-                            // Hay una versión nueva lista para activar
-                            console.log('✅ Nueva versión lista');
-                            mostrarAvisoActualizacion(registration);
-                        } else {
-                            // Primera instalación
-                            console.log('🎉 SW instalado por primera vez');
-                        }
-                    }
-                });
-            });
-
-            // Si ya hay un SW esperando al arrancar, avisa
-            if (registration.waiting) {
-                console.log('⏳ Hay un SW esperando');
-                mostrarAvisoActualizacion(registration);
+        .catch(() => {
+          // Si falla la red, buscar en cache
+          return caches.match(request).then(cached => {
+            if (cached) {
+              console.log('📡 SW: Sirviendo API desde cache');
+              return cached;
             }
-
-            // 🔁 Detecta cuando el SW toma el control tras la actualización
-            let refrescando = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refrescando) {
-                    refrescando = true;
-                    console.log('🔄 Recargando con nueva versión...');
-                    window.location.reload();
-                }
+            // Devolver error JSON
+            return new Response(JSON.stringify({ exito: false, offline: true }), {
+              status: 503,
+              headers: { 'Content-Type': 'application/json' }
             });
+          });
         })
-        .catch((err) => {
-            console.log('❌ Error al registrar SW:', err);
-        });
+    );
+    return;
+  }
 
-        // 🔄 Comprobar actualizaciones cada 30 minutos
-        setInterval(() => {
-            navigator.serviceWorker.getRegistration().then((reg) => {
-                if (reg) reg.update().catch(() => {});
-            });
-        }, 30 * 60 * 1000);
+  // ============================================================
+  // Estrategia 2: Google Fonts → Cache-first (larga duración)
+  // ============================================================
+  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
+    event.respondWith(
+      caches.match(request).then(cached => {
+        if (cached) return cached;
+        return fetch(request).then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_DYNAMIC).then(cache => cache.put(request, clone));
+          return response;
+        }).catch(() => cached);
+      })
+    );
+    return;
+  }
 
-        // 📢 Escuchar mensajes del SW
-        navigator.serviceWorker.addEventListener('message', (event) => {
-            if (event.data && event.data.tipo === 'NUEVA_VERSION') {
-                console.log('📢 SW notifica versión:', event.data.version);
-                mostrarAvisoActualizacion(null);
-            }
-        });
-    });
-}
+  // ============================================================
+  // Estrategia 3: Backend externo → Network-only
+  // ============================================================
+  if (url.hostname.includes('workers.dev') || url.hostname.includes('cloudflare')) {
+    event.respondWith(fetch(request).catch(() => new Response('', { status: 503 })));
+    return;
+  }
 
-// ============================================================
-// 🔔 Aviso visual de nueva versión
-// ============================================================
-function mostrarAvisoActualizacion(registration) {
-    // Evita duplicados
-    if (document.getElementById('avisoActualizacion')) return;
-
-    const aviso = document.createElement('div');
-    aviso.id = 'avisoActualizacion';
-    aviso.innerHTML = `
-        <span style="font-size:1.6rem;">🎉</span>
-        <span style="flex:1; line-height:1.3;">
-            <strong>¡Nueva versión de Mia!</strong><br>
-            <small style="color:#888;">Pulsa para actualizar</small>
-        </span>
-        <button id="btnActualizar" style="
-            background: linear-gradient(135deg, #6BCB77, #4CAF50);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 3px 0 #2E7D32;
-            transition: all 0.15s;
-        ">🔄 Actualizar</button>
-    `;
-    aviso.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        background: #fff;
-        color: #333;
-        padding: 14px 20px;
-        border-radius: 50px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-        font-family: 'Quicksand', sans-serif;
-        font-weight: 600;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        z-index: 99999;
-        max-width: 92%;
-        min-width: 280px;
-        border: 3px solid #FFD93D;
-        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    `;
-
-    document.body.appendChild(aviso);
-
-    // Animación de entrada
-    requestAnimationFrame(() => {
-        setTimeout(() => {
-            aviso.style.transform = 'translateX(-50%) translateY(0)';
-        }, 100);
-    });
-
-    const btn = document.getElementById('btnActualizar');
-    btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'translateY(-2px)';
-        btn.style.boxShadow = '0 5px 0 #2E7D32';
-    });
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translateY(0)';
-        btn.style.boxShadow = '0 3px 0 #2E7D32';
-    });
-
-    btn.addEventListener('click', () => {
-        btn.textContent = '⏳ Actualizando...';
-        btn.disabled = true;
-
-        // Envía mensaje al SW para activación inmediata
-        navigator.serviceWorker.ready.then((reg) => {
-            if (reg.waiting) {
-                reg.waiting.postMessage({ tipo: 'SKIP_WAITING' });
-            }
-        });
-
-        // Por si acaso, recarga tras 2s
-        setTimeout(() => {
-            window.location.reload();
-        }, 2000);
-    });
-
-    // Auto-actualización tras 30s si el usuario no hace nada
-    setTimeout(() => {
-        if (document.getElementById('avisoActualizacion')) {
-            console.log('⏰ Auto-actualizando tras 30s...');
-            btn.click();
+  // ============================================================
+  // Estrategia 4: Assets locales → Cache-first con fallback
+  // ============================================================
+  event.respondWith(
+    caches.match(request)
+      .then((cached) => {
+        if (cached) {
+          // Devolver cache y actualizar en background (stale-while-revalidate)
+          const fetchPromise = fetch(request)
+            .then((response) => {
+              if (response && response.status === 200) {
+                const clone = response.clone();
+                caches.open(CACHE_STATIC).then(cache => cache.put(request, clone));
+              }
+              return response;
+            })
+            .catch(() => null);
+          return cached;
         }
-    }, 30000);
-}
+
+        // No está en cache → buscar en red
+        return fetch(request)
+          .then((response) => {
+            // Cachear si es un asset válido
+            if (response && response.status === 200 && response.type === 'basic') {
+              const clone = response.clone();
+              caches.open(CACHE_DYNAMIC).then(cache => cache.put(request, clone));
+            }
+            return response;
+          })
+          .catch((err) => {
+            console.warn('⚠️ SW: Fallo fetch', request.url, err.message);
+
+            // Si es una navegación, servir el index cacheado
+            if (request.mode === 'navigate') {
+              return caches.match('/index.html');
+            }
+
+            // Si es un icono, devolver placeholder
+            if (request.destination === 'image') {
+              return caches.match('/icon-192.png');
+            }
+
+            // Si es audio, devolver silencio
+            if (request.destination === 'audio') {
+              return new Response('', { status: 204 });
+            }
+
+            return new Response('Offline', { status: 503 });
+          });
+      })
+  );
+});
+
+// ============================================================
+// MENSAJES DEL CLIENTE
+// ============================================================
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    caches.keys().then(names => {
+      Promise.all(names.map(name => caches.delete(name)))
+        .then(() => console.log('🗑️ SW: Todos los caches eliminados'));
+    });
+  }
+});
+
+// ============================================================
+// SYNC EN BACKGROUND (opcional)
+// ============================================================
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'sync-progreso') {
+    console.log('🔄 SW: Sincronizando progreso en background');
+    // Aquí podrías sincronizar con el backend cuando vuelva la conexión
+  }
+});
+
+console.log('🚀 SW: Mia va al Colegio cargado');
