@@ -4,65 +4,338 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidad - Mia va al Colegio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <meta name="theme-color" content="#FF6B6B">
+    <meta name="description" content="Política de privacidad de Mia va al Colegio, app educativa infantil.">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Quicksand', 'Comic Sans MS', sans-serif;
-            background: linear-gradient(135deg, #FFF8E7, #FFE4B5);
+            font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #FFF8E7, #FFE4B5, #FFF0F5);
             min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
             color: #333;
+            line-height: 1.7;
+            padding: 20px;
         }
         .contenedor {
+            max-width: 800px;
+            margin: 30px auto;
             background: white;
             border-radius: 40px;
-            padding: 30px;
-            max-width: 700px;
-            margin: 20px auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 50px 45px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 4px solid rgba(255, 215, 0, 0.3);
         }
-        h1 { color: #FF6B6B; font-size: 2rem; margin-bottom: 20px; }
-        h2 { color: #6C4A7C; font-size: 1.3rem; margin-top: 25px; }
-        p { margin-bottom: 15px; }
-        a { color: #4FC3F7; }
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px dashed rgba(255, 215, 0, 0.4);
+        }
+        .logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 22px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            background: white;
+            padding: 5px;
+        }
+        h1 {
+            color: #FF6B6B;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0 #FFD93D;
+        }
+        .fecha {
+            color: #999;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        h2 {
+            color: #6C4A7C;
+            font-size: 1.35rem;
+            margin: 28px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #FFD93D;
+            display: inline-block;
+        }
+        h3 {
+            color: #FF6B6B;
+            font-size: 1.05rem;
+            margin: 18px 0 8px;
+        }
+        p {
+            margin-bottom: 12px;
+            font-size: 0.98rem;
+        }
+        ul, ol {
+            margin: 10px 0 15px 25px;
+        }
+        li {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        strong {
+            color: #6C4A7C;
+        }
+        .destacado {
+            background: #F3E8FF;
+            padding: 18px 22px;
+            border-radius: 20px;
+            border-left: 5px solid #C084FC;
+            margin: 20px 0;
+        }
+        .destacado-verde {
+            background: #E8F5E9;
+            padding: 18px 22px;
+            border-radius: 20px;
+            border-left: 5px solid #6BCB77;
+            margin: 20px 0;
+        }
+        .no-hacemos {
+            background: #FFF5F5;
+            padding: 20px 25px;
+            border-radius: 20px;
+            border-left: 5px solid #FF6B6B;
+            margin: 20px 0;
+        }
+        .no-hacemos ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        .no-hacemos li {
+            padding: 6px 0;
+            font-size: 1rem;
+        }
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.92rem;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .tabla th {
+            background: #FFF8E7;
+            color: #6C4A7C;
+            padding: 12px;
+            text-align: left;
+            font-weight: 700;
+        }
+        .tabla td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .tabla tr:last-child td {
+            border-bottom: none;
+        }
         .btn-volver {
+            display: inline-block;
             background: #6BCB77;
             color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
+            padding: 14px 35px;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 0 #2E7D32;
+            transition: all 0.1s;
+            margin-top: 30px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .btn-volver:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #2E7D32;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.85rem;
+        }
+        .contacto {
+            background: #FFF8E7;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 767px) {
+            .contenedor { padding: 30px 20px; border-radius: 25px; margin: 10px auto; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.15rem; }
+            body { padding: 10px; }
+            .logo { width: 70px; height: 70px; }
         }
     </style>
 </head>
 <body>
     <div class="contenedor">
-        <h1>🔒 Política de Privacidad</h1>
-        <p><strong>Última actualización:</strong> 17 de septiembre de 2026</p>
+        <div class="header">
+            <img src="icon-192.png" alt="Mia va al Colegio" class="logo">
+            <h1>🔒 Política de Privacidad</h1>
+            <p class="fecha">Última actualización: <span id="fecha"></span></p>
+        </div>
 
-        <h2>📋 Información que recopilamos</h2>
-        <p>Mia va al Colegio es una aplicación educativa para niños. <strong>NO recopilamos datos personales</strong> como nombre, edad, correo electrónico, número de teléfono ni dirección.</p>
-        <p>Únicamente guardamos:</p>
+        <div class="destacado-verde">
+            <strong>🌟 Resumen rápido:</strong> Mia va al Colegio <strong>NO recoge datos personales</strong> de los niños. No hay anuncios, no hay compras, no hay rastreo. Todo el progreso se guarda de forma anónima.
+        </div>
+
+        <h2>1. Información general</h2>
+        <p><strong>Mia va al Colegio</strong> es una aplicación educativa gratuita diseñada para niños de 3 a 6 años que están aprendiendo a leer, escribir y pronunciar correctamente. Esta política explica qué datos se recogen y cómo se utilizan.</p>
+        <p>Al usar esta aplicación, aceptas las prácticas descritas en esta política. Si eres padre, madre o tutor, te recomendamos leerla antes de que el menor use la app.</p>
+
+        <h2>2. Datos que recogemos</h2>
+        <p>La app <strong>NO recoge datos personales identificables</strong>. No pedimos nombre, email, teléfono, ubicación, contactos ni acceso a la cámara o micrófono.</p>
+        <p>Únicamente se guardan de forma <strong>anónima</strong> los siguientes datos:</p>
+
+        <table class="tabla">
+            <tr>
+                <th>Dato</th>
+                <th>Para qué</th>
+                <th>Tipo</th>
+            </tr>
+            <tr>
+                <td>🆔 Identificador de dispositivo anónimo</td>
+                <td>Recuperar el progreso en otro dispositivo</td>
+                <td>Aleatorio (no personal)</td>
+            </tr>
+            <tr>
+                <td>📊 Progreso educativo</td>
+                <td>Guardar qué letras, sílabas y palabras ha aprendido</td>
+                <td>Anónimo</td>
+            </tr>
+            <tr>
+                <td>🎨 Preferencias</td>
+                <td>Recordar mascota, tema, velocidad de voz</td>
+                <td>Anónimo</td>
+            </tr>
+            <tr>
+                <td>📅 Última sesión</td>
+                <td>Mostrar la fecha de último uso en el informe</td>
+                <td>Anónimo</td>
+            </tr>
+        </table>
+
+        <h2>3. Dónde se guardan los datos</h2>
         <ul>
-            <li>Un <strong>identificador anónimo de dispositivo</strong> (generado automáticamente y aleatorio)</li>
-            <li>El <strong>progreso educativo</strong> (letras, sílabas, palabras y números aprendidos)</li>
+            <li><strong>Localmente</strong> en el navegador del dispositivo (mediante <em>localStorage</em>).</li>
+            <li><strong>En la nube</strong> de forma anónima (servidores de Cloudflare Workers) para no perder el progreso si se cambia de dispositivo.</li>
+        </ul>
+        <p>El identificador de dispositivo se genera <strong>aleatoriamente</strong> en el primer uso y no se puede vincular a ninguna persona real.</p>
+
+        <h2>4. Para qué usamos los datos</h2>
+        <ul>
+            <li>Guardar y recuperar el progreso educativo del menor.</li>
+            <li>Sincronizar el progreso entre dispositivos del mismo usuario (usando el ID anónimo).</li>
+            <li>Generar el informe descargable para padres.</li>
+            <li>Mostrar estadísticas internas (aciertos, fallos, estrellas).</li>
         </ul>
 
-        <h2>🎯 Cómo usamos la información</h2>
-        <p>El progreso se guarda para que el niño pueda continuar donde lo dejó, incluso si cambia de dispositivo. Este dato es completamente anónimo.</p>
+        <h2>5. Lo que NO hacemos</h2>
+        <div class="no-hacemos">
+            <ul>
+                <li>❌ No mostramos anuncios de ningún tipo.</li>
+                <li>❌ No hay compras dentro de la aplicación.</li>
+                <li>❌ No compartimos datos con terceros.</li>
+                <li>❌ No rastreamos la ubicación GPS.</li>
+                <li>❌ No accedemos a contactos, fotos, cámara ni micrófono.</li>
+                <li>❌ No enviamos notificaciones push.</li>
+                <li>❌ No usamos cookies de seguimiento.</li>
+                <li>❌ No perfilamos al usuario con fines publicitarios.</li>
+            </ul>
+        </div>
 
-        <h2>👶 Protección de menores (COPPA/GDPR)</h2>
-        <p>Cumplimos con las leyes de protección de menores. No recopilamos información personal de niños menores de 13 años. No mostramos publicidad. No compartimos datos con terceros.</p>
+        <h2>6. Permisos de la aplicación</h2>
+        <p>La aplicación solo utiliza los siguientes recursos del dispositivo:</p>
+        <table class="tabla">
+            <tr>
+                <th>Permiso</th>
+                <th>Uso</th>
+            </tr>
+            <tr>
+                <td>🔊 Sintetizador de voz</td>
+                <td>Leer el contenido educativo en voz alta (Web Speech API)</td>
+            </tr>
+            <tr>
+                <td>💾 Almacenamiento local</td>
+                <td>Guardar el progreso del menor</td>
+            </tr>
+            <tr>
+                <td>🌐 Conexión a internet</td>
+                <td>Sincronizar el progreso con la nube (opcional)</td>
+            </tr>
+        </table>
+        <p>La app <strong>funciona sin conexión</strong> una vez cargada la primera vez.</p>
 
-        <h2>🗑️ Eliminación de datos</h2>
-        <p>El niño o el padre/tutor puede eliminar todo el progreso en cualquier momento desde la sección "Progreso" de la app, pulsando el botón "Reiniciar progreso".</p>
+        <h2>7. Derechos de los padres y tutores</h2>
+        <p>Los padres, madres o tutores legales pueden en cualquier momento:</p>
+        <ul>
+            <li>🗑️ <strong>Borrar todo el progreso</strong> desde el botón "Reiniciar progreso" dentro de la app (pestaña Progreso).</li>
+            <li>📧 <strong>Solicitar la eliminación de datos en la nube</strong> escribiendo al email de contacto.</li>
+            <li>📱 <strong>Desinstalar la app</strong> en cualquier momento desde los ajustes del dispositivo.</li>
+            <li>🚫 <strong>Bloquear el acceso a internet</strong> de la app desde los ajustes del sistema operativo.</li>
+            <li>📄 <strong>Solicitar una copia</strong> de los datos guardados (informe descargable).</li>
+        </ul>
 
-        <h2>📧 Contacto</h2>
-        <p>Si tienes preguntas, contacta en: <a href="mailto:arnaldoeuropa66@gmail.com">arnaldoeuropa66@gmail.com</a></p>
+        <h2>8. Menores de edad y cumplimiento legal</h2>
+        <p>Esta app está diseñada <strong>específicamente para niños pequeños</strong> y cumple con:</p>
+        <ul>
+            <li><strong>RGPD</strong> (Reglamento General de Protección de Datos - Europa)</li>
+            <li><strong>COPPA</strong> (Children's Online Privacy Protection Act - EE.UU.)</li>
+            <li><strong>LOPDGDD</strong> (Ley Orgánica de Protección de Datos - España)</li>
+            <li><strong>Políticas de Familias de Google Play</strong></li>
+        </ul>
+        <p>Al no recoger datos personales identificables, la app <strong>no requiere consentimiento parental explícito</strong> para funcionar.</p>
 
-        <a href="/" class="btn-volver">← Volver a la app</a>
+        <h2>9. Seguridad de los datos</h2>
+        <ul>
+            <li>Toda la comunicación con la nube se hace mediante <strong>HTTPS cifrado</strong>.</li>
+            <li>Los datos guardados en la nube son <strong>anónimos</strong> y no contienen información personal.</li>
+            <li>El identificador de dispositivo es <strong>aleatorio</strong> y no se comparte con terceros.</li>
+            <li>No almacenamos contraseñas porque no hay sistema de cuentas.</li>
+        </ul>
+
+        <h2>10. Cambios en esta política</h2>
+        <p>Si en el futuro se modificara esta política, se actualizaría la fecha al inicio del documento. Recomendamos revisarla periódicamente.</p>
+        <p>Si los cambios fueran significativos (por ejemplo, si empezáramos a recoger datos personales), se notificaría dentro de la app.</p>
+
+        <h2>11. Propiedad intelectual</h2>
+        <p>Todo el contenido educativo (letras, sílabas, palabras, rimas, trabalenguas) está creado específicamente para esta app.</p>
+        <p>Los iconos son de estilo Fluent 3D. La tipografía Quicksand es de Google Fonts (licencia abierta).</p>
+
+        <h2>12. Contacto</h2>
+        <div class="contacto">
+            <p>Para cualquier duda, sugerencia o solicitud relacionada con la privacidad:</p>
+            <p>📧 <strong>Email:</strong> contacto@miavaalcolegio.com</p>
+            <p>🌐 <strong>Web:</strong> https://miavaalcolegio.com</p>
+            <p>🐙 <strong>GitHub:</strong> https://github.com/tu-usuario/mia-colegio</p>
+        </div>
+
+        <div class="destacado">
+            <strong>💜 Compromiso con los niños:</strong> Mia va al Colegio nace con la vocación de ser una herramienta educativa segura, gratuita y sin distracciones. Creemos que el aprendizaje infantil debe estar libre de publicidad y de recogida de datos. Esta política refleja ese compromiso.
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="btn-volver">🏫 Volver a la app</a>
+        </div>
+
+        <div class="footer">
+            <p>© <span id="anio"></span> Mia va al Colegio · Hecho con ❤️ para que los niños aprendan jugando</p>
+            <p style="margin-top: 8px;">Versión 2.1 · Documento generado automáticamente</p>
+        </div>
     </div>
+
+    <script>
+        // Fechas dinámicas
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+        document.getElementById('anio').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
