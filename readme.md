@@ -1,86 +1,113 @@
 # 🏫 Mia va al Colegio
 
-> 🧸 App educativa para que los niños aprendan las letras y los números jugando con Mia.
+<div align="center">
 
-[![PWA](https://img.shields.io/badge/PWA-instalable-blueviolet)](https://web.dev/progressive-web-apps/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Español](https://img.shields.io/badge/Idioma-Espa%C3%B1ol-red)]()
+![Mia va al Colegio](icon-192.png)
 
----
+**🧸 Aplicación web educativa para niños de 3 a 6 años**
 
-## 🎯 ¿Qué es?
+*¡Aprende letras, sílabas, palabras, números y pronunciación jugando con Mia!*
 
-**Mia va al Colegio** es una aplicación web progresiva (PWA) diseñada para que niños de 3 a 7 años aprendan:
+[![PWA](https://img.shields.io/badge/PWA-instalable-6BCB77?style=for-the-badge)](https://web.dev/progressive-web-apps/)
+[![Offline](https://img.shields.io/badge/Offline-funciona-4FC3F7?style=for-the-badge)](https://developer.mozilla.org/es/docs/Web/Progressive_web_apps)
+[![Español](https://img.shields.io/badge/Idioma-Español-FF6B6B?style=for-the-badge)](https://github.com/)
+[![Sin anuncios](https://img.shields.io/badge/Sin%20anuncios-100%25-FFD93D?style=for-the-badge)](https://github.com/)
 
-- 🔤 **27 letras** del alfabeto español (incluida la Ñ)
-- 🔢 **10 números** del 0 al 9
-- 🎵 **Rimas originales** para cada letra y número
-- 🎮 **Juego de adivinanzas** con voz
-- 📊 **Progreso guardado** localmente y sincronizado
-
-Todo con la ayuda de **Mia**, una mascota virtual que habla, anima y celebra cada logro.
+</div>
 
 ---
 
-## ✨ Características
+## 📖 Descripción
 
-### 🎤 Voz natural
-- Voces del sistema en español (local y online)
-- Selector manual de voz con indicador ⭐ local / ☁️ online
-- Precarga del motor TTS al arrancar (respuesta instantánea)
-- Filtro automático de voces problemáticas
-- Ajustes de velocidad y tono
+**Mia va al Colegio** es una PWA (Progressive Web App) educativa diseñada para acompañar a niños de 3 a 6 años en sus primeros pasos con la lectura, la escritura y la pronunciación.
 
-### 🎮 Gamificación
-- 37 elementos (27 letras + 10 números)
-- Sistema de estrellas y medallas
-- Celebración con confeti al completar
-- 4 niveles de progreso (5, 10, 20, 37 elementos)
-- Juego de adivinanzas con 3 opciones
+A través de un enfoque **multisensorial** (voz, imagen, color, rima y movimiento), los niños aprenden:
+
+- 🔤 Las **letras** de la A a la Z (incluida la Ñ)
+- 🔢 Los **números** del 0 al 9
+- 🔗 Las **sílabas** (MA, ME, MI, MO, MU, PA, PE, PI, PO, PU...)
+- 📝 **Palabras** completas (MAMÁ, PAPÁ, GATO, SOL...)
+- 🗣️ La **pronunciación de la S** con palabras, trabalenguas y discriminación auditiva
+
+Todo con **voz personalizable**, **mascota elegible**, **3 temas visuales** y **progreso guardado en la nube**.
+
+---
+
+## ✨ Características principales
+
+### 🎓 Contenido educativo
+| Sección | Contenido |
+|---|---|
+| **📖 Aprender** | 27 letras + 10 números con iconos, rimas y voz |
+| **🔤 Sílabas** | 25 sílabas combinadas con rimas |
+| **📝 Palabras** | 26 palabras básicas del entorno infantil |
+| **🗣️ Ejercicios de S** | 28 palabras con S + 5 trabalenguas + 20 palabras para discriminar |
+| **🎮 Juego** | Adivina la letra/número por el sonido |
 
 ### 🎨 Personalización
-- 5 mascotas: 🧸 🐼 🦊 🐨 🦄
-- 3 temas visuales: 🏫 Escuela, 🌴 Selva, 🚀 Espacio
-- Ajustes de voz individuales
+- **6 mascotas**: Oso, Perro, Gato, Zorro, Koala, León
+- **3 temas visuales**: 🏫 Escuela, 🌴 Selva, 🚀 Espacio (modo oscuro)
+- **Voz ajustable**: velocidad (0.3–1.0) y tono (0.8–2.0)
+- **Selector de voz**: elige entre todas las voces instaladas
 
-### 📱 PWA completa
-- Instalable en Android, iOS y escritorio
-- Funciona **offline** (gracias al Service Worker)
-- Icono personalizado en pantalla de inicio
-- Auto-actualización con notificación visual
+### 🏆 Motivación
+- ⭐ Estrellas al acertar
+- 🏅 4 medallas por hitos (5, 10, 20, 37 elementos)
+- 🎉 Celebración con confeti y fuegos artificiales al completar todo
+- 📊 Progreso detallado por sección
 
-### 🔒 Privacidad y seguridad
-- **Sin captura de audio** del menor (RGPD/LOPDGDD)
-- Sin cuentas de usuario
-- Sin cookies de terceros
-- Progreso guardado localmente (`localStorage`)
-- Cumple con el principio de minimización de datos
-
----
-
-## 🚀 Cómo usarla
-
-### Para usuarios
-1. Abre [https://mia-va-al-colegio.pages.dev](https://mia-va-al-colegio.pages.dev)
-2. Pulsa **"🚀 ¡Empezar!"**
-3. ¡Listo! Empieza a aprender con Mia
-
-### Para instalarla como app
-- **Android (Chrome):** Menú ⋮ → **"Instalar aplicación"**
-- **iOS (Safari):** Compartir ⬆️ → **"Añadir a pantalla de inicio"**
-- **Escritorio (Chrome/Edge):** Icono ⊕ en la barra de direcciones
+### 📱 Técnico
+- ✅ **PWA instalable** en Android e iOS
+- ✅ **Funciona offline** tras la primera visita
+- ✅ **Optimizado para dedos pequeños** (botones ≥52px)
+- ✅ **Responsive** (móvil, tablet, escritorio)
+- ✅ **Sincronización en la nube** (Cloudflare Workers)
+- ✅ **Sin anuncios, sin compras, sin enlaces externos**
+- ✅ **Sin recogida de datos personales**
 
 ---
 
-## 🛠️ Desarrollo
+## 🚀 Demo
 
-### Requisitos
-- Navegador moderno (Chrome 80+, Safari 14+, Firefox 75+)
-- Servidor local para desarrollo (por CORS y Service Worker)
+🔗 **Prueba la app en vivo**: [https://tu-dominio.com](https://tu-dominio.com)
 
-### Ejecutar localmente
+> Reemplaza el enlace con tu URL real de Cloudflare Pages.
 
-**Opción 1 — Python:**
+---
+
+## 📦 Instalación
+
+### Como PWA (recomendado para usuarios)
+
+#### Android (Chrome)
+1. Abre la URL de la app en Chrome
+2. Pulsa el menú ⋮ → **"Añadir a pantalla de inicio"**
+3. Confirma → se instalará como app nativa
+
+#### iOS (Safari)
+1. Abre la URL en Safari
+2. Pulsa el botón **Compartir** 📤
+3. Selecciona **"Añadir a pantalla de inicio"**
+4. Confirma → se instalará como app
+
+#### Escritorio (Chrome/Edge)
+1. Abre la URL
+2. Pulsa el icono de **instalar** en la barra de direcciones
+3. Confirma
+
+### Como desarrollador (local)
+
 ```bash
-cd mia-va-al-colegio
+# Clona el repositorio
+git clone https://github.com/tu-usuario/mia-colegio.git
+cd mia-colegio
+
+# Sirve los archivos con cualquier servidor local
+# Opción 1: Python
 python -m http.server 8000
+
+# Opción 2: Node.js
+npx serve
+
+# Opción 3: PHP
+php -S localhost:8000
